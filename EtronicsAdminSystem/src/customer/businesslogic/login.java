@@ -67,4 +67,24 @@ public class login {
         else
             return true;
     }
+    
+    public boolean validatePW(String text){
+        String pattern = "^[0-9a-zA-Z]{6,16}";
+        if(!(text.matches(pattern))){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    
+    public boolean validateEmail(String text){
+        String pattern = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        if(!(text.matches(pattern))){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 }

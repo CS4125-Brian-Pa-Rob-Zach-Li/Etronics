@@ -47,6 +47,7 @@ public class loginGUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         EmailTF = new javax.swing.JTextField();
         pwTF = new javax.swing.JTextField();
+        registerBu = new javax.swing.JButton();
         LoginBu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,6 +66,14 @@ public class loginGUI extends javax.swing.JFrame {
 
         pwTF.setForeground(new java.awt.Color(153, 153, 153));
         pwTF.setText("8 <= PW <= 16 ");
+
+        registerBu.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        registerBu.setText("Register");
+        registerBu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerBuActionPerformed(evt);
+            }
+        });
 
         LoginBu.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         LoginBu.setText("Login");
@@ -91,12 +100,17 @@ public class loginGUI extends javax.swing.JFrame {
                             .addComponent(pwTF, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(451, 451, 451)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(LoginBu)))))
+                        .addComponent(jLabel3)))
                 .addContainerGap(302, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(registerBu)
+                .addGap(386, 386, 386))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(389, 389, 389)
+                    .addComponent(LoginBu)
+                    .addContainerGap(568, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,9 +127,14 @@ public class loginGUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(pwTF, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
-                .addComponent(LoginBu)
-                .addGap(58, 58, 58))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addComponent(registerBu)
+                .addGap(62, 62, 62))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(400, Short.MAX_VALUE)
+                    .addComponent(LoginBu)
+                    .addGap(63, 63, 63)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,33 +150,15 @@ public class loginGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public boolean validatePW(String text){
-        String pattern = "^[0-9a-zA-Z]{6,16}";
-        if(!(text.matches(pattern))){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
     
-    public boolean validateEmail(String text){
-        String pattern = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-        if(!(text.matches(pattern))){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
     
-    private void LoginBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBuActionPerformed
+    private void registerBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBuActionPerformed
         // TODO add your handling code here:
         String email = EmailTF.getText();
         String password = pwTF.getText();
-        if(!validateEmail(email))
+        if(!userLogin.validateEmail(email))
             JOptionPane.showMessageDialog(null, "Email invalud"); 
-        else if(!validatePW(password))
+        else if(!userLogin.validatePW(password))
             JOptionPane.showMessageDialog(null, "Password invalud"); 
         else{
             String result = "";
@@ -170,6 +171,10 @@ public class loginGUI extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(null, result); 
          }
+    }//GEN-LAST:event_registerBuActionPerformed
+
+    private void LoginBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBuActionPerformed
+        // TODO add your handling code here:
     }//GEN-LAST:event_LoginBuActionPerformed
 
     /**
@@ -215,5 +220,6 @@ public class loginGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField pwTF;
+    private javax.swing.JButton registerBu;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,10 +5,25 @@
  */
 package customer;
 
+import customer.gui.loginGUI;
+import customer.gui.mainpageGUI;
+
 /**
  *
  * @author 
  */
 public class UICustomerController {
     
+    private static mainpageGUI mainPage;
+    private static loginGUI loginPage;
+    
+    public int callLogin()
+    {
+        int id = 0;
+        loginPage = new loginGUI();
+        mainPage.setVisible(false);
+        loginPage.setVisible(true);
+        //id = loginPage.getid();
+        return id;
+    }
 }
