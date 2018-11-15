@@ -7,10 +7,11 @@ package administration;
 
 import administration.gui.UIAdminView;
 import database.AdminDAO;
-import products.Product;
+import products.BasicProduct;
 import products.ProductFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
 /**
  *
@@ -27,10 +28,11 @@ public class UIAdminController{
         this.model = model;
         
         addListeners();
-        updateView();
+        updateCategories();
     }
     
     public void addListeners(){
+        // Add product button
         view.addNewProductListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 int pPrice = 0;
@@ -43,10 +45,18 @@ public class UIAdminController{
                     String pCat = view.getAddProductCat();
                     if(!pName.equals("")  && !pDesc.equals("") && !pCat.equals("")){
                         ProductFactory pf = new ProductFactory();
-                        Product p = pf.getProduct(0, pName, pPrice, pDesc, pCat, 0);
-                        model.addProduct(p);
-                        model.updateProducts();
-                        view.showInfoMessage("Product added successfully.");
+                        BasicProduct p = pf.getProduct(0, pName, pPrice, pDesc, pCat, 0);
+                        
+                        boolean addSuccess = model.addProduct(p);
+                        if(addSuccess){
+                            model.updateProducts();
+                            view.showInfoMessage("Product added successfully.");
+                        }
+                        else{
+                            view.showErrorMessage("Invalid product!\n"
+                                    + "Name must be less than 50 chars and "
+                                    + "description must be less than 256 chars.");
+                        }
                     }
                     else{
                         view.showErrorMessage("Fields left empty!");
@@ -57,9 +67,27 @@ public class UIAdminController{
                 }
                 
             }});
+        
+        // Find product button
+        view.addFindProductListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                String textToSearch = view.getFindIDText();
+                ArrayList<BasicProduct> selectedProducts = 
+                        model.getAllProductsByString(textToSearch);
+                
+                ArrayList<String> prodNamesWithIDs = new ArrayList<String>();
+                BasicProduct p = null;
+                String s;
+                for(int x = 0; x < selectedProducts.size(); x++){
+                    p = selectedProducts.get(x);
+                    s = p.getID()+": "+p.getName();
+                    prodNamesWithIDs.add(s);
+                }
+                view.setFindIDResults(prodNamesWithIDs);
+            }});
     }
     
-    public void updateView(){
+    public void updateCategories(){
         view.setCats(model.getCategoryList());
     }
     
