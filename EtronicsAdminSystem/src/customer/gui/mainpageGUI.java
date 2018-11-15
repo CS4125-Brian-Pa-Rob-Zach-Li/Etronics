@@ -6,6 +6,14 @@
 package customer.gui;
 
 import customer.UICustomerController;
+import database.ProductsDAO;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 
 /**
@@ -13,7 +21,11 @@ import java.awt.event.ActionListener;
  * @author dell
  */
 public class mainpageGUI extends javax.swing.JFrame {
-
+    
+    ProductsDAO productsDAO;
+    JPanel searchFrame;
+    JScrollPane jScrollPane;;
+    
     /**
      * Creates new form mainpageGUI
      */
@@ -21,6 +33,46 @@ public class mainpageGUI extends javax.swing.JFrame {
     public mainpageGUI() {
         uController = new UICustomerController();
         initComponents();
+        productsDAO = new ProductsDAO();
+        
+        ArrayList<String[]> productsArray;
+        searchFrame = new JPanel();
+        searchFrame.setLayout(new BoxLayout(searchFrame,BoxLayout.Y_AXIS));
+        searchFrame.setSize(1000, 800);
+        try {
+            productsArray = productsDAO.setProducts("Television");
+            setProducts(productsArray,1);
+            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            ArrayList<String[]> products = productsDAO.setProducts("Oven");
+            for(int i=0;i< products.size();i++)
+            {
+                ProductPanel productPanel = new ProductPanel(
+                        products.get(i)[3],
+                        Integer.parseInt(products.get(i)[1]),
+                        products.get(i)[0], 
+                        Integer.parseInt(products.get(i)[2]));             
+                
+                searchFrame.add(productPanel);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(mainpageGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        jScrollPane = new JScrollPane(searchFrame);
+            
+        jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane.setBounds(0, 0, 753, 197);
+        jPanel4.add(jScrollPane);
+//        System.out.println(jPanel4.getBounds());
+        
     }
     
     public static void addLoginListener(ActionListener al){
@@ -141,7 +193,7 @@ public class mainpageGUI extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -255,6 +307,16 @@ public class mainpageGUI extends javax.swing.JFrame {
 
     private void searchBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBuActionPerformed
         // TODO add your handling code here:
+        String search = searchTF.getText();
+        try {
+            searchFrame.removeAll();
+            searchFrame.revalidate();
+            searchFrame.repaint();
+            ArrayList<String[]> searchedProducts = productsDAO.searchProducts(search);
+            setProducts(searchedProducts,0);
+        } catch (SQLException ex) {
+            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_searchBuActionPerformed
 
     private void HomeBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeBuActionPerformed
@@ -264,7 +326,40 @@ public class mainpageGUI extends javax.swing.JFrame {
     private void AllProductBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AllProductBuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_AllProductBuActionPerformed
-
+    
+    private void setProducts(ArrayList<String[]> products,int panel) throws SQLException {
+            JPanel innerFrame = new JPanel();
+            innerFrame.setLayout(new BoxLayout(innerFrame,BoxLayout.Y_AXIS));
+            innerFrame.setSize(1000, 800);
+      
+            for(int i=0;i< products.size();i++)
+            {
+                ProductPanel productPanel = new ProductPanel(
+                        products.get(i)[3],
+                        Integer.parseInt(products.get(i)[1]),
+                        products.get(i)[0], 
+                        Integer.parseInt(products.get(i)[2]));
+                if(panel != 1) {
+                    searchFrame.add(productPanel);
+                }
+                else
+                    innerFrame.add(productPanel);
+            }
+            
+            if(panel ==1) {
+                JScrollPane jScrollPane = new JScrollPane(innerFrame);
+                jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                jScrollPane.setBounds(0, 0, 753, 282);
+                jPanel5.add(jScrollPane);
+            }
+            else {
+                jPanel4.add(jScrollPane);
+            }
+            
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
