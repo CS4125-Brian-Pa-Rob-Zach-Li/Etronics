@@ -18,15 +18,9 @@ import javax.swing.JOptionPane;
  */
 public class loginGUI extends javax.swing.JFrame {
 
-    login userLogin;
+    
     public loginGUI() {
-        try {
-            this.userLogin = new login();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(loginGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(loginGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         initComponents();
     }
     
@@ -42,6 +36,9 @@ public class loginGUI extends javax.swing.JFrame {
         return pwTF.getText();
     }
 
+    public static void addRegisterListener(ActionListener a2){
+        registerBu.addActionListener(a2);
+    }
 /**
      * Creates new form loginGUI
      */
@@ -82,19 +79,9 @@ public class loginGUI extends javax.swing.JFrame {
 
         registerBu.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         registerBu.setText("Register");
-        registerBu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerBuActionPerformed(evt);
-            }
-        });
 
         LoginBu.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         LoginBu.setText("Login");
-        LoginBu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginBuActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -165,14 +152,6 @@ public class loginGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     
-    private void registerBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_registerBuActionPerformed
-
-    private void LoginBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LoginBuActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -216,6 +195,6 @@ public class loginGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private static javax.swing.JTextField pwTF;
-    private javax.swing.JButton registerBu;
+    private static javax.swing.JButton registerBu;
     // End of variables declaration//GEN-END:variables
 }
