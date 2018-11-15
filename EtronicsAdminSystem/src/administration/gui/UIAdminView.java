@@ -72,12 +72,12 @@ public class UIAdminView extends JFrame {
     private JTextField discountNum;
     private JLabel prod;
     private JTextField productID;
+    private JLabel promo;
+    private JTextField promoName;    
     private JLabel date;
     private JTextField endDate;
     private JButton addPromButton;
-    private JPanel addPromPanel;
-    private boolean validInput;
-    
+    private JPanel addPromPanel;    
     
     public UIAdminView(UIAdminModel model){
         
@@ -139,6 +139,10 @@ public class UIAdminView extends JFrame {
         mainButtonPanel.add(promoManButton);
         mainButtonPanel.add(adManButton);
         
+        //promotion GUI//////////////////////////////
+        
+        //////////////////////////////////////////////
+        
         JPanel variablePanel = setupProductGUI();
         
         mainContent.add(mainButtonPanel, BorderLayout.WEST);
@@ -193,7 +197,7 @@ public class UIAdminView extends JFrame {
         addProdButtonPanel.add(prodAddButton);
         addProdPanel.add(addProdButtonPanel);
         
-        // Delete Product Panel
+        //////// Delete Product Panel////////////////////
         JPanel delProdPanel = new JPanel();
         delProdPanel.setLayout(new BoxLayout(delProdPanel, BoxLayout.Y_AXIS));
         delProdPanel.setBorder(new EmptyBorder(20, 0, 0, 20));
@@ -221,8 +225,10 @@ public class UIAdminView extends JFrame {
         JPanel delProdButtonPanel = new JPanel(new FlowLayout());
         delProdButtonPanel.add(prodDelButton);
         delProdPanel.add(delProdButtonPanel);
+        /////////////////////////////////////////////////////
         
-        // Change Product Panel
+        
+        ////////// Change Product Panel//////////////////////
         JPanel changeProdPanel = new JPanel();
         changeProdPanel.setLayout(new BoxLayout(changeProdPanel, BoxLayout.Y_AXIS));
         changeProdPanel.setBorder(new EmptyBorder(20, 0, 0, 20));
@@ -256,8 +262,10 @@ public class UIAdminView extends JFrame {
         JPanel changeProdButtonPanel = new JPanel(new FlowLayout());
         changeProdButtonPanel.add(changeProdAddButton);
         changeProdPanel.add(changeProdButtonPanel);
+        //////////////////////////////////////////////////////////
         
-        // New Category
+        
+        ////////////// New Category //////////////////////////////
         JPanel chProdPanel = new JPanel();
         chProdPanel.setLayout(new BoxLayout(chProdPanel, BoxLayout.Y_AXIS));
         chProdPanel.setBorder(new EmptyBorder(20, 0, 0, 20));
@@ -287,6 +295,9 @@ public class UIAdminView extends JFrame {
         JPanel chProdButtonPanel = new JPanel(new FlowLayout());
         chProdButtonPanel.add(chProdDelButton);
         chProdPanel.add(chProdButtonPanel);
+        ////////////////////////////////////////////////////////////
+        
+        
         
         variablePanel.add(addProdPanel);
         variablePanel.add(delProdPanel);
@@ -296,6 +307,9 @@ public class UIAdminView extends JFrame {
         return variablePanel;
     }
     
+    
+    
+    ////////////Product attribute methods////////////////////////////
     public String getAddProductName(){
         return prodNameField.getText();
     }
@@ -315,6 +329,42 @@ public class UIAdminView extends JFrame {
     public void addNewProductListener(ActionListener al){
         prodAddButton.addActionListener(al);
     }
+    //////////////////////////////////////////////////////////
+    
+    
+    //////////////Promotion attribute methods///////////////////////
+    public void addNewPromotionListener(ActionListener al){
+        addPromButton.addActionListener(al);
+    }
+    
+    public String getAddPromotionDiscountNum()
+    {
+        return discountNum.getText();
+    }
+    
+    public String getAddPromotionProductID()
+    {
+        return productID.getText();
+    }
+    
+    public String getAddPromotionEndDate()
+    {
+        return endDate.toString();
+    }
+    
+    public String getAddPromotionPromoName(){
+        return promoName.toString();
+    }
+    
+    public void resetAllTextBoxes(){
+        discountNum.setText("");
+        productID.setText("");
+        endDate.setText("");
+        promoName.setText("");
+    }
+    ///////////////////////////////////////////
+    
+    
     
     public void showErrorMessage(String m){
         JOptionPane.showMessageDialog(null, m, "Error", 1);
@@ -342,4 +392,58 @@ public class UIAdminView extends JFrame {
             return true;
         }
     }
+    
+    public boolean validateDate(String date)
+    {
+        Date dateToValidate = new Date(date);
+        Date today = new Date();
+        String datePatternSlash = "[0-9]{2}/[0-9]{2}/[0-9]{2,4}";
+        String datePatternDash = "[0-9]{2}-[0-9]{2}-[0-9]{2,4}";
+        if(dateToValidate == null)
+        {
+            return false;
+        }else if(dateToValidate.toString().matches(datePatternSlash) || dateToValidate.toString().matches(datePatternDash))//check if date is correct format
+        {
+            JOptionPane.showMessageDialog(null,"Error: Incorrect format used! Please use one of these formats, dd-mm-yyyy, dd/mm/yy");
+            return false;
+        }else if(dateToValidate.before(today) || dateToValidate.equals(today))//check if date is same as today or before
+        {
+            JOptionPane.showMessageDialog(null,"Error: Incorrect date used! Please use a date in future");
+            return false;
+        }else
+        {
+            return true;
+        }    
+         
+    }
+    
+    
+    
+    /*discount = new JLabel("Discount:");
+        discountNum = new JTextField("", 100);
+        discountNum.setSize(100, 20);
+        prod = new JLabel("Product ID:");
+        productID = new JTextField("", 100);
+        productID.setSize(100, 20);
+        promo = new JLabel("Promotion:");
+        promoName = new JTextField("", 100);
+        promoName.setSize(100, 20);
+        date = new JLabel("Promotion End Date:");
+        endDate = new JTextField("", 100);
+        endDate.setSize(100, 20);
+        addPromButton = new JButton("Add Promotion");
+       // addPromButton.addActionListener(this);
+        addPromPanel = new JPanel();
+        addPromPanel.setLayout(new GridLayout(4,2));
+
+        addPromPanel.add(discount);
+        addPromPanel.add(discountNum);
+        addPromPanel.add(prod);
+        addPromPanel.add(productID);
+        addPromPanel.add(promo);
+        addPromPanel.add(promoName);
+        addPromPanel.add(date);
+        addPromPanel.add(endDate);
+        addPromPanel.add(addPromButton); 
+        */
 }

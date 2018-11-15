@@ -9,8 +9,10 @@ import administration.gui.UIAdminView;
 import database.AdminDAO;
 import products.Product;
 import products.ProductFactory;
+import products.Promotion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import javax.swing.*;
 /**
  *
@@ -57,7 +59,34 @@ public class UIAdminController{
                 }
                 
             }});
+        
+        
+        view.addNewPromotionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e)
+            {
+                String discount = view.getAddPromotionDiscountNum(), id = view.getAddPromotionProductID();
+                String promoName = view.getAddPromotionPromoName(), date = view.getAddPromotionEndDate();
+                boolean validInput;
+                validInput = view.validateInput(discount,2);
+                if(validInput) validInput = view.validateInput(id, 0);
+                else if(validInput) validInput = view.validateDate(date);
+                
+                if(validInput)
+                    {
+                      int pID = Integer.parseInt(id);
+                      int dis = Integer.parseInt(discount);
+                      Date lastDate = new Date(date);
+                      Promotion newPromotion = new Promotion(id, dis, lastDate);
+                      UIAdminModel addPromotion = new UIAdminModel();
+                      addPromotion.addPromotion(newPromotion);
+                    } else {
+                        view.resetAllTextBoxes();
+                        JOptionPane.showMessageDialog(null,"Error: Input in incorrect format");
+                        }
+                    }
+        });
     }
+    
     
     public void updateView(){
         view.setCats(model.getCategoryList());
