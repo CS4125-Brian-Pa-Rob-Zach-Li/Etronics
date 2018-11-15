@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -56,7 +58,7 @@ public class ProductsDAO {
         statement.executeUpdate("UPDATE store1 SET stock = " + newQuantity + " WHERE productID = " + itemID+";");
     }
 
-    void removeFromShoppingCart(int userID, int itemID) throws  SQLException {
+    public void removeFromShoppingCart(int userID, int itemID) throws  SQLException {
         resultSet = statement.executeQuery("SELECT quantity FROM shopping_carts WHERE userID = " +
                 userID + " AND itemID = " + itemID + ";");
         int removedStock = resultSet.getInt("quantity");
@@ -108,18 +110,67 @@ public class ProductsDAO {
         ArrayList<String[]> productsArray = new ArrayList<>();
         String[] products;
         while(resultSet.next()) {
-            products = new String[3];
+            products = new String[4];
             products[0] = resultSet.getString("name");
             products[1] = resultSet.getString("price");
             products[2] = resultSet.getString("id");
+            products[3] = resultSet.getString("description");
             productsArray.add(products);
         }
         return productsArray;
     }
     
     //For testing the Database
-    void testCart() throws SQLException {
-        statement.executeUpdate("INSERT shopping_carts (userID, productID, quantity) VALUES(1,1,1)");
+    public void testCart(String userID, int productID) throws SQLException {
+//        statement.executeUpdate("INSERT shopping_carts (userID, productID, quantity) VALUES(1,1,1)");
+        System.out.println("INSERT shopping_carts (userID, productID, quantity) VALUES("+ userID+ "," +
+                productID +",1)");
+    }
+    
+    public ArrayList<String[]> setProducts(String product) {
+        
+        ArrayList<String[]> productsArray = new ArrayList<>();
+        try {
+            resultSet = statement.executeQuery("SELECT * FROM etronics_products WHERE name LIKE '%" + product + "%';");
+            
+            String[] products;
+            while(resultSet.next()) {
+                products = new String[4];
+                products[0] = resultSet.getString("name");
+                products[1] = resultSet.getString("price");
+                products[2] = resultSet.getString("id");
+                products[3] = resultSet.getString("description");
+                productsArray.add(products);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return productsArray;
+    }
+   
+    
+    public ArrayList<String[]> getCart(int userID) throws SQLException {
+        resultSet = statement.executeQuery("SELECT * FROM shopping_carts WHERE userID = " + userID + ";");
+        ArrayList<String> cartList = new ArrayList<>();
+        ArrayList<String[]> shoppingCart = new ArrayList<>();
+        
+        while(resultSet.next()) {
+            cartList.add(resultSet.getString("productID"));
+        }
+        String[] products;
+        for(int i = 0; i < cartList.size(); i++) {
+            resultSet = statement.executeQuery("SELECT * FROM etronics_products WHERE id =" + cartList.get(i));
+            products = new String[4];
+            resultSet.first();
+            products[0] = resultSet.getString("name");
+            products[1] = resultSet.getString("price");
+            products[2] = resultSet.getString("id");
+            products[3] = resultSet.getString("description");
+            shoppingCart.add(products);
+        }
+        
+        return shoppingCart;
     }
 
 }
