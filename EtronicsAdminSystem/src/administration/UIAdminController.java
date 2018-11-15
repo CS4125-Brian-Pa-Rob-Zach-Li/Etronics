@@ -7,7 +7,7 @@ package administration;
 
 import administration.gui.UIAdminView;
 import database.AdminDAO;
-import products.Product;
+import products.BasicProduct;
 import products.ProductFactory;
 import products.Promotion;
 import java.awt.event.ActionEvent;
@@ -45,7 +45,7 @@ public class UIAdminController{
                     String pCat = view.getAddProductCat();
                     if(!pName.equals("")  && !pDesc.equals("") && !pCat.equals("")){
                         ProductFactory pf = new ProductFactory();
-                        Product p = pf.getProduct(0, pName, pPrice, pDesc, pCat, 0);
+                        BasicProduct p = pf.getProduct(0, pName, pPrice, pDesc, pCat, 0);
                         model.addProduct(p);
                         model.updateProducts();
                         view.showInfoMessage("Product added successfully.");
