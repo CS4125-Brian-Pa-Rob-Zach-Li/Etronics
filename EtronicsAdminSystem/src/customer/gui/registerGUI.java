@@ -8,6 +8,7 @@
 package customer.gui;
 
 import customer.businesslogic.register;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,19 +22,26 @@ import javax.swing.JOptionPane;
  */
 public class registerGUI extends javax.swing.JFrame {
 
-    register newRegister;
     /** Creates new form registerGUI */
     public registerGUI() {
-        try {
-            this.newRegister = new register();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(registerGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(registerGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         initComponents();
     }
+    public static String getEmail(){
+        return emailTF.getText();
+    }
+    
+    public static String getPassword(){
+        return pwTF.getText();
+    }
+    
+    public static String getUserName(){
+        return unameTF.getText();
+    }
 
+    public static void addRegisterListener(ActionListener a1){
+        registerBu.addActionListener(a1);
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -145,39 +153,11 @@ public class registerGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-  public boolean validatePW(String text){
-        String pattern = "^[0-9a-zA-Z]{8,16}";
-        if(!(text.matches(pattern))){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-    
-    public boolean validateEmail(String text){
-        String pattern = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-        if(!(text.matches(pattern))){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
+
     
     private void registerBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBuActionPerformed
         // TODO add your handling code here:
-        String uname = unameTF.getText();
-        String password = pwTF.getText();
-        String email = emailTF.getText();
-        if(!validateEmail(email))
-            JOptionPane.showMessageDialog(null, "Email invalud"); 
-        else if(!validatePW(password))
-            JOptionPane.showMessageDialog(null, "Password invalud"); 
-        else{
-            String result = newRegister.getDetails(uname, password, email);
-            JOptionPane.showMessageDialog(null, result); 
-        }
+  
     }//GEN-LAST:event_registerBuActionPerformed
 
     /**
@@ -216,15 +196,15 @@ public class registerGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField emailTF;
+    private static javax.swing.JTextField emailTF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField pwTF;
-    private javax.swing.JButton registerBu;
-    private javax.swing.JTextField unameTF;
+    private static javax.swing.JTextField pwTF;
+    private static javax.swing.JButton registerBu;
+    private static javax.swing.JTextField unameTF;
     // End of variables declaration//GEN-END:variables
 
 }
