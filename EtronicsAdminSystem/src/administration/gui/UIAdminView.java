@@ -60,12 +60,12 @@ public class UIAdminView extends JFrame {
     private JComboBox changeCategoryComboBox;
     private JButton changeProdAddButton;
     // Add Category
-    private JLabel chProdTitleLabel;
-    private JLabel chProdIDLabel;
+    private JLabel findProdTitleLabel;
+    private JLabel findProdIDLabel;
     private JLabel idLabel;
     private JComboBox idComboBox;
-    private JButton chProdDelButton;
-    private JTextField chProdIDField;
+    private JButton findProdButton;
+    private JTextField findProdIDField;
     // Promotions
     // AddPromotion
     private JLabel discount;
@@ -117,13 +117,13 @@ public class UIAdminView extends JFrame {
         changeProdPriceField = new JTextField();
         changeCategoryComboBox = new JComboBox();
         changeProdAddButton = new JButton("Change Product");
-        // Add Category
-        chProdTitleLabel = new JLabel("Find Product ID");
-        chProdIDLabel = new JLabel("Product Name: ");
+        // Find product ID
+        findProdTitleLabel = new JLabel("Find Product ID");
+        findProdIDLabel = new JLabel("Product Name: ");
         idLabel = new JLabel("ID List: ");
         idComboBox = new JComboBox();
-        chProdDelButton = new JButton("Find ID");
-        chProdIDField = new JTextField();
+        findProdButton = new JButton("Find ID");
+        findProdIDField = new JTextField();
     
         mainContent = new JPanel();
         mainContent.setLayout(new BorderLayout());
@@ -271,16 +271,16 @@ public class UIAdminView extends JFrame {
         chProdPanel.setBorder(new EmptyBorder(20, 0, 0, 20));
         
         JPanel chProdTitlePanel = new JPanel(new GridLayout(0,1));
-        chProdTitlePanel.add(chProdTitleLabel);
+        chProdTitlePanel.add(findProdTitleLabel);
         
         JPanel chProdLabelPanel = new JPanel();
         chProdLabelPanel.setLayout(new GridLayout(4, 1));
-        chProdLabelPanel.add(chProdIDLabel);
+        chProdLabelPanel.add(findProdIDLabel);
         chProdLabelPanel.add(idLabel);
         
         JPanel chProdToolPanel = new JPanel();
         chProdToolPanel.setLayout(new GridLayout(4, 1));
-        chProdToolPanel.add(chProdIDField);
+        chProdToolPanel.add(findProdIDField);
         chProdToolPanel.add(idComboBox);
         
         chProdPanel.add(chProdTitlePanel);
@@ -293,7 +293,7 @@ public class UIAdminView extends JFrame {
         chProdPanel.add(yetAnotherPanel4);
         
         JPanel chProdButtonPanel = new JPanel(new FlowLayout());
-        chProdButtonPanel.add(chProdDelButton);
+        chProdButtonPanel.add(findProdButton);
         chProdPanel.add(chProdButtonPanel);
         ////////////////////////////////////////////////////////////
         
@@ -322,12 +322,20 @@ public class UIAdminView extends JFrame {
         return prodDescField.getText();
     }
     
+    public String getFindIDText(){
+        return findProdIDField.getText();
+    }
+    
     public String getAddProductCat(){
         return String.valueOf(categoryComboBox.getSelectedItem());
     }
     
     public void addNewProductListener(ActionListener al){
         prodAddButton.addActionListener(al);
+    }
+    
+    public void addFindProductListener(ActionListener al){
+        findProdButton.addActionListener(al);
     }
     //////////////////////////////////////////////////////////
     
@@ -377,6 +385,10 @@ public class UIAdminView extends JFrame {
     public void setCats(ArrayList<String> cats){
         categoryComboBox.setModel(new DefaultComboBoxModel(cats.toArray()));
         changeCategoryComboBox.setModel(new DefaultComboBoxModel(cats.toArray()));
+    }
+    
+    public void setFindIDResults(ArrayList<String> r){
+        idComboBox.setModel(new DefaultComboBoxModel(r.toArray()));
     }
     
     public boolean validateInput(String text, int length)

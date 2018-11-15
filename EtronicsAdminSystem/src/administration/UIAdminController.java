@@ -105,8 +105,7 @@ public class UIAdminController{
                       int dis = Integer.parseInt(discount);
                       Date lastDate = new Date(date);
                       Promotion newPromotion = new Promotion(id, dis, lastDate);
-                      UIAdminModel addPromotion = new UIAdminModel();
-                      addPromotion.addPromotion(newPromotion);
+                      model.addPromotion(newPromotion);
                     } else {
                         view.resetAllTextBoxes();
                         JOptionPane.showMessageDialog(null,"Error: Input in incorrect format");

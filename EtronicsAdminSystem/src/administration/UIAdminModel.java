@@ -8,6 +8,7 @@ package administration;
 import database.AdminDAOImpl;
 import database.AdminDAO;
 import products.BasicProduct;
+import products.Promotion;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
@@ -61,6 +62,10 @@ public class UIAdminModel {
     
     public void updateCategories(){
         categoryList = dao.getAllCategories();
+    }
+    
+    public void addPromotion(Promotion p){
+         dao.insertPromotion(p);
     }
 
     public DefaultListModel getShopList(){
