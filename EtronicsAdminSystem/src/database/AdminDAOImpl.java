@@ -143,6 +143,11 @@ public class AdminDAOImpl implements AdminDAO {
 
     @Override
     public void insertPromotion(Promotion p) {
+        try{
+            statement.executeUpdate("INSERT INTO promotions(discount, promoName, endDate) VALUES ("+ p.getDiscountAmount()+"," +p.getPromoName()+","+p.getEndDate());
+        }catch(SQLException e){
+            System.out.print("Error: Couldn't insert promotions. Trace: "+e);
+        }
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

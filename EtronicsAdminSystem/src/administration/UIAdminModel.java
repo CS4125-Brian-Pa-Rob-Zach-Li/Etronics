@@ -8,6 +8,7 @@ package administration;
 import database.AdminDAOImpl;
 import database.AdminDAO;
 import products.Product;
+import products.Promotion;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
@@ -36,6 +37,10 @@ public class UIAdminModel {
     
     public void addProduct(Product p){
         dao.insertProduct(p);
+    }
+    
+    public void addPromotion(Promotion p){
+        dao.insertPromotion(p);
     }
     
     public ArrayList<String> getCategoryList(){
