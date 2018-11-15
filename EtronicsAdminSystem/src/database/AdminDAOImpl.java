@@ -7,7 +7,6 @@ package database;
 
 import database.AdminDAO;
 import products.BasicProduct;
-import products.Product;
 import products.ProductFactory;
 import products.Promotion;
 import java.sql.CallableStatement;
@@ -33,7 +32,7 @@ public class AdminDAOImpl implements AdminDAO {
     private CallableStatement cStmt = null;
     private ResultSet resultSet = null;
     //private List<User> users;
-    private ArrayList<Product> products = null;
+    private ArrayList<BasicProduct> products = null;
     private ArrayList<String> cats = null;
     private ArrayList<Promotion> promos = null;
     private AdminBL abl;
@@ -45,8 +44,8 @@ public class AdminDAOImpl implements AdminDAO {
     }
     
     @Override
-    public ArrayList<Product> getAllProducts(){
-        products = new ArrayList<Product>();
+    public ArrayList<BasicProduct> getAllProducts(){
+        products = new ArrayList<BasicProduct>();
         try{
             cStmt = conn.prepareCall("{call get_all_products()}");
             boolean result = cStmt.execute();
@@ -59,7 +58,7 @@ public class AdminDAOImpl implements AdminDAO {
                 return products;
             }
             
-            Product prod = null;
+            BasicProduct prod = null;
             ProductFactory pf = new ProductFactory();
             while(resultSet.next()){
                 int pID = Integer.parseInt(resultSet.getString("id"));
@@ -76,6 +75,7 @@ public class AdminDAOImpl implements AdminDAO {
                     promoID = 0;
                 
                 prod = pf.getProduct(pID, pName, price, type, desc, promoID);
+                System.out.println("");
                 products.add(prod);
             }
         }catch(SQLException se){
@@ -118,36 +118,37 @@ public class AdminDAOImpl implements AdminDAO {
     }
 
     @Override
-    public void insertProduct(Product p){
+    public boolean insertProduct(BasicProduct p){
         
+        boolean valid = abl.validateAddProduct(p);
         
-        
-        try{
-            cStmt = conn.prepareCall("{call insert_product(?,?,?,?)}");
-            cStmt.setString(1, p.getName());
-            cStmt.setString(2, p.getType());
-            cStmt.setString(3, p.getDescription());
-            cStmt.setInt(4, p.getPrice());
-            cStmt.execute();
-        }catch(SQLException se){
-            throw new RuntimeException("Error communicating with server.", se);
-        }finally{
+        if(valid){
             try{
-                if(cStmt != null)
-                    cStmt.close();
+                cStmt = conn.prepareCall("{call insert_product(?,?,?,?)}");
+                cStmt.setString(1, p.getName());
+                cStmt.setString(2, p.getType());
+                cStmt.setString(3, p.getDescription());
+                cStmt.setInt(4, p.getPrice());
+                cStmt.execute();
             }catch(SQLException se){
-                System.out.println("Error closing callable statement.");
+                throw new RuntimeException("Error communicating with server.", se);
+            }finally{
+                try{
+                    if(cStmt != null)
+                        cStmt.close();
+                }catch(SQLException se){
+                    System.out.println("Error closing callable statement.");
+                }
             }
         }
+        else{
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public void insertPromotion(Promotion p) {
-        try{
-            statement.executeUpdate("INSERT INTO promotions(discount, promoName, endDate) VALUES ("+ p.getDiscountAmount()+"," +p.getPromoName()+","+p.getEndDate());
-        }catch(SQLException e){
-            System.out.print("Error: Couldn't insert promotions. Trace: "+e);
-        }
+    public boolean insertPromotion(Promotion p) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -160,11 +161,6 @@ public class AdminDAOImpl implements AdminDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-     @Override
-    public void updateProduct(Product p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     public boolean isInt(String s){
         try{
             Integer.parseInt(s);
@@ -173,5 +169,4 @@ public class AdminDAOImpl implements AdminDAO {
             return false;
         }
     }
-
 }
