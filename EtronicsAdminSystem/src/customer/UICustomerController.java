@@ -17,6 +17,10 @@ public class UICustomerController {
     private static mainpageGUI mainPage;
     private static loginGUI loginPage;
     
+    public UICustomerController(){
+        
+    }
+    
     public int callLogin()
     {
         int id = 0;

@@ -5,27 +5,24 @@
  */
 package products;
 
-import products.Product;
 import products.BasicProduct;
 
 /**
  *
  * @author Brian
  */
-public class ProductFactory {
+public class ProductFactory{
     
-    private Product p;
     
     public ProductFactory(){
-        p = null;
     }
     
-    public Product getProduct(int id, String name, int price, String description, String type, int promoID){
+    public BasicProduct getProduct(int pID, String pName, int price, String type, String desc, int promoID){
         
         if(promoID > 0)
-            p = new PromotionalProduct(id, name, price, description, type, promoID);
+            return new PromotionalProduct(pID, pName, price, type, desc, promoID);
         else
-            p = new BasicProduct(id, name, price, description, type);
-        return p;
+            return new BasicProduct(pID, pName, price, type, desc);
     }
+
 }

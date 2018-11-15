@@ -6,6 +6,7 @@
 package customer.gui;
 
 import customer.businesslogic.login;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,18 @@ public class loginGUI extends javax.swing.JFrame {
             Logger.getLogger(loginGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+    }
+    
+    public static void addLoginListener(ActionListener al){
+        LoginBu.addActionListener(al);
+    }
+    
+    public static String getEmail(){
+        return EmailTF.getText();
+    }
+    
+    public static String getPassword(){
+        return pwTF.getText();
     }
 
 /**
@@ -154,23 +167,6 @@ public class loginGUI extends javax.swing.JFrame {
     
     private void registerBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBuActionPerformed
         // TODO add your handling code here:
-        String email = EmailTF.getText();
-        String password = pwTF.getText();
-        if(!userLogin.validateEmail(email))
-            JOptionPane.showMessageDialog(null, "Email invalud"); 
-        else if(!userLogin.validatePW(password))
-            JOptionPane.showMessageDialog(null, "Password invalud"); 
-        else{
-            String result = "";
-           
-            try {
-                result = userLogin.getDetails(email, password);
-            } catch (SQLException ex) {
-                Logger.getLogger(loginGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            JOptionPane.showMessageDialog(null, result); 
-         }
     }//GEN-LAST:event_registerBuActionPerformed
 
     private void LoginBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBuActionPerformed
@@ -213,13 +209,13 @@ public class loginGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField EmailTF;
-    private javax.swing.JButton LoginBu;
+    private static javax.swing.JTextField EmailTF;
+    private static javax.swing.JButton LoginBu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField pwTF;
+    private static javax.swing.JTextField pwTF;
     private javax.swing.JButton registerBu;
     // End of variables declaration//GEN-END:variables
 }

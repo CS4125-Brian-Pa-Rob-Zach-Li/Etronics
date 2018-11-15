@@ -5,7 +5,7 @@
  */
 package database;
 
-import products.Product;
+import products.BasicProduct;
 import products.Promotion;
 import java.util.ArrayList;
 
@@ -15,14 +15,14 @@ import java.util.ArrayList;
  */
 public interface AdminDAO {
     //List<User> getAllUsers();
-    ArrayList<Product> getAllProducts();
+    ArrayList<BasicProduct> getAllProducts();
     ArrayList<Promotion> getAllPromotions();
     ArrayList<String> getAllCategories();
     //void insertUser(User u);
-    void insertProduct(Product p);
-    void insertPromotion(Promotion p);
+    boolean insertProduct(BasicProduct p);
+    boolean insertPromotion(Promotion p);
     //void updateUser(User u);
-    void updateProduct(Product p);
+    void updateProduct(BasicProduct p);
     //void deleteUser();
     void deleteProduct();
 }

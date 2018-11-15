@@ -6,6 +6,7 @@
 package customer.gui;
 
 import customer.UICustomerController;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -20,6 +21,10 @@ public class mainpageGUI extends javax.swing.JFrame {
     public mainpageGUI() {
         uController = new UICustomerController();
         initComponents();
+    }
+    
+    public static void addLoginListener(ActionListener al){
+        LoginButton.addActionListener(al);
     }
 
     /**
@@ -221,6 +226,7 @@ public class mainpageGUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        LoginButton.getAccessibleContext().setAccessibleDescription("");
         clubCardBu.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -297,7 +303,7 @@ public class mainpageGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AllProductBu;
     private javax.swing.JButton HomeBu;
-    private javax.swing.JButton LoginButton;
+    private static javax.swing.JButton LoginButton;
     private javax.swing.JButton clubCardBu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

@@ -9,35 +9,39 @@ package products;
  *
  * @author Brian
  */
-public class BasicProduct implements Product{
+public class BasicProduct{
     
     protected int id;
     protected String name;
     protected String type;
     protected String description;
     protected int price;
+    protected int promoID;
     
     public BasicProduct(){
         
     }
     
+    // Used when creating a product from the GUI
     public BasicProduct(String name, int price, String description, String type){
+        id = 0;
         this.name = name;
         this.type = type;
         this.description = description;
         this.price = price;
+        promoID = 0;
     }
     
+    // Used when a product is read from the Database
     public BasicProduct(int id, String name, int price, String description, String type){
-        
         this.id = id;
         this.name = name;
         this.type = type;
         this.description = description;
         this.price = price;
+        promoID = 0;
     }
     
-    @Override
     public int getID(){
         return id;
     }
@@ -46,7 +50,6 @@ public class BasicProduct implements Product{
         id = i;
     }
     
-    @Override
     public String getName(){
         return name;
     }
@@ -55,7 +58,6 @@ public class BasicProduct implements Product{
         name = n;
     }
     
-    @Override
     public String getType(){
         return type;
     }
@@ -64,7 +66,6 @@ public class BasicProduct implements Product{
         type = t;
     }
     
-    @Override
     public String getDescription(){
         return description;
     }
@@ -73,7 +74,6 @@ public class BasicProduct implements Product{
         description = d;
     }
     
-    @Override
     public int getPrice(){
         return price;
     }
