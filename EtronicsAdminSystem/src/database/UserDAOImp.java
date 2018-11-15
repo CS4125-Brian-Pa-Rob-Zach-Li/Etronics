@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import user.customerModel;
 
 
@@ -58,21 +59,26 @@ public class UserDAOImp implements UserDAO{
             Logger.getLogger(UserDAOImp.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(rs != null)
-            return false;
-        else
             return true;
+        else
+            return false;
     }
     
     public String checkUser(String email) throws SQLException{
-        String sql = "select password from etronics_users where email='" + email + "'";
+        String sql = "select * from etronics_users where email='" + email + "'";
         ResultSet rs = null;
+        String password = "";
         rs = stmt.executeQuery(sql);
         if(rs != null){
-            String password = rs.getString(1);
-            return password;
+           while(rs.next()){
+                password = rs.getString(4);
+            }
         }
-        else
-            return null;
+       //JOptionPane.showMessageDialog(null, "44763");
+        return password;
+        
+        
+        
     }
     
     public customerModel getUserDetail(String email) throws SQLException{
@@ -82,11 +88,11 @@ public class UserDAOImp implements UserDAO{
         rs = stmt.executeQuery(sql);
         if(rs != null){
             while(rs.next()){
-            user.setUserID(rs.getInt(1));
-            user.setUserName(rs.getString(2));
-            user.setUserPW(rs.getString(4));
-            user.setUserEmail(rs.getString(3));
-            user.setUserRole();
+                user.setUserID(rs.getInt(1));
+                user.setUserName(rs.getString(2));
+                user.setUserPW(rs.getString(4));
+                user.setUserEmail(rs.getString(3));
+                user.setUserRole();
             }
         }
         else
