@@ -5,17 +5,60 @@
  */
 package customer.gui;
 
+import database.ProductsDAO;
+import java.awt.Dimension;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 /**
  *
  * @author Windows 10
  */
 public class allProduct extends javax.swing.JFrame {
 
+    ProductsDAO productsDAO;
+    JPanel innerFrame;
+    JScrollPane jScrollPane;
+    
     /**
      * Creates new form allProduct
      */
     public allProduct() {
         initComponents();
+        productsDAO = new ProductsDAO();
+        ArrayList<String[]> productsArray;
+        innerFrame = new JPanel();
+        innerFrame.setLayout(new BoxLayout(innerFrame,BoxLayout.PAGE_AXIS));
+        innerFrame.setMaximumSize(new Dimension(1000, 451-14));
+        
+            
+        try {
+            productsArray = productsDAO.setProducts();
+            for(int i=0;i< productsArray.size();i++)
+                {
+                    ProductPanel example = new ProductPanel(productsArray.get(i)[3],
+                        Integer.parseInt(productsArray.get(i)[1]),
+                        productsArray.get(i)[0], 
+                        Integer.parseInt(productsArray.get(i)[2]));
+                                
+                    innerFrame.add(example);
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        jScrollPane = new JScrollPane(innerFrame);
+            
+        jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane.setBounds(7, 7, 1106-14, 451-14);
+        jPanel4.add(jScrollPane);
+        System.out.println(jPanel4.getBounds());
     }
 
     /**
@@ -68,7 +111,12 @@ public class allProduct extends javax.swing.JFrame {
         );
 
         jButton1.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
-        jButton1.setText("make payment");
+        jButton1.setText("View Cart");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -202,19 +250,37 @@ public class allProduct extends javax.swing.JFrame {
 
     private void searchBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBuActionPerformed
         // TODO add your handling code here:
-//        String search = searchTF.getText();
-//        try {
-//            innerFrame.removeAll();
-//            innerFrame.revalidate();
-//            innerFrame.repaint();
-//            ArrayList<String[]> searchedProducts = productsDAO.setProducts(search);
-//            setProducts(searchedProducts);
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        String search = searchTF.getText();
+        try {
+            innerFrame.removeAll();
+            innerFrame.revalidate();
+            innerFrame.repaint();
+            ArrayList<String[]> searchedProducts = productsDAO.searchProducts(search);
+            setProducts(searchedProducts);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_searchBuActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+    private void setProducts(ArrayList<String[]> products) throws SQLException {
+
+            for(int i=0;i< products.size();i++)
+            {
+                ProductPanel example = new ProductPanel(
+                        String.valueOf(i+1),
+                        Integer.parseInt(products.get(i)[1]),
+                        products.get(i)[0], 
+                        Integer.parseInt(products.get(i)[2]));
+                innerFrame.add(example);
+            }
+        jPanel4.add(jScrollPane);
+    }
     /**
      * @param args the command line arguments
      */

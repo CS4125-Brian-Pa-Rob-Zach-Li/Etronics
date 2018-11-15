@@ -82,7 +82,7 @@ public class ProductsDAO {
         resultSet = statement.executeQuery("SELECT * FROM shopping_carts WHERE userID = " + userID +";");
 
         while (resultSet.next()) {
-            description.append(resultSet.getString("itemID")).append(",");
+            description.append(resultSet.getString("name")).append("\n");
             idQuantityHash.put(resultSet.getString("itemID"),resultSet.getInt("quantity"));
         }
         int totalCost = getTotalCost(idQuantityHash);
@@ -120,6 +120,22 @@ public class ProductsDAO {
         return productsArray;
     }
     
+    public ArrayList<String[]> setProducts(String type) throws SQLException {
+
+        resultSet = statement.executeQuery("SELECT * FROM etronics_products where type = '" + type + "';");
+        ArrayList<String[]> productsArray = new ArrayList<>();
+        String[] products;
+        while(resultSet.next()) {
+            products = new String[4];
+            products[0] = resultSet.getString("name");
+            products[1] = resultSet.getString("price");
+            products[2] = resultSet.getString("id");
+            products[3] = resultSet.getString("description");
+            productsArray.add(products);
+        }
+        return productsArray;
+    }
+    
     //For testing the Database
     public void testCart(String userID, int productID) throws SQLException {
 //        statement.executeUpdate("INSERT shopping_carts (userID, productID, quantity) VALUES(1,1,1)");
@@ -127,7 +143,7 @@ public class ProductsDAO {
                 productID +",1)");
     }
     
-    public ArrayList<String[]> setProducts(String product) {
+    public ArrayList<String[]> searchProducts(String product) {
         ArrayList<String[]> productsArray = new ArrayList<>();
         try {
             resultSet = statement.executeQuery("SELECT * FROM etronics_products WHERE name LIKE '%" + product + "%';");

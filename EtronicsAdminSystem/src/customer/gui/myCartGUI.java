@@ -40,14 +40,12 @@ public class myCartGUI extends javax.swing.JFrame {
             productsArray = productsDAO.getCart(1);
             for(int i=0;i< productsArray.size();i++)
                 {
-                    ProductPanel example = new ProductPanel(productsArray.get(i)[3],
+                    ProductPanel product = new ProductPanel(productsArray.get(i)[3],
                         Integer.parseInt(productsArray.get(i)[1]),
                         productsArray.get(i)[0], 
                         Integer.parseInt(productsArray.get(i)[2]),
                             1);
-                                
-                    innerFrame.add(example);
-                    System.out.println("Example: " + example.getBounds());
+                    innerFrame.add(product);
                 }
         } catch (SQLException ex) {
             Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,7 +57,6 @@ public class myCartGUI extends javax.swing.JFrame {
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane.setBounds(7, 7, 1000, 451-14);
         jPanel4.add(jScrollPane);
-        System.out.println("IF: "+innerFrame.getBounds());
     }
 
     /** This method is called from within the constructor to
@@ -251,7 +248,7 @@ public class myCartGUI extends javax.swing.JFrame {
             innerFrame.removeAll();
             innerFrame.revalidate();
             innerFrame.repaint();
-            ArrayList<String[]> searchedProducts = productsDAO.setProducts(search);
+            ArrayList<String[]> searchedProducts = productsDAO.searchProducts(search);
             setProducts(searchedProducts);
         
         } catch (SQLException ex) {
