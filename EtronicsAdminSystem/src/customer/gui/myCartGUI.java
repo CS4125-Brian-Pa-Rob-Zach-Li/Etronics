@@ -7,15 +7,13 @@
 package customer.gui;
 
 import database.ProductsDAO;
+import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 /**
@@ -25,50 +23,43 @@ import javax.swing.JScrollPane;
 public class myCartGUI extends javax.swing.JFrame {
     
     ProductsDAO productsDAO;
-
+    JPanel innerFrame;
+    JScrollPane jScrollPane;
+    
     /** Creates new form myCartGUI */
     public myCartGUI() {
         initComponents();
         productsDAO = new ProductsDAO();
         ArrayList<String[]> productsArray;
-        JList<ProductPanel> productsList = new JList();
-        productsList.setSize(400, 400);
-//        jList1 = new JList(ProductPanel);
-        DefaultListModel<ProductPanel> productModel = new DefaultListModel<>();
+        innerFrame = new JPanel();
+        innerFrame.setLayout(new BoxLayout(innerFrame,BoxLayout.PAGE_AXIS));
+        innerFrame.setMaximumSize(new Dimension(1000, 451-14));
         
-        JPanel innerFrame = new JPanel();
-        innerFrame.setLayout(new BoxLayout(innerFrame,BoxLayout.Y_AXIS));
-        innerFrame.setSize(1000, 800);
+            
         try {
-//            productsArray = productsDAO.getCart(1);
-            productsArray = productsDAO.setProducts();
-            ProductPanel productPanel;
+            productsArray = productsDAO.getCart(1);
             for(int i=0;i< productsArray.size();i++)
                 {
-                    ProductPanel example = new ProductPanel(
-                            Integer.parseInt(productsArray.get(i)[1]),
-                            productsArray.get(i)[0], 
-                            Integer.parseInt(productsArray.get(i)[2]));
-                    productModel.addElement(example);
+                    ProductPanel example = new ProductPanel(productsArray.get(i)[3],
+                        Integer.parseInt(productsArray.get(i)[1]),
+                        productsArray.get(i)[0], 
+                        Integer.parseInt(productsArray.get(i)[2]),
+                            1);
+                                
                     innerFrame.add(example);
+                    System.out.println("Example: " + example.getBounds());
                 }
         } catch (SQLException ex) {
             Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        jPanel4.add(productsList);
-//        productsList.setModel(productModel);  
         
-         JScrollPane scroll = new JScrollPane(innerFrame);
-         
-         JScrollBar scrollBar = new JScrollBar();
+        jScrollPane = new JScrollPane(innerFrame);
             
-        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scroll.setBounds(0, 0, 848, 600);
-        
-        jPanel4.add(scroll);
-        
-        
+        jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane.setBounds(7, 7, 1000, 451-14);
+        jPanel4.add(jScrollPane);
+        System.out.println("IF: "+innerFrame.getBounds());
     }
 
     /** This method is called from within the constructor to
@@ -257,15 +248,19 @@ public class myCartGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         String search = searchTF.getText();
         try {
+            innerFrame.removeAll();
+            innerFrame.revalidate();
+            innerFrame.repaint();
             ArrayList<String[]> searchedProducts = productsDAO.setProducts(search);
             setProducts(searchedProducts);
+        
         } catch (SQLException ex) {
             Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_searchBuActionPerformed
 
     private void setProducts(ArrayList<String[]> products) throws SQLException {
-            
+
             for(int i=0;i< products.size();i++)
             {
                 ProductPanel example = new ProductPanel(
@@ -273,8 +268,9 @@ public class myCartGUI extends javax.swing.JFrame {
                         Integer.parseInt(products.get(i)[1]),
                         products.get(i)[0], 
                         Integer.parseInt(products.get(i)[2]));
-                jPanel4.add(example);
+                innerFrame.add(example);
             }
+        jPanel4.add(jScrollPane);
     }
     
     /**
@@ -311,6 +307,7 @@ public class myCartGUI extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AllProductBu;

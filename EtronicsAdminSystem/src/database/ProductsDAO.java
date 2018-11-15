@@ -128,7 +128,6 @@ public class ProductsDAO {
     }
     
     public ArrayList<String[]> setProducts(String product) {
-        
         ArrayList<String[]> productsArray = new ArrayList<>();
         try {
             resultSet = statement.executeQuery("SELECT * FROM etronics_products WHERE name LIKE '%" + product + "%';");
@@ -145,7 +144,6 @@ public class ProductsDAO {
         } catch (SQLException ex) {
             Logger.getLogger(ProductsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return productsArray;
     }
    

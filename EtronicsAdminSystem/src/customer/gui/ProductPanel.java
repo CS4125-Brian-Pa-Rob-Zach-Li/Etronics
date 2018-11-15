@@ -26,11 +26,14 @@ public class ProductPanel extends JPanel implements ActionListener{
     private int price;
     private int id;
     private String title;
+    private JButton buyB;
+    private JButton descrip;
 
     public ProductPanel(String desc, int prodPrice, String title, int id) 
     {
-            GridLayout lay = new GridLayout(0,5);
+            GridLayout lay = new GridLayout(0,4);
             lay.setHgap(35);
+            lay.setVgap(90);
             this.setLayout(lay);
 
             setDescription(desc);
@@ -39,10 +42,9 @@ public class ProductPanel extends JPanel implements ActionListener{
             setID(id);
 
 
-            JButton buyB = new JButton("Add to Cart");
+            buyB = new JButton("Add to Cart");
             buyB.addActionListener(this);
-            JButton descrip = new JButton("More Info");
-
+            descrip = new JButton("More Info");
             descrip.addActionListener(this);
 
             JLabel name = new JLabel(title);
@@ -54,10 +56,12 @@ public class ProductPanel extends JPanel implements ActionListener{
             this.add(price);
             this.add(descrip);
             this.add(buyB);
+            this.setBounds(7, 7, 1000, 60);
+            this.setMaximumSize(new Dimension(1000, 451-14));
     }
     
-   public ProductPanel(int prodPrice, String title, int id) {
-       GridLayout lay = new GridLayout(0,5);
+   public ProductPanel(String desc, int prodPrice, String title, int id, int shippingCart) {
+       GridLayout lay = new GridLayout(1,4);
             lay.setHgap(90);
             lay.setVgap(250);
             this.setLayout(lay);
@@ -66,22 +70,27 @@ public class ProductPanel extends JPanel implements ActionListener{
             setTitle(title);
             setID(id);
 
-
-            JButton buyB = new JButton("Remove");
+            buyB = new JButton("Remove");
             buyB.addActionListener(this);
-            JButton descrip = new JButton("More Info");
-
+            buyB.setSize(135, 40);
+            descrip = new JButton("More Info");
             descrip.addActionListener(this);
 
             JLabel name = new JLabel(title);
             JLabel description = new JLabel(this.description);
-
 
             JLabel price = new JLabel("€"+Integer.toString(this.price));
             this.add(name);
             this.add(price);
             this.add(descrip);
             this.add(buyB);
+            this.setSize(1000, 40);
+            name.setSize(135,40);
+            description.setSize(135,40);
+            
+
+            
+            
    }
 
     public void setID(int id)
@@ -126,6 +135,8 @@ public class ProductPanel extends JPanel implements ActionListener{
             descBox.add(blank);
             descBox.setVisible(true);
             descBox.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            System.out.println(buyB.getBounds());
+            buyB.setSize(135, 40);
         }
 
         if(text.equals("Add to Cart")) {
