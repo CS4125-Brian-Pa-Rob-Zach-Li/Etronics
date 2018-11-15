@@ -76,17 +76,19 @@ public class ProductsDAO {
             newQuantity + " WHERE userID = " + userID + " AND itemID = " + itemID + ";");
     }
 
-    void createTransction(int userID, String status) throws SQLException {
+    public void createTransction(int userID, String status) throws SQLException {
         StringBuilder description = new StringBuilder();
         HashMap<String,Integer> idQuantityHash = new HashMap<>();
         resultSet = statement.executeQuery("SELECT * FROM shopping_carts WHERE userID = " + userID +";");
 
         while (resultSet.next()) {
-            description.append(resultSet.getString("name")).append("\n");
-            idQuantityHash.put(resultSet.getString("itemID"),resultSet.getInt("quantity"));
+            description.append(resultSet.getString("productID")).append("||");
+            idQuantityHash.put(resultSet.getString("userID"),resultSet.getInt("quantity"));
         }
         int totalCost = getTotalCost(idQuantityHash);
-        statement.executeUpdate("INSERT INTO orders ( userID, description, totalCost, status)" +
+//        statement.executeUpdate("INSERT INTO orders ( userID, description, totalCost, status)" +
+//                " VALUES (" + userID + ", + " + description.toString() + ", + " +  totalCost + ", + " + status+ " )");
+        System.out.println("INSERT INTO orders ( userID, description, totalCost, status)" +
                 " VALUES (" + userID + ", + " + description.toString() + ", + " +  totalCost + ", + " + status+ " )");
     }
 
