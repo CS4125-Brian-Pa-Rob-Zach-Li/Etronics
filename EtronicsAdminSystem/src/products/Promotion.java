@@ -24,12 +24,14 @@ public class Promotion {
         endDate = null;
     }
     
+    // Used when creating a new promotion in the GUI
     public Promotion(String name, int disAmount, Date eDate){
         promoName = name;
         discountAmount = disAmount;
         endDate = eDate;
     }
     
+    // Used when created after a database read
     public Promotion(int pID, String name, int disAmount, Date eDate)
     {
         promoID = pID;
