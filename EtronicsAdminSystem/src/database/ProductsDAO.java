@@ -60,7 +60,7 @@ public class ProductsDAO {
     }
 
     private boolean checkIfProductLastOne(int itemID, int itemQuantity) throws SQLException {
-        resultSet = statement.executeQuery("SELECT stock FROM store1 WHERE productID = " + itemID + ";");
+        resultSet = statement.executeQuery("SELECT stock FROM etronics_products WHERE id = " + itemID + ";");
         if((resultSet.getInt("stock") - itemQuantity) < 0 ) {
             return true;
         }
@@ -73,14 +73,14 @@ public class ProductsDAO {
     }
     
     private void setStock(int newQuantity, int itemID) throws SQLException {
-        statement.executeUpdate("UPDATE store1 SET stock = " + newQuantity + " WHERE productID = " + itemID+";");
+        statement.executeUpdate("UPDATE etronics_products SET stock = " + newQuantity + " WHERE id = " + itemID+";");
     }
 
     public void removeFromShoppingCart(int userID, int itemID) throws  SQLException {
         resultSet = statement.executeQuery("SELECT quantity FROM shopping_carts WHERE userID = " +
                 userID + " AND itemID = " + itemID + ";");
         int removedStock = resultSet.getInt("quantity");
-        resultSet = statement.executeQuery("SELECT stock FROM store1 WHERE productID  = "+ itemID + ";");
+        resultSet = statement.executeQuery("SELECT stock FROM etronics_products WHERE id = "+ itemID + ";");
         int currentStock = resultSet.getInt("stock");
         
         setStock(removedStock + currentStock, itemID);
