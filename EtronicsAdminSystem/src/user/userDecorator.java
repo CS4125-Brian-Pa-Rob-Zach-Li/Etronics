@@ -7,7 +7,7 @@ package user;
 
 /**
  *
- * @author dell
+ * @author XintingLi
  */
 public class userDecorator extends User{
     User user;

@@ -96,7 +96,7 @@ public class EtronicsSystem {
                         Logger.getLogger(EtronicsSystem.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     loginPage.setVisible(false);
-                    if(rule.equals("customer")){
+                    if(rule.equals("custormer")){
                         mainPage.setVisible(true);
                         try {
                             mainPage.showID(loginBL.setCustomerDetails(email));
