@@ -52,7 +52,7 @@ public class allProductGUI extends javax.swing.JFrame {
         HomeBu = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        viewCartButton = new javax.swing.JButton();
         specialOfferBu = new javax.swing.JButton();
         AllProductBu = new javax.swing.JButton();
         myUsualBu = new javax.swing.JButton();
@@ -88,11 +88,11 @@ public class allProductGUI extends javax.swing.JFrame {
             .addGap(0, 447, Short.MAX_VALUE)
         );
 
-        jButton1.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
-        jButton1.setText("View Cart");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        viewCartButton.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        viewCartButton.setText("View Cart");
+        viewCartButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                viewCartButtonActionPerformed(evt);
             }
         });
 
@@ -106,7 +106,7 @@ public class allProductGUI extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(viewCartButton)
                 .addGap(23, 23, 23))
         );
         jPanel2Layout.setVerticalGroup(
@@ -115,7 +115,7 @@ public class allProductGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(viewCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -230,9 +230,9 @@ public class allProductGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_searchBuActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void viewCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCartButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_viewCartButtonActionPerformed
 
     
     public void setProducts(ArrayList<String[]> products) throws SQLException {
@@ -292,7 +292,6 @@ public class allProductGUI extends javax.swing.JFrame {
     private javax.swing.JButton AllProductBu;
     private javax.swing.JButton HomeBu;
     private javax.swing.JButton clubCardBu;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -301,6 +300,7 @@ public class allProductGUI extends javax.swing.JFrame {
     private javax.swing.JButton searchBu;
     private javax.swing.JTextField searchTF;
     private javax.swing.JButton specialOfferBu;
+    private javax.swing.JButton viewCartButton;
     // End of variables declaration//GEN-END:variables
 
     public void setSearchListener(ActionListener actionListener) {
@@ -311,5 +311,13 @@ public class allProductGUI extends javax.swing.JFrame {
         innerFrame.removeAll();
         innerFrame.revalidate();
         innerFrame.repaint();
+    }
+
+    public void setHomeListener(ActionListener actionListener) {
+        HomeBu.addActionListener(actionListener);
+    }
+
+    public void setCartListener(ActionListener actionListener) {
+        viewCartButton.addActionListener(actionListener);
     }
 }

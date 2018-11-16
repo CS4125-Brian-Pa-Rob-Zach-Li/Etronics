@@ -21,7 +21,6 @@ public class UICustomerModel {
    public UICustomerModel() {
        productsDAO = new ProductsDAO();
        productsArray = new ArrayList();
-       
    }
    
    public ArrayList<String[]> getProducts() throws SQLException {

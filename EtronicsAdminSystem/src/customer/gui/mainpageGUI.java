@@ -384,4 +384,8 @@ public class mainpageGUI extends javax.swing.JFrame {
     private javax.swing.JTextField searchTF;
     private javax.swing.JButton specialOfferBu;
     // End of variables declaration//GEN-END:variables
+
+    public void setProductListener(ActionListener actionListener) {
+        AllProductBu.addActionListener(actionListener);
+    }
 }
