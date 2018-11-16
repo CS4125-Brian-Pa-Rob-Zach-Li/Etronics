@@ -5,16 +5,8 @@
  */
 package customer;
 
-import customer.gui.allProductGUI;
 import customer.gui.loginGUI;
 import customer.gui.mainpageGUI;
-import customer.gui.myCartGUI;
-import customer.gui.purchaseGUI;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -24,137 +16,10 @@ public class UICustomerController {
     
     private static mainpageGUI mainPage;
     private static loginGUI loginPage;
-    private static myCartGUI cartPage;
-    private static purchaseGUI purchasePage;
-    private static allProductGUI productPage;
-    private UICustomerModel model;
     
-    public UICustomerController(mainpageGUI mainPage, loginGUI loginPage, myCartGUI cartPage,
-            purchaseGUI purchasePage, allProductGUI productPage, UICustomerModel model) {
-        
-        this.mainPage = mainPage;
-        this.loginPage = loginPage;
-        this.cartPage = cartPage;
-        this.purchasePage = purchasePage;
-        this.productPage = productPage;
-        this.model = model;
-        
+    public UICustomerController(){
         
     }
-    
-    public void updateProductView() throws SQLException {
-//        mainPage
-        mainPage.setProducts(model.getProducts("Television"), 1);
-        mainPage.setProducts(model.getProducts("Oven"), 0);
-        //Get userId for getCarts(userID)
-        cartPage.setCart(model.getCart(1));
-        //Get userID for getCarts
-        purchasePage.setCart(model.getCart(1));
-        productPage.setProducts(model.getProducts());
-        
-    }
-    
-    public void updateSearchView() throws SQLException {
-        mainPage.setProducts(model.searchProduct(mainPage.getSearchText()),0);
-        cartPage.setProducts(model.searchProduct(cartPage.getSearchText()));
-        productPage.setProducts(model.searchProduct(productPage.getSearchText()));
-    }
-    
-    public void addListeners() {
-        mainPage.setSearchListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    mainPage.refreshScreen();
-                    updateSearchView();
-                } catch (SQLException ex) {
-                    Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        
-        mainPage.setProductListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                mainPage.setVisible(false);
-                productPage.setVisible(true);
-            }
-        });
-        
-        
-        cartPage.setSearchListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    cartPage.refreshScreen();
-                    updateSearchView();
-                } catch (SQLException ex) {
-                    Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        
-        cartPage.setHomeListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                mainPage.setVisible(true);
-                cartPage.setVisible(false);
-            }
-        });
-        
-        cartPage.setPurchaseListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                purchasePage.setVisible(true);
-                cartPage.setVisible(false);
-            }
-        });
-        
-        
-        
-        productPage.setSearchListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    productPage.refreshScreen();
-                    updateSearchView();
-                } catch (SQLException ex) {
-                    Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        
-        productPage.setHomeListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                mainPage.setVisible(true);
-                productPage.setVisible(false);
-                
-            }
-        });
-        
-        productPage.setCartListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                cartPage.setVisible(true);
-                productPage.setVisible(false);
-                
-            }
-        });
-        
-        
-        
-        purchasePage.setPurchaseListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    model.createTransaction();
-                } catch (SQLException ex) {
-                    Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-        
-        purchasePage.setCancelListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                mainPage.setVisible(true);
-                purchasePage.setVisible(false);
-            }
-        });
-    }
-    
     
     public int callLogin()
     {
@@ -165,6 +30,4 @@ public class UICustomerController {
         //id = loginPage.getid();
         return id;
     }
-    
-    
 }

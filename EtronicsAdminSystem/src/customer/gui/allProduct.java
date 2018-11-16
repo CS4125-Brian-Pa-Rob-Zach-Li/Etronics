@@ -7,7 +7,6 @@ package customer.gui;
 
 import database.ProductsDAO;
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -20,23 +19,46 @@ import javax.swing.JScrollPane;
  *
  * @author Windows 10
  */
-public class allProductGUI extends javax.swing.JFrame {
+public class allProduct extends javax.swing.JFrame {
+
+    ProductsDAO productsDAO;
     JPanel innerFrame;
     JScrollPane jScrollPane;
     
     /**
      * Creates new form allProduct
      */
-    public allProductGUI() {
+    public allProduct() {
         initComponents();
-        
+        productsDAO = new ProductsDAO();
+        ArrayList<String[]> productsArray;
         innerFrame = new JPanel();
         innerFrame.setLayout(new BoxLayout(innerFrame,BoxLayout.PAGE_AXIS));
         innerFrame.setMaximumSize(new Dimension(1000, 451-14));
+        
+            
+        try {
+            productsArray = productsDAO.setProducts();
+            for(int i=0;i< productsArray.size();i++)
+                {
+                    ProductPanel example = new ProductPanel(productsArray.get(i)[3],
+                        Integer.parseInt(productsArray.get(i)[1]),
+                        productsArray.get(i)[0], 
+                        Integer.parseInt(productsArray.get(i)[2]));
+                                
+                    innerFrame.add(example);
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         jScrollPane = new JScrollPane(innerFrame);
+            
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane.setBounds(7, 7, 1106-14, 451-14);
+        jPanel4.add(jScrollPane);
+        System.out.println(jPanel4.getBounds());
     }
 
     /**
@@ -52,7 +74,7 @@ public class allProductGUI extends javax.swing.JFrame {
         HomeBu = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        viewCartButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         specialOfferBu = new javax.swing.JButton();
         AllProductBu = new javax.swing.JButton();
         myUsualBu = new javax.swing.JButton();
@@ -88,11 +110,11 @@ public class allProductGUI extends javax.swing.JFrame {
             .addGap(0, 447, Short.MAX_VALUE)
         );
 
-        viewCartButton.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
-        viewCartButton.setText("View Cart");
-        viewCartButton.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        jButton1.setText("View Cart");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewCartButtonActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -106,7 +128,7 @@ public class allProductGUI extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(viewCartButton)
+                .addComponent(jButton1)
                 .addGap(23, 23, 23))
         );
         jPanel2Layout.setVerticalGroup(
@@ -115,7 +137,7 @@ public class allProductGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(viewCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -227,15 +249,26 @@ public class allProductGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_AllProductBuActionPerformed
 
     private void searchBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBuActionPerformed
+        // TODO add your handling code here:
+        String search = searchTF.getText();
+        try {
+            innerFrame.removeAll();
+            innerFrame.revalidate();
+            innerFrame.repaint();
+            ArrayList<String[]> searchedProducts = productsDAO.searchProducts(search);
+            setProducts(searchedProducts);
 
+        } catch (SQLException ex) {
+            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_searchBuActionPerformed
 
-    private void viewCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCartButtonActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_viewCartButtonActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
-    public void setProducts(ArrayList<String[]> products) throws SQLException {
+    private void setProducts(ArrayList<String[]> products) throws SQLException {
 
             for(int i=0;i< products.size();i++)
             {
@@ -247,10 +280,6 @@ public class allProductGUI extends javax.swing.JFrame {
                 innerFrame.add(example);
             }
         jPanel4.add(jScrollPane);
-    }
-    
-    public String getSearchText() {
-        return searchTF.getText();
     }
     /**
      * @param args the command line arguments
@@ -269,21 +298,20 @@ public class allProductGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(allProductGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(allProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(allProductGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(allProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(allProductGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(allProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(allProductGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(allProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new allProductGUI().setVisible(true);
+                new allProduct().setVisible(true);
             }
         });
     }
@@ -292,6 +320,7 @@ public class allProductGUI extends javax.swing.JFrame {
     private javax.swing.JButton AllProductBu;
     private javax.swing.JButton HomeBu;
     private javax.swing.JButton clubCardBu;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -300,24 +329,5 @@ public class allProductGUI extends javax.swing.JFrame {
     private javax.swing.JButton searchBu;
     private javax.swing.JTextField searchTF;
     private javax.swing.JButton specialOfferBu;
-    private javax.swing.JButton viewCartButton;
     // End of variables declaration//GEN-END:variables
-
-    public void setSearchListener(ActionListener actionListener) {
-        searchBu.addActionListener(actionListener);
-    }
-    
-    public void refreshScreen() {
-        innerFrame.removeAll();
-        innerFrame.revalidate();
-        innerFrame.repaint();
-    }
-
-    public void setHomeListener(ActionListener actionListener) {
-        HomeBu.addActionListener(actionListener);
-    }
-
-    public void setCartListener(ActionListener actionListener) {
-        viewCartButton.addActionListener(actionListener);
-    }
 }
