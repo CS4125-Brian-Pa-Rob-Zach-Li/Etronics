@@ -8,6 +8,7 @@ package customer.gui;
 
 import database.ProductsDAO;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -22,41 +23,23 @@ import javax.swing.JScrollPane;
  */
 public class myCartGUI extends javax.swing.JFrame {
     
-    ProductsDAO productsDAO;
+    
     JPanel innerFrame;
     JScrollPane jScrollPane;
     
     /** Creates new form myCartGUI */
     public myCartGUI() {
         initComponents();
-        productsDAO = new ProductsDAO();
-        ArrayList<String[]> productsArray;
         innerFrame = new JPanel();
         innerFrame.setLayout(new BoxLayout(innerFrame,BoxLayout.PAGE_AXIS));
         innerFrame.setMaximumSize(new Dimension(1000, 451-14));
-        
-            
-        try {
-            productsArray = productsDAO.getCart(1);
-            for(int i=0;i< productsArray.size();i++)
-                {
-                    ProductPanel product = new ProductPanel(productsArray.get(i)[3],
-                        Integer.parseInt(productsArray.get(i)[1]),
-                        productsArray.get(i)[0], 
-                        Integer.parseInt(productsArray.get(i)[2]),
-                            1);
-                    innerFrame.add(product);
-                }
-        } catch (SQLException ex) {
-            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
         jScrollPane = new JScrollPane(innerFrame);
             
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane.setBounds(7, 7, 1000, 451-14);
-        jPanel4.add(jScrollPane);
+        
     }
 
     /** This method is called from within the constructor to
@@ -72,7 +55,7 @@ public class myCartGUI extends javax.swing.JFrame {
         HomeBu = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        paymentButton = new javax.swing.JButton();
         specialOfferBu = new javax.swing.JButton();
         AllProductBu = new javax.swing.JButton();
         myUsualBu = new javax.swing.JButton();
@@ -108,8 +91,8 @@ public class myCartGUI extends javax.swing.JFrame {
             .addGap(0, 447, Short.MAX_VALUE)
         );
 
-        jButton1.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
-        jButton1.setText("make payment");
+        paymentButton.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        paymentButton.setText("make payment");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -121,7 +104,7 @@ public class myCartGUI extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(paymentButton)
                 .addGap(23, 23, 23))
         );
         jPanel2Layout.setVerticalGroup(
@@ -130,7 +113,7 @@ public class myCartGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(paymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -235,28 +218,19 @@ public class myCartGUI extends javax.swing.JFrame {
 
     private void HomeBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeBuActionPerformed
         // TODO add your handling code here:
+       
     }//GEN-LAST:event_HomeBuActionPerformed
 
     private void AllProductBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AllProductBuActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_AllProductBuActionPerformed
 
     private void searchBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBuActionPerformed
-        // TODO add your handling code here:
-        String search = searchTF.getText();
-        try {
-            innerFrame.removeAll();
-            innerFrame.revalidate();
-            innerFrame.repaint();
-            ArrayList<String[]> searchedProducts = productsDAO.searchProducts(search);
-            setProducts(searchedProducts);
-        
-        } catch (SQLException ex) {
-            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_searchBuActionPerformed
 
-    private void setProducts(ArrayList<String[]> products) throws SQLException {
+    public void setProducts(ArrayList<String[]> products) throws SQLException {
 
             for(int i=0;i< products.size();i++)
             {
@@ -267,6 +241,19 @@ public class myCartGUI extends javax.swing.JFrame {
                         Integer.parseInt(products.get(i)[2]));
                 innerFrame.add(example);
             }
+        jPanel4.add(jScrollPane);
+    }
+    
+    public void setCart(ArrayList<String[]> productsArray) throws SQLException {
+        for(int i=0;i< productsArray.size();i++)
+                {
+                    ProductPanel product = new ProductPanel(productsArray.get(i)[3],
+                        Integer.parseInt(productsArray.get(i)[1]),
+                        productsArray.get(i)[0], 
+                        Integer.parseInt(productsArray.get(i)[2]),
+                            1);
+                    innerFrame.add(product);
+                }
         jPanel4.add(jScrollPane);
     }
     
@@ -310,15 +297,37 @@ public class myCartGUI extends javax.swing.JFrame {
     private javax.swing.JButton AllProductBu;
     private javax.swing.JButton HomeBu;
     private javax.swing.JButton clubCardBu;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JButton myUsualBu;
+    private javax.swing.JButton paymentButton;
     private javax.swing.JButton searchBu;
     private javax.swing.JTextField searchTF;
     private javax.swing.JButton specialOfferBu;
     // End of variables declaration//GEN-END:variables
+
+    public String getSearchText() {
+        return searchTF.getText();
+    }
+
+    public void setSearchListener(ActionListener actionListener) {
+        searchBu.addActionListener(actionListener);
+    }
+    
+    public void refreshScreen() {
+        innerFrame.removeAll();
+        innerFrame.revalidate();
+        innerFrame.repaint();
+    }
+
+    public void setHomeListener(ActionListener actionListener) {
+        HomeBu.addActionListener(actionListener);
+    }
+
+    public void setPurchaseListener(ActionListener actionListener) {
+        paymentButton.addActionListener(actionListener);
+    }
 
 }
