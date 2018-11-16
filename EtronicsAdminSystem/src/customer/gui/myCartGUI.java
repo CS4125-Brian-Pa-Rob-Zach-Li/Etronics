@@ -23,15 +23,13 @@ import javax.swing.JScrollPane;
  */
 public class myCartGUI extends javax.swing.JFrame {
     
-    ProductsDAO productsDAO;
+    
     JPanel innerFrame;
     JScrollPane jScrollPane;
     
     /** Creates new form myCartGUI */
     public myCartGUI() {
         initComponents();
-        productsDAO = new ProductsDAO();
-        ArrayList<String[]> productsArray;
         innerFrame = new JPanel();
         innerFrame.setLayout(new BoxLayout(innerFrame,BoxLayout.PAGE_AXIS));
         innerFrame.setMaximumSize(new Dimension(1000, 451-14));
@@ -41,7 +39,6 @@ public class myCartGUI extends javax.swing.JFrame {
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane.setBounds(7, 7, 1000, 451-14);
-        
         
     }
 
@@ -228,18 +225,7 @@ public class myCartGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_AllProductBuActionPerformed
 
     private void searchBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBuActionPerformed
-        // TODO add your handling code here:
-        String search = searchTF.getText();
-        try {
-            innerFrame.removeAll();
-            innerFrame.revalidate();
-            innerFrame.repaint();
-            ArrayList<String[]> searchedProducts = productsDAO.searchProducts(search);
-            setProducts(searchedProducts);
-        
-        } catch (SQLException ex) {
-            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_searchBuActionPerformed
 
     public void setProducts(ArrayList<String[]> products) throws SQLException {
@@ -326,6 +312,12 @@ public class myCartGUI extends javax.swing.JFrame {
 
     public void setSearchListener(ActionListener actionListener) {
         searchBu.addActionListener(actionListener);
+    }
+    
+    public void refreshScreen() {
+        innerFrame.removeAll();
+        innerFrame.revalidate();
+        innerFrame.repaint();
     }
 
 }
