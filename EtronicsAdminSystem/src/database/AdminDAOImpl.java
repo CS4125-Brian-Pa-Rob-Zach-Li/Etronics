@@ -75,7 +75,7 @@ public class AdminDAOImpl implements AdminDAO {
                     promoID = 0;
                 
                 prod = pf.getProduct(pID, pName, price, type, desc, promoID);
-                System.out.println("");
+                System.out.println("Product read with promoID: "+promoID);
                 products.add(prod);
             }
         }catch(SQLException se){
