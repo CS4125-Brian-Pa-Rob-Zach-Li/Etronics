@@ -33,6 +33,9 @@ public class mainpageGUI extends javax.swing.JFrame {
     public mainpageGUI() {
         uController = new UICustomerController();
         initComponents();
+        
+        unameLabel.setVisible(false);
+        
         productsDAO = new ProductsDAO();
         
         ArrayList<String[]> productsArray;
@@ -75,6 +78,13 @@ public class mainpageGUI extends javax.swing.JFrame {
         
     }
     
+    public static void showID(String name)
+    {
+        unameLabel.setText(name);
+        unameLabel.setVisible(true);
+        LoginButton.setVisible(false);
+    }
+    
     public static void addLoginListener(ActionListener al){
         LoginButton.addActionListener(al);
     }
@@ -102,6 +112,7 @@ public class mainpageGUI extends javax.swing.JFrame {
         clubCardBu = new javax.swing.JButton();
         searchTF = new javax.swing.JTextField();
         searchBu = new javax.swing.JButton();
+        unameLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -256,6 +267,8 @@ public class mainpageGUI extends javax.swing.JFrame {
                         .addComponent(searchBu))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(unameLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -263,7 +276,9 @@ public class mainpageGUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
-                .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(unameLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(HomeBu, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -410,5 +425,6 @@ public class mainpageGUI extends javax.swing.JFrame {
     private javax.swing.JButton searchBu;
     private javax.swing.JTextField searchTF;
     private javax.swing.JButton specialOfferBu;
+    private static javax.swing.JLabel unameLabel;
     // End of variables declaration//GEN-END:variables
 }

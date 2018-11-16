@@ -16,6 +16,14 @@ public abstract class User {
     protected String userpw;
     protected String userEmail;
     
+    public User(){
+        userID = 0;
+        userName = "";
+        userRole = ""; 
+        userpw = "";
+        userEmail = "";       
+    }
+    
     public int getUserID() {
 	return userID;
     }
