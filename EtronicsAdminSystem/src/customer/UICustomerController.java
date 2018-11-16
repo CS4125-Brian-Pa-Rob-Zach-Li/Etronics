@@ -48,6 +48,8 @@ public class UICustomerController {
         mainPage.setProducts(model.getProducts("Oven"), 0);
         //Get userId for getCarts(userID)
         cartPage.setCart(model.getCart(1));
+        //Get userID for getCarts
+        purchasePage.setCart(model.getCart(1));
         productPage.setProducts(model.getProducts());
         
     }
@@ -63,6 +65,7 @@ public class UICustomerController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    mainPage.refreshScreen();
                     updateSearchView();
                 } catch (SQLException ex) {
                     Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,6 +76,7 @@ public class UICustomerController {
         cartPage.setSearchListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 try {
+                    cartPage.refreshScreen();
                     updateSearchView();
                 } catch (SQLException ex) {
                     Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,6 +87,7 @@ public class UICustomerController {
         productPage.setSearchListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 try {
+                    productPage.refreshScreen();
                     updateSearchView();
                 } catch (SQLException ex) {
                     Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);

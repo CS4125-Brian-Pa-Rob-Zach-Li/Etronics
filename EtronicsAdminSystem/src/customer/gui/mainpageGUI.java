@@ -22,7 +22,6 @@ import java.awt.event.ActionListener;
  */
 public class mainpageGUI extends javax.swing.JFrame {
     
-    ProductsDAO productsDAO;
     JPanel searchFrame;
     JScrollPane jScrollPane;;
     
@@ -30,18 +29,15 @@ public class mainpageGUI extends javax.swing.JFrame {
      * Creates new form mainpageGUI
      */
     private UICustomerController uController;
+    
     public mainpageGUI() {
 //        uController = new UICustomerController();
         initComponents();
   
-
         searchFrame = new JPanel();
         searchFrame.setLayout(new BoxLayout(searchFrame,BoxLayout.Y_AXIS));
         searchFrame.setSize(1000, 800);
-        
-        
         jScrollPane = new JScrollPane(searchFrame);
-            
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane.setBounds(0, 0, 753, 197);
@@ -279,17 +275,7 @@ public class mainpageGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     private void searchBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBuActionPerformed
-        // TODO add your handling code here:
-        String search = searchTF.getText();
-        try {
-            searchFrame.removeAll();
-            searchFrame.revalidate();
-            searchFrame.repaint();
-            ArrayList<String[]> searchedProducts = productsDAO.searchProducts(search);
-            setProducts(searchedProducts,0);
-        } catch (SQLException ex) {
-            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_searchBuActionPerformed
 
     private void HomeBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeBuActionPerformed
@@ -304,19 +290,25 @@ public class mainpageGUI extends javax.swing.JFrame {
         return searchTF.getText();
     }
     
+    public void refreshScreen() {
+        searchFrame.removeAll();
+        searchFrame.revalidate();
+        searchFrame.repaint();
+    }
     
-    public void setProducts(ArrayList<String[]> products,int panel) throws SQLException {
+    
+    public void setProducts(ArrayList<String[]> productsArray,int panel) throws SQLException {
             JPanel innerFrame = new JPanel();
             innerFrame.setLayout(new BoxLayout(innerFrame,BoxLayout.Y_AXIS));
             innerFrame.setSize(1000, 800);
       
-            for(int i=0;i< products.size();i++)
+            for(int i=0;i< productsArray.size();i++)
             {
                 ProductPanel productPanel = new ProductPanel(
-                        products.get(i)[3],
-                        Integer.parseInt(products.get(i)[1]),
-                        products.get(i)[0], 
-                        Integer.parseInt(products.get(i)[2]));
+                        productsArray.get(i)[3],
+                        Integer.parseInt(productsArray.get(i)[1]),
+                        productsArray.get(i)[0], 
+                        Integer.parseInt(productsArray.get(i)[2]));
                 if(panel != 1) {
                     searchFrame.add(productPanel);
                 }

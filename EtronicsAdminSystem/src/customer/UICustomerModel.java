@@ -44,7 +44,7 @@ public class UICustomerModel {
        return productsArray;
    }
    
-   public void createTransaction() {
+   public void createTransaction() throws SQLException {
        productsDAO.createTransction(1, "Confirmed");
    }
    

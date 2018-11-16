@@ -21,8 +21,6 @@ import javax.swing.JScrollPane;
  * @author Windows 10
  */
 public class allProductGUI extends javax.swing.JFrame {
-
-    ProductsDAO productsDAO;
     JPanel innerFrame;
     JScrollPane jScrollPane;
     
@@ -229,18 +227,7 @@ public class allProductGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_AllProductBuActionPerformed
 
     private void searchBuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBuActionPerformed
-        // TODO add your handling code here:
-        String search = searchTF.getText();
-        try {
-            innerFrame.removeAll();
-            innerFrame.revalidate();
-            innerFrame.repaint();
-            ArrayList<String[]> searchedProducts = productsDAO.searchProducts(search);
-            setProducts(searchedProducts);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_searchBuActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -318,5 +305,11 @@ public class allProductGUI extends javax.swing.JFrame {
 
     public void setSearchListener(ActionListener actionListener) {
         searchBu.addActionListener(actionListener);
+    }
+    
+    public void refreshScreen() {
+        innerFrame.removeAll();
+        innerFrame.revalidate();
+        innerFrame.repaint();
     }
 }
