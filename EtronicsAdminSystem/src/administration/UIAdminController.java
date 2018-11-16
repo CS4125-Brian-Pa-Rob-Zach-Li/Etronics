@@ -88,7 +88,7 @@ public class UIAdminController{
                 view.setFindIDResults(prodNamesWithIDs);
             }});
         
-        
+        // Add promotion button
         view.addNewPromotionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e)
             {
