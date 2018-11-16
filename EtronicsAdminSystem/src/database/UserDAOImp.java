@@ -174,4 +174,18 @@ public class UserDAOImp implements UserDAO{
         else
             return false;
     }
+    
+    public String getUserRole(String email) throws SQLException{
+        String role = "";
+        String sql = "select * from etronics_users where email='" + email + "'";
+        ResultSet rs = null;
+        
+        rs = stmt.executeQuery(sql);
+        if(rs != null){
+           while(rs.next()){
+                role = rs.getString(5);
+            }
+        }
+        return role;
+    }
 }

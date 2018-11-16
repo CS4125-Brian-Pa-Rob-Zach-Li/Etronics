@@ -8,8 +8,10 @@ package customer;
 import administration.UIAdminController;
 import administration.UIAdminModel;
 import administration.gui.UIAdminView;
+import customer.businesslogic.UserManagement;
 import customer.businesslogic.login;
 import customer.businesslogic.register;
+import customer.gui.UserManagementGUI;
 import customer.gui.allProductsGUI;
 import customer.gui.loginGUI;
 import customer.gui.mainpageGUI;
@@ -22,6 +24,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -41,9 +44,7 @@ public class EtronicsSystem {
     private static myCartGUI cartPage;
     private static login loginBL;
     private static register registerBL;
-    
-    private static UICustomerController customerController;
-    private static UICustomerModel customerModel;
+
     // Admin
     private static UIAdminController adminController;
     private static UIAdminModel adminModel;
@@ -56,17 +57,11 @@ public class EtronicsSystem {
         adminView = new UIAdminView(adminModel);
         adminController = new UIAdminController(adminView, adminModel);
         
+
         loginPage = new loginGUI();
         mainPage = new mainpageGUI();
         registerPage = new registerGUI();
-        
-        productsPage = new allProductsGUI();
-        purchasePage = new purchaseGUI();
-        cartPage = new myCartGUI();
-        
-        customerModel = new UICustomerModel();
-        customerController = new UICustomerController(mainPage, loginPage, 
-                cartPage, purchasePage, productsPage, customerModel);
+        UserManagementPage = new UserManagementGUI();
         
         loginBL = new login();
         registerBL = new register();
@@ -83,6 +78,7 @@ public class EtronicsSystem {
                 String email = loginPage.getEmail();
                 String password = loginPage.getPassword();
                 String result = "";
+                String rule = "";
                 
                 if(!loginBL.validateEmail(email))
                     JOptionPane.showMessageDialog(null, "Email invalid"); 
@@ -98,8 +94,22 @@ public class EtronicsSystem {
                 }
                 
                 if(result.equals("Successfully")){
-                    mainPage.setVisible(true);
+                    try {
+                        rule = loginBL.getRole(email);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(EtronicsSystem.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     loginPage.setVisible(false);
+                    if(rule.equals("custormer")){
+                        mainPage.setVisible(true);
+                        try {
+                            mainPage.showID(loginBL.setCustomerDetails(email));
+                        } catch (SQLException ex) {
+                            Logger.getLogger(EtronicsSystem.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    else
+                        UserManagementPage.setVisible(true);
                 }
             }});
     }
@@ -130,6 +140,11 @@ public class EtronicsSystem {
 
                 if(result.equals("Successfully")){
                     mainPage.setVisible(true);
+                    try {
+                        mainPage.showID(loginBL.setCustomerDetails(email));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(EtronicsSystem.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     registerPage.setVisible(false);
                 }
             }});
