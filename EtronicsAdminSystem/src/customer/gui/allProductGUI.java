@@ -7,6 +7,7 @@ package customer.gui;
 
 import database.ProductsDAO;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -19,7 +20,7 @@ import javax.swing.JScrollPane;
  *
  * @author Windows 10
  */
-public class allProduct extends javax.swing.JFrame {
+public class allProductGUI extends javax.swing.JFrame {
 
     ProductsDAO productsDAO;
     JPanel innerFrame;
@@ -28,37 +29,16 @@ public class allProduct extends javax.swing.JFrame {
     /**
      * Creates new form allProduct
      */
-    public allProduct() {
+    public allProductGUI() {
         initComponents();
-        productsDAO = new ProductsDAO();
-        ArrayList<String[]> productsArray;
+        
         innerFrame = new JPanel();
         innerFrame.setLayout(new BoxLayout(innerFrame,BoxLayout.PAGE_AXIS));
         innerFrame.setMaximumSize(new Dimension(1000, 451-14));
-        
-            
-        try {
-            productsArray = productsDAO.setProducts();
-            for(int i=0;i< productsArray.size();i++)
-                {
-                    ProductPanel example = new ProductPanel(productsArray.get(i)[3],
-                        Integer.parseInt(productsArray.get(i)[1]),
-                        productsArray.get(i)[0], 
-                        Integer.parseInt(productsArray.get(i)[2]));
-                                
-                    innerFrame.add(example);
-                }
-        } catch (SQLException ex) {
-            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         jScrollPane = new JScrollPane(innerFrame);
-            
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane.setBounds(7, 7, 1106-14, 451-14);
-        jPanel4.add(jScrollPane);
-        System.out.println(jPanel4.getBounds());
     }
 
     /**
@@ -268,7 +248,7 @@ public class allProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
-    private void setProducts(ArrayList<String[]> products) throws SQLException {
+    public void setProducts(ArrayList<String[]> products) throws SQLException {
 
             for(int i=0;i< products.size();i++)
             {
@@ -280,6 +260,10 @@ public class allProduct extends javax.swing.JFrame {
                 innerFrame.add(example);
             }
         jPanel4.add(jScrollPane);
+    }
+    
+    public String getSearchText() {
+        return searchTF.getText();
     }
     /**
      * @param args the command line arguments
@@ -298,20 +282,21 @@ public class allProduct extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(allProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(allProductGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(allProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(allProductGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(allProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(allProductGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(allProduct.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(allProductGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new allProduct().setVisible(true);
+                new allProductGUI().setVisible(true);
             }
         });
     }
@@ -330,4 +315,8 @@ public class allProduct extends javax.swing.JFrame {
     private javax.swing.JTextField searchTF;
     private javax.swing.JButton specialOfferBu;
     // End of variables declaration//GEN-END:variables
+
+    public void setSearchListener(ActionListener actionListener) {
+        searchBu.addActionListener(actionListener);
+    }
 }

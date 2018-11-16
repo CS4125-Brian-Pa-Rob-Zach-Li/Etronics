@@ -142,7 +142,8 @@ public class ProductPanel extends JPanel implements ActionListener{
         if(text.equals("Add to Cart")) {
             ProductsDAO products = new ProductsDAO();
             try {
-                products.testCart("1",id);
+//                products.testCart("1",id);
+                    products.updateShoppingCart(1, id, 1);
             } catch (SQLException ex) {
                 Logger.getLogger(ProductPanel.class.getName()).log(Level.SEVERE, null, ex);
             }

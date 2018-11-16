@@ -5,10 +5,7 @@
  */
 package customer.gui;
 
-import database.ProductsDAO;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -16,14 +13,12 @@ import java.util.logging.Logger;
  */
 public class purchaseGUI extends javax.swing.JFrame {
     
-    
-    ProductsDAO productsDAO;
     /**
      * Creates new form purchaseGUI
      */
     public purchaseGUI() {
+        
         initComponents();
-        productsDAO = new ProductsDAO();
     }
 
     /**
@@ -230,13 +225,7 @@ public class purchaseGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void purchaseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_purchaseButtonActionPerformed
-        try {
-            // TODO add your handling code here:
-            productsDAO.createTransction(1, "Confirmed");
-        } catch (SQLException ex) {
-            Logger.getLogger(purchaseGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+
     }//GEN-LAST:event_purchaseButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -298,4 +287,8 @@ public class purchaseGUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JButton purchaseButton;
     // End of variables declaration//GEN-END:variables
+
+    public void setPurchaseListener(ActionListener actionListener) {
+        purchaseButton.addActionListener(actionListener);
+    }
 }
