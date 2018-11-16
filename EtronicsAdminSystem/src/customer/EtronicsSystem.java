@@ -10,22 +10,22 @@ import administration.UIAdminModel;
 import administration.gui.UIAdminView;
 import customer.businesslogic.login;
 import customer.businesslogic.register;
+import customer.gui.allProductsGUI;
 import customer.gui.loginGUI;
 import customer.gui.mainpageGUI;
+import customer.gui.myCartGUI;
+import customer.gui.purchaseGUI;
 import customer.gui.registerGUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import products.BasicProduct;
-
 
 /**
  *
- * @author XintingLi & Brian
+ * @author XintingLi & Brian AND a little bit from Patrick
  */
 public class EtronicsSystem {
 
@@ -36,21 +36,37 @@ public class EtronicsSystem {
     private static mainpageGUI mainPage;
     private static loginGUI loginPage;
     private static registerGUI registerPage;
+    private static allProductsGUI productsPage;
+    private static purchaseGUI purchasePage;
+    private static myCartGUI cartPage;
     private static login loginBL;
     private static register registerBL;
+    
+    private static UICustomerController customerController;
+    private static UICustomerModel customerModel;
     // Admin
     private static UIAdminController adminController;
     private static UIAdminModel adminModel;
     private static UIAdminView adminView;
+    
     
     public static void main(String[] args) throws Exception {
         
         adminModel = new UIAdminModel();
         adminView = new UIAdminView(adminModel);
         adminController = new UIAdminController(adminView, adminModel);
+        
         loginPage = new loginGUI();
         mainPage = new mainpageGUI();
         registerPage = new registerGUI();
+        
+        productsPage = new allProductsGUI();
+        purchasePage = new purchaseGUI();
+        cartPage = new myCartGUI();
+        
+        customerModel = new UICustomerModel();
+        customerController = new UICustomerController(mainPage, loginPage, 
+                cartPage, purchasePage, productsPage, customerModel);
         
         loginBL = new login();
         registerBL = new register();
@@ -91,7 +107,6 @@ public class EtronicsSystem {
     public static void addRegisterListeners_login(){
         loginPage.addRegisterListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                
                 registerPage.setVisible(true);
                 loginPage.setVisible(false);
             }});
