@@ -31,48 +31,21 @@ public class mainpageGUI extends javax.swing.JFrame {
      */
     private UICustomerController uController;
     public mainpageGUI() {
-        uController = new UICustomerController();
+//        uController = new UICustomerController();
         initComponents();
-        productsDAO = new ProductsDAO();
-        
-        ArrayList<String[]> productsArray;
+  
+
         searchFrame = new JPanel();
         searchFrame.setLayout(new BoxLayout(searchFrame,BoxLayout.Y_AXIS));
         searchFrame.setSize(1000, 800);
-        try {
-            productsArray = productsDAO.setProducts("Television");
-            setProducts(productsArray,1);
-            
-
-        } catch (SQLException ex) {
-            Logger.getLogger(myCartGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
-        try {
-            ArrayList<String[]> products = productsDAO.setProducts("Oven");
-            for(int i=0;i< products.size();i++)
-            {
-                ProductPanel productPanel = new ProductPanel(
-                        products.get(i)[3],
-                        Integer.parseInt(products.get(i)[1]),
-                        products.get(i)[0], 
-                        Integer.parseInt(products.get(i)[2]));             
-                
-                searchFrame.add(productPanel);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(mainpageGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
         jScrollPane = new JScrollPane(searchFrame);
             
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane.setBounds(0, 0, 753, 197);
-        jPanel4.add(jScrollPane);
-//        System.out.println(jPanel4.getBounds());
-        
+  
     }
     
     public static void addLoginListener(ActionListener al){
@@ -327,7 +300,12 @@ public class mainpageGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_AllProductBuActionPerformed
     
-    private void setProducts(ArrayList<String[]> products,int panel) throws SQLException {
+    public String getSearchText() {
+        return searchTF.getText();
+    }
+    
+    
+    public void setProducts(ArrayList<String[]> products,int panel) throws SQLException {
             JPanel innerFrame = new JPanel();
             innerFrame.setLayout(new BoxLayout(innerFrame,BoxLayout.Y_AXIS));
             innerFrame.setSize(1000, 800);
@@ -356,7 +334,10 @@ public class mainpageGUI extends javax.swing.JFrame {
             else {
                 jPanel4.add(jScrollPane);
             }
-            
+    }
+    
+    public void setSearchListener(ActionListener action) {
+        searchBu.addActionListener(action);
     }
     
     

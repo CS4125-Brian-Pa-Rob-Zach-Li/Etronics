@@ -40,6 +40,24 @@ public class ProductsDAO {
             statement.executeUpdate("INSERT INTO shopping_carts(userID,itemID,quantity)" +
                     " VALUES (" + 1 + ", + " + 12 +", + " + 1+ " )");
     }
+    
+    public void updateShoppingCart(int userID, int itemID, int itemQuantity) throws SQLException {
+        
+        resultSet = statement.executeQuery("SELECT COUNT(*) FROM shopping_carts WHERE userID ="+ userID+
+                " AND productID = "+ itemID+ ";" );
+       
+        if(resultSet.getInt(1) > 0) {
+        resultSet = statement.executeQuery("SELECT quantity FROM shopping_carts WHERE userID ="+ userID+
+                " AND productID = "+ itemID+ ";" );
+        int newQuantity = (resultSet.getInt("quantity")) + itemQuantity;
+        statement.execute("UPDATE shopping_carts set quantity = " + newQuantity + "WHERE productID = " + itemID +
+                " AND userID =" + userID);
+        }
+        else {
+            insertIntoShoppingCart(userID,itemID,itemQuantity);
+        } 
+            
+    }
 
     private boolean checkIfProductLastOne(int itemID, int itemQuantity) throws SQLException {
         resultSet = statement.executeQuery("SELECT stock FROM store1 WHERE productID = " + itemID + ";");
@@ -100,9 +118,11 @@ public class ProductsDAO {
         while(resultSet.next()){
             idPriceHash.put(resultSet.getString("id"),resultSet.getInt("price"));
         }
+        
         for( String key : idQuantityHash.keySet() ) {
             totalCost += idQuantityHash.get(key) * idPriceHash.get(key);
         }
+        
         return totalCost;
     }
 
