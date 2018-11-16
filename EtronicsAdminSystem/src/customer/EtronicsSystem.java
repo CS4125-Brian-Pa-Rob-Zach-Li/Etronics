@@ -8,6 +8,7 @@ package customer;
 import administration.UIAdminController;
 import administration.UIAdminModel;
 import administration.gui.UIAdminView;
+import customer.businesslogic.UserManagement;
 import customer.businesslogic.login;
 import customer.businesslogic.register;
 import customer.gui.loginGUI;
@@ -21,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import products.BasicProduct;
+import customer.gui.UserManagementGUI;
 
 
 /**
@@ -38,20 +40,25 @@ public class EtronicsSystem {
     private static registerGUI registerPage;
     private static login loginBL;
     private static register registerBL;
+    private static UserManagement UserManagementBL;
+    private static UserManagementGUI UserManagementPage;
     // Admin
     private static UIAdminController adminController;
     private static UIAdminModel adminModel;
     private static UIAdminView adminView;
     
+    
     public static void main(String[] args) throws Exception {
         
-        adminModel = new UIAdminModel();
-        adminView = new UIAdminView(adminModel);
-        adminController = new UIAdminController(adminView, adminModel);
+        //adminModel = new UIAdminModel();
+        //adminView = new UIAdminView(adminModel);
+        //adminController = new UIAdminController(adminView, adminModel);
         loginPage = new loginGUI();
         mainPage = new mainpageGUI();
         registerPage = new registerGUI();
+        UserManagementPage = new UserManagementGUI();
         
+        UserManagementBL = new UserManagement();
         loginBL = new login();
         registerBL = new register();
         
@@ -67,6 +74,7 @@ public class EtronicsSystem {
                 String email = loginPage.getEmail();
                 String password = loginPage.getPassword();
                 String result = "";
+                String rule = "";
                 
                 if(!loginBL.validateEmail(email))
                     JOptionPane.showMessageDialog(null, "Email invalid"); 
@@ -82,8 +90,22 @@ public class EtronicsSystem {
                 }
                 
                 if(result.equals("Successfully")){
-                    mainPage.setVisible(true);
+                    try {
+                        rule = loginBL.getRole(email);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(EtronicsSystem.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     loginPage.setVisible(false);
+                    if(rule.equals("custormer")){
+                        mainPage.setVisible(true);
+                        try {
+                            mainPage.showID(loginBL.setCustomerDetails(email));
+                        } catch (SQLException ex) {
+                            Logger.getLogger(EtronicsSystem.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    else
+                        UserManagementPage.setVisible(true);
                 }
             }});
     }
@@ -115,6 +137,11 @@ public class EtronicsSystem {
 
                 if(result.equals("Successfully")){
                     mainPage.setVisible(true);
+                    try {
+                        mainPage.showID(loginBL.setCustomerDetails(email));
+                    } catch (SQLException ex) {
+                        Logger.getLogger(EtronicsSystem.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     registerPage.setVisible(false);
                 }
             }});

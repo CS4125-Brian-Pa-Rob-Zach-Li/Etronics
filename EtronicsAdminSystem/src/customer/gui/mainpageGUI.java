@@ -44,6 +44,13 @@ public class mainpageGUI extends javax.swing.JFrame {
   
     }
     
+    public void showID(String email)
+    {
+        usernameLB.setText(email);
+        usernameLB.setVisible(true);
+        LoginButton.setVisible(false);
+    }
+    
     public static void addLoginListener(ActionListener al){
         LoginButton.addActionListener(al);
     }
@@ -71,6 +78,8 @@ public class mainpageGUI extends javax.swing.JFrame {
         clubCardBu = new javax.swing.JButton();
         searchTF = new javax.swing.JTextField();
         searchBu = new javax.swing.JButton();
+        unameLabel = new javax.swing.JLabel();
+        usernameLB = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -201,6 +210,8 @@ public class mainpageGUI extends javax.swing.JFrame {
             }
         });
 
+        usernameLB.setText("jLabel2");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -225,6 +236,10 @@ public class mainpageGUI extends javax.swing.JFrame {
                         .addComponent(searchBu))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(unameLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(usernameLB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -232,7 +247,10 @@ public class mainpageGUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
-                .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LoginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(unameLabel)
+                    .addComponent(usernameLB))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(HomeBu, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -383,5 +401,11 @@ public class mainpageGUI extends javax.swing.JFrame {
     private javax.swing.JButton searchBu;
     private javax.swing.JTextField searchTF;
     private javax.swing.JButton specialOfferBu;
+    private static javax.swing.JLabel unameLabel;
+    private static javax.swing.JLabel usernameLB;
     // End of variables declaration//GEN-END:variables
+
+    public void setProductListener(ActionListener actionListener) {
+        AllProductBu.addActionListener(actionListener);
+    }
 }

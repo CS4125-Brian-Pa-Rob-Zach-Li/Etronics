@@ -11,22 +11,30 @@ import user.User;
 import user.customerModel;
 import database.UserDAO;
 import database.UserDAOImp;
+import user.customerFactory;
+import user.stuffFactory;
+import user.stuffModel;
+import user.userDecorator;
+import user.userFactory;
 
 /**
  *
  * @author XintingLi
  */
 public class login {
-    UserDAOImp userDao;
-    customerModel user = new customerModel();
+    private UserDAOImp userDao;
+    private User user;
+    private String role;
     
     public login() throws ClassNotFoundException, SQLException{
-        userDao = new UserDAOImp();
+       userDao = new UserDAOImp();
     }
     
     public String getDetails(String uemail, String uPw) throws SQLException{
         if(checkEmail(uemail) && checkUserPW(uPw)){
             if(userDao.checkIfExist(uemail) && checkUser(uemail, uPw)){
+                    role = getRole(uemail);
+                    createUser(role);
                     loginUser(uemail);
                     return "Successfully";
                 }
@@ -85,6 +93,35 @@ public class login {
         }
         else{
             return true;
+        }
+    }
+    
+    public String setCustomerDetails(String uemail) throws SQLException
+    {
+        user = new userDecorator(user);
+        user = userDao.getUserDetail(uemail);
+        return user.getUserName();
+    }
+    
+    public String getRole(String email) throws SQLException
+    {
+        String role = userDao.getUserRole(email);
+        return role;
+    }
+    
+    public void createUser(String role)
+    {
+        if(role.equals("stuff"))
+        {
+            userFactory ufactory = new stuffFactory();
+            user = ufactory.getuser();
+            //user = new stuffModel();
+        }
+        else
+        {
+             userFactory ufactory = new customerFactory();
+           user = ufactory.getuser();
+            //user = new customerModel();
         }
     }
 }

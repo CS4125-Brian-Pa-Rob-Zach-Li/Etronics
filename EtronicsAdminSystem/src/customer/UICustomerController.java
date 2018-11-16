@@ -73,6 +73,14 @@ public class UICustomerController {
             }
         });
         
+        mainPage.setProductListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                mainPage.setVisible(false);
+                productPage.setVisible(true);
+            }
+        });
+        
+        
         cartPage.setSearchListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -83,6 +91,22 @@ public class UICustomerController {
                 }
             }
         });
+        
+        cartPage.setHomeListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                mainPage.setVisible(true);
+                cartPage.setVisible(false);
+            }
+        });
+        
+        cartPage.setPurchaseListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                purchasePage.setVisible(true);
+                cartPage.setVisible(false);
+            }
+        });
+        
+        
         
         productPage.setSearchListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -95,6 +119,24 @@ public class UICustomerController {
             }
         });
         
+        productPage.setHomeListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                mainPage.setVisible(true);
+                productPage.setVisible(false);
+                
+            }
+        });
+        
+        productPage.setCartListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                cartPage.setVisible(true);
+                productPage.setVisible(false);
+                
+            }
+        });
+        
+        
+        
         purchasePage.setPurchaseListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -105,8 +147,14 @@ public class UICustomerController {
             }
         });
         
-        
+        purchasePage.setCancelListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                mainPage.setVisible(true);
+                purchasePage.setVisible(false);
+            }
+        });
     }
+    
     
     public int callLogin()
     {
