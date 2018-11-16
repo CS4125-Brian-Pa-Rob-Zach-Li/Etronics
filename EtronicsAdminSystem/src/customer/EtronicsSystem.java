@@ -44,11 +44,13 @@ public class EtronicsSystem {
     private static myCartGUI cartPage;
     private static login loginBL;
     private static register registerBL;
+//    private static 
 
     // Admin
     private static UIAdminController adminController;
     private static UIAdminModel adminModel;
     private static UIAdminView adminView;
+    private static UserManagementGUI UserManagementPage;
     
     
     public static void main(String[] args) throws Exception {
