@@ -8,7 +8,7 @@ package customer;
 import administration.UIAdminController;
 import administration.UIAdminModel;
 import administration.gui.UIAdminView;
-import customer.businesslogic.UserManagement;
+import administration.businesslogic.UserManagement;
 import customer.businesslogic.login;
 import customer.businesslogic.register;
 import customer.gui.loginGUI;
@@ -22,7 +22,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import products.BasicProduct;
-import customer.gui.UserManagementGUI;
+import administration.gui.UserManagementGUI;
+import customer.gui.allProductGUI;
+import customer.gui.myCartGUI;
+import customer.gui.purchaseGUI;
 
 
 /**
@@ -40,12 +43,18 @@ public class EtronicsSystem {
     private static registerGUI registerPage;
     private static login loginBL;
     private static register registerBL;
-    private static UserManagement UserManagementBL;
-    private static UserManagementGUI UserManagementPage;
+    private static UICustomerModel custMod;
+    private static allProductGUI allProdGUI;
+    private static myCartGUI myCartGUI;
+    private static purchaseGUI purchaseGUI;
+    private static UICustomerController custCont;
+    
     // Admin
     private static UIAdminController adminController;
     private static UIAdminModel adminModel;
     private static UIAdminView adminView;
+    private static UserManagement UserManagementBL;
+    private static UserManagementGUI UserManagementPage;
     
     
     public static void main(String[] args) throws Exception {
@@ -58,6 +67,13 @@ public class EtronicsSystem {
         registerPage = new registerGUI();
         UserManagementPage = new UserManagementGUI();
         
+        allProdGUI = new allProductGUI();
+        myCartGUI = new myCartGUI();
+        purchaseGUI = new purchaseGUI();
+        custMod = new UICustomerModel();
+        custCont = new UICustomerController(mainPage, loginPage, 
+                myCartGUI, purchaseGUI, allProdGUI,custMod);
+        
         UserManagementBL = new UserManagement();
         loginBL = new login();
         registerBL = new register();
@@ -65,7 +81,8 @@ public class EtronicsSystem {
         addloginListeners();
         addRegisterListeners_login();
         addRegisterListeners_register();
-        loginPage.setVisible(true);
+        //loginPage.setVisible(true
+        mainPage.setVisible(true);
     } 
     
     public static void addloginListeners(){
