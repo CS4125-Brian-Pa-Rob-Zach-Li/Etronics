@@ -44,7 +44,8 @@ public class EtronicsSystem {
     private static myCartGUI cartPage;
     private static login loginBL;
     private static register registerBL;
-//    private static 
+    private static UICustomerController customerController;
+    private static UICustomerModel customerModel;
 
     // Admin
     private static UIAdminController adminController;
@@ -54,19 +55,27 @@ public class EtronicsSystem {
     
     
     public static void main(String[] args) throws Exception {
-        
-        adminModel = new UIAdminModel();
-        adminView = new UIAdminView(adminModel);
-        adminController = new UIAdminController(adminView, adminModel);
-        
+//        
+//        adminModel = new UIAdminModel();
+//        adminView = new UIAdminView(adminModel);
+//        adminController = new UIAdminController(adminView, adminModel);
+//        
 
         loginPage = new loginGUI();
         mainPage = new mainpageGUI();
         registerPage = new registerGUI();
         UserManagementPage = new UserManagementGUI();
+        productsPage = new allProductsGUI();
+        purchasePage = new purchaseGUI();
+        cartPage = new myCartGUI();
         
         loginBL = new login();
         registerBL = new register();
+        
+        customerModel = new UICustomerModel();
+        
+         customerController = new UICustomerController(mainPage, loginPage, 
+                cartPage, purchasePage, productsPage, customerModel);
         
         addloginListeners();
         addRegisterListeners_login();

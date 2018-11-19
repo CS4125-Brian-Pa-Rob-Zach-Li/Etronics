@@ -341,9 +341,6 @@ public class mainpageGUI extends javax.swing.JFrame {
             else {
                 jPanel4.add(jScrollPane);
             }
-            
-            System.out.println("4"+jPanel4.getBounds());
-            System.out.println("5"+jPanel5.getBounds());
     }
     
     public void setSearchListener(ActionListener action) {

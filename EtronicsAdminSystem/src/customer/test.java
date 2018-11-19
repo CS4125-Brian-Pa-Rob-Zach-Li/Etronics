@@ -44,6 +44,7 @@ public class test {
         cartPage = new myCartGUI();
         
         customerModel = new UICustomerModel();
+        
         customerController = new UICustomerController(mainPage, loginPage, 
                 cartPage, purchasePage, productsPage, customerModel);
         
