@@ -135,7 +135,6 @@ public class ProductPanel extends JPanel implements ActionListener{
             descBox.add(blank);
             descBox.setVisible(true);
             descBox.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            System.out.println(buyB.getBounds());
             buyB.setSize(135, 40);
         }
 

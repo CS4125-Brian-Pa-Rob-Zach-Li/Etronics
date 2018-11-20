@@ -6,11 +6,8 @@
 package customer.gui;
 
 import customer.UICustomerController;
-import database.ProductsDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -40,7 +37,7 @@ public class mainpageGUI extends javax.swing.JFrame {
         jScrollPane = new JScrollPane(searchFrame);
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        jScrollPane.setBounds(0, 0, 753, 197);
+        jScrollPane.setBounds(0, 0, 715, 197);
   
     }
     
@@ -338,7 +335,7 @@ public class mainpageGUI extends javax.swing.JFrame {
                 JScrollPane jScrollPane = new JScrollPane(innerFrame);
                 jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
                 jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-                jScrollPane.setBounds(0, 0, 753, 282);
+                jScrollPane.setBounds(0, 0, 715, 282);
                 jPanel5.add(jScrollPane);
             }
             else {

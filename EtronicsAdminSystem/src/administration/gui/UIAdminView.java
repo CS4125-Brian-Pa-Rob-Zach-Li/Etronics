@@ -140,7 +140,31 @@ public class UIAdminView extends JFrame {
         mainButtonPanel.add(adManButton);
         
         //promotion GUI//////////////////////////////
-        
+        discount = new JLabel("Discount:");
+        discountNum = new JTextField("", 100);
+        discountNum.setSize(100, 20);
+        prod = new JLabel("Product ID:");
+        productID = new JTextField("", 100);
+        productID.setSize(100, 20);
+        promo = new JLabel("Promotion:");
+        promoName = new JTextField("", 100);
+        promoName.setSize(100, 20);
+        date = new JLabel("Promotion End Date:");
+        endDate = new JTextField("", 100);
+        endDate.setSize(100, 20);
+        addPromButton = new JButton("Add Promotion");
+        addPromPanel = new JPanel();
+        addPromPanel.setLayout(new GridLayout(4,2));
+
+        addPromPanel.add(discount);
+        addPromPanel.add(discountNum);
+        addPromPanel.add(prod);
+        addPromPanel.add(productID);
+        addPromPanel.add(promo);
+        addPromPanel.add(promoName);
+        addPromPanel.add(date);
+        addPromPanel.add(endDate);
+        addPromPanel.add(addPromButton); 
         //////////////////////////////////////////////
         
         JPanel variablePanel = setupProductGUI();
@@ -330,12 +354,29 @@ public class UIAdminView extends JFrame {
         return String.valueOf(categoryComboBox.getSelectedItem());
     }
     
+    public void addUserManListener(ActionListener al){
+        userManButton.addActionListener(al);
+    }
+    
     public void addNewProductListener(ActionListener al){
         prodAddButton.addActionListener(al);
     }
     
     public void addFindProductListener(ActionListener al){
         findProdButton.addActionListener(al);
+    }
+    
+    public void addPromoManListener(ActionListener al){
+        promoManButton.addActionListener(al);
+    }
+    
+    public void setPromoMenuVisible(){
+        /*JPanel contentPane = (JPanel) this.getContentPane();
+
+        contentPane.removeAll();
+        contentPane.add(addPromPanel);
+        contentPane.revalidate(); 
+        contentPane.repaint();*/
     }
     //////////////////////////////////////////////////////////
     
@@ -428,34 +469,5 @@ public class UIAdminView extends JFrame {
         }    
          
     }
-    
-    
-    
-    /*discount = new JLabel("Discount:");
-        discountNum = new JTextField("", 100);
-        discountNum.setSize(100, 20);
-        prod = new JLabel("Product ID:");
-        productID = new JTextField("", 100);
-        productID.setSize(100, 20);
-        promo = new JLabel("Promotion:");
-        promoName = new JTextField("", 100);
-        promoName.setSize(100, 20);
-        date = new JLabel("Promotion End Date:");
-        endDate = new JTextField("", 100);
-        endDate.setSize(100, 20);
-        addPromButton = new JButton("Add Promotion");
-       // addPromButton.addActionListener(this);
-        addPromPanel = new JPanel();
-        addPromPanel.setLayout(new GridLayout(4,2));
 
-        addPromPanel.add(discount);
-        addPromPanel.add(discountNum);
-        addPromPanel.add(prod);
-        addPromPanel.add(productID);
-        addPromPanel.add(promo);
-        addPromPanel.add(promoName);
-        addPromPanel.add(date);
-        addPromPanel.add(endDate);
-        addPromPanel.add(addPromButton); 
-        */
 }

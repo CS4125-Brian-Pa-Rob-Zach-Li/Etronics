@@ -5,7 +5,7 @@
  */
 package customer;
 
-import customer.gui.allProductGUI;
+import customer.gui.allProductsGUI;
 import customer.gui.loginGUI;
 import customer.gui.mainpageGUI;
 import customer.gui.myCartGUI;
@@ -26,11 +26,11 @@ public class UICustomerController {
     private static loginGUI loginPage;
     private static myCartGUI cartPage;
     private static purchaseGUI purchasePage;
-    private static allProductGUI productPage;
+    private static allProductsGUI productPage;
     private UICustomerModel model;
     
     public UICustomerController(mainpageGUI mainPage, loginGUI loginPage, myCartGUI cartPage,
-            purchaseGUI purchasePage, allProductGUI productPage, UICustomerModel model) {
+            purchaseGUI purchasePage, allProductsGUI productPage, UICustomerModel model) {
         
         this.mainPage = mainPage;
         this.loginPage = loginPage;
@@ -39,7 +39,12 @@ public class UICustomerController {
         this.productPage = productPage;
         this.model = model;
         
-        
+        try {
+            updateProductView();
+            addListeners();
+        } catch (SQLException ex) {
+            Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void updateProductView() throws SQLException {

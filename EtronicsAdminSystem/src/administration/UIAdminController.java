@@ -6,7 +6,7 @@
 package administration;
 
 import administration.gui.UIAdminView;
-import database.AdminDAO;
+import administration.gui.UserManagementGUI;
 import products.BasicProduct;
 import products.ProductFactory;
 import products.Promotion;
@@ -23,17 +23,37 @@ public class UIAdminController{
     
     private UIAdminView view;
     private UIAdminModel model;
-    private AdminDAO dao;
+    private UserManagementGUI userManGUI;
+    
 
-    public UIAdminController(UIAdminView view, UIAdminModel model){
+    public UIAdminController(UIAdminView view, UIAdminModel model, UserManagementGUI umg){
         this.view = view;
         this.model = model;
+        this.userManGUI = umg;
         
         addListeners();
         updateCategories();
     }
     
     public void addListeners(){
+        // Promo Man Button
+        view.addPromoManListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                view.setPromoMenuVisible();
+            }});
+        // Product management button
+        userManGUI.addProductManListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                userManGUI.setVisible(false);
+                view.setVisible(true);
+            }});
+        
+        // User management button
+        view.addUserManListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                view.setVisible(false);
+                userManGUI.setVisible(true);
+            }});
         // Add product button
         view.addNewProductListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){

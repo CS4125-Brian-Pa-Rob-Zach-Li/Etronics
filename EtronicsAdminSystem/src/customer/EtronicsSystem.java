@@ -11,26 +11,27 @@ import administration.gui.UIAdminView;
 import administration.businesslogic.UserManagement;
 import customer.businesslogic.login;
 import customer.businesslogic.register;
+import administration.gui.UserManagementGUI;
+import customer.gui.allProductsGUI;
 import customer.gui.loginGUI;
 import customer.gui.mainpageGUI;
+import customer.gui.myCartGUI;
+import customer.gui.purchaseGUI;
 import customer.gui.registerGUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.JOptionPane;
-import products.BasicProduct;
-import administration.gui.UserManagementGUI;
-import customer.gui.allProductGUI;
-import customer.gui.myCartGUI;
-import customer.gui.purchaseGUI;
+import simulation.*;
 
 
 /**
  *
- * @author XintingLi & Brian
+ * @author XintingLi & Brian AND a little bit from Patrick
  */
 public class EtronicsSystem {
 
@@ -41,48 +42,58 @@ public class EtronicsSystem {
     private static mainpageGUI mainPage;
     private static loginGUI loginPage;
     private static registerGUI registerPage;
+    private static allProductsGUI productsPage;
+    private static purchaseGUI purchasePage;
+    private static myCartGUI cartPage;
     private static login loginBL;
     private static register registerBL;
-    private static UICustomerModel custMod;
-    private static allProductGUI allProdGUI;
-    private static myCartGUI myCartGUI;
-    private static purchaseGUI purchaseGUI;
-    private static UICustomerController custCont;
-    
+    private static UICustomerController customerController;
+    private static UICustomerModel customerModel;
+
     // Admin
     private static UIAdminController adminController;
     private static UIAdminModel adminModel;
     private static UIAdminView adminView;
-    private static UserManagement UserManagementBL;
-    private static UserManagementGUI UserManagementPage;
+    private static UserManagementGUI userManagementPage;
     
     
     public static void main(String[] args) throws Exception {
-        
-        //adminModel = new UIAdminModel();
-        //adminView = new UIAdminView(adminModel);
-        //adminController = new UIAdminController(adminView, adminModel);
+       
+        adminModel = new UIAdminModel();
+        adminView = new UIAdminView(adminModel);
+        userManagementPage = new UserManagementGUI();
+        adminController = new UIAdminController(adminView, adminModel, userManagementPage);
+
         loginPage = new loginGUI();
         mainPage = new mainpageGUI();
         registerPage = new registerGUI();
-        UserManagementPage = new UserManagementGUI();
+        productsPage = new allProductsGUI();
+        purchasePage = new purchaseGUI();
+        cartPage = new myCartGUI();
         
-        allProdGUI = new allProductGUI();
-        myCartGUI = new myCartGUI();
-        purchaseGUI = new purchaseGUI();
-        custMod = new UICustomerModel();
-        custCont = new UICustomerController(mainPage, loginPage, 
-                myCartGUI, purchaseGUI, allProdGUI,custMod);
-        
-        UserManagementBL = new UserManagement();
         loginBL = new login();
         registerBL = new register();
+        
+        customerModel = new UICustomerModel();
+        
+         customerController = new UICustomerController(mainPage, loginPage, 
+                cartPage, purchasePage, productsPage, customerModel);
+        
+        // Start Simulation
+        ControllerFactory cf = new ControllerFactory();
+        Controller simController = cf.getSimulationController();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                simController.startSim();
+            }
+        }).start();
         
         addloginListeners();
         addRegisterListeners_login();
         addRegisterListeners_register();
-        //loginPage.setVisible(true
-        mainPage.setVisible(true);
+        loginPage.setVisible(true);
+        //mainPage.setVisible(true);
     } 
     
     public static void addloginListeners(){
@@ -122,7 +133,7 @@ public class EtronicsSystem {
                         }
                     }
                     else
-                        UserManagementPage.setVisible(true);
+                        adminView.setVisible(true);
                 }
             }});
     }
@@ -130,7 +141,6 @@ public class EtronicsSystem {
     public static void addRegisterListeners_login(){
         loginPage.addRegisterListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                
                 registerPage.setVisible(true);
                 loginPage.setVisible(false);
             }});
