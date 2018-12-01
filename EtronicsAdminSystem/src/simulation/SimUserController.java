@@ -5,8 +5,10 @@
  */
 package simulation;
 
+import database.ProductsDAO;
 import database.UserDAO;
 import database.UserDAOImp;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 
 /**
@@ -37,6 +39,10 @@ public class SimUserController extends Controller{
         simUserStateFact = susf;
         uDAO = new UserDAOImp();
         
+        add_sim_users_to_database();
+    }
+    
+    public void add_sim_users_to_database(){
         // Add simulation users if they do not already exist
         for(int x = 0; x < simUsers.size(); x++){
             boolean exists = uDAO.checkIfExist("sim_user"+x+"@sim.com");
@@ -45,7 +51,7 @@ public class SimUserController extends Controller{
                 // 'custormer' Typo here deliberate. 
                 // Need to check with Xinting Li if she does checks using this spelling
                 boolean result = uDAO.insertUser("simUser"+x, "testtest", "sim_user"+x+"@sim.com", "custormer");
-                System.out.println("Res:"+result);
+                System.out.println("Res: "+result);
             }
         }
     }
@@ -75,7 +81,12 @@ public class SimUserController extends Controller{
                     }
                 }
             }
+            try{
+                // One second wait between cycles
+                sleep(1000);
+            }catch(Exception e){
+                System.out.println("Exception: sleep() unsuccessful.");
+            }
         }
     }
- 
 }

@@ -58,10 +58,14 @@ public class UserDAOImp implements UserDAO{
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImp.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(rs != null)
-            return true;
-        else
+        try{
+            if(rs.next())
+                return true;
+            else
+                return false;
+        }catch(SQLException sqlex){
             return false;
+        }
     }
     
     public String checkUser(String email) throws SQLException{

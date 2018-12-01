@@ -15,9 +15,9 @@ public class SimUserShoppingState implements ISimUserState {
     private String details;
     private ProductsDAO pDAO;
     
-    public SimUserShoppingState(){
+    public SimUserShoppingState(ProductsDAO pDAO){
         details = "";
-        pDAO = new ProductsDAO();
+        this.pDAO = pDAO;
     }
     
     @Override

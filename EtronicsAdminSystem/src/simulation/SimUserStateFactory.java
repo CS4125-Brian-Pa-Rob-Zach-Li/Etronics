@@ -5,17 +5,20 @@
  */
 package simulation;
 
+import database.ProductsDAO;
+
 /**
  *
  * @author Brian
  */
 public class SimUserStateFactory {
-    
+    private ProductsDAO pDAO = new ProductsDAO();
+            
     public ISimUserState getUserState(String s){
         if(s.equals("Browsing"))
             return new SimUserBrowsingState();
         else if(s.equals("Shopping"))
-            return new SimUserShoppingState();
+            return new SimUserShoppingState(pDAO);
         else
             return null;
     }
