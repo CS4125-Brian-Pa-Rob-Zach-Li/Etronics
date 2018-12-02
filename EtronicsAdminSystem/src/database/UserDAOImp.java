@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import user.customerModel;
+import user.CustomerModel;
 
 
 /**
@@ -85,33 +85,32 @@ public class UserDAOImp implements UserDAO{
         
     }
     
-    public customerModel getUserDetail(String email) throws SQLException{
-        customerModel user = new customerModel();
+    public CustomerModel getUserDetail(String email) throws SQLException{
+        CustomerModel user = new CustomerModel();
         String sql = "select * from etronics_users where email='" + email + "'";
         ResultSet rs = null;
         rs = stmt.executeQuery(sql);
-        if(rs != null){
-            while(rs.next()){
-                user.setUserID(rs.getInt(1));
-                user.setUserName(rs.getString(2));
-                user.setUserPW(rs.getString(4));
-                user.setUserEmail(rs.getString(3));
-                user.setUserRole();
-            }
+        
+        if(rs.next()){
+            user.setUserID(rs.getInt(1));
+            System.out.println("uid: "+rs.getInt(1));
+            user.setUserName(rs.getString(2));
+            user.setUserPW(rs.getString(4));
+            user.setUserEmail(rs.getString(3));
+            user.setUserRole();
         }
-        else
-            user = null;
+            
         return user;
     }
     
-    public ArrayList<customerModel> queryUsers() throws SQLException{
-        ArrayList<customerModel> list = new ArrayList<>();
+    public ArrayList<CustomerModel> queryUsers() throws SQLException{
+        ArrayList<CustomerModel> list = new ArrayList<>();
         String sql = "select * from etronics_users";
         ResultSet rs = null;
         rs = stmt.executeQuery(sql);
         if(rs != null){
+            CustomerModel user = new CustomerModel();
             while(rs.next()){
-            customerModel user = new customerModel();
             user.setUserID(rs.getInt(1));
             user.setUserName(rs.getString(2));
             user.setUserPW(rs.getString(4));

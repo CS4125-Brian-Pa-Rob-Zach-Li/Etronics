@@ -7,7 +7,7 @@ package database;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import user.customerModel;
+import user.CustomerModel;
 
 /**
  *
@@ -17,8 +17,8 @@ public interface UserDAO {
     public boolean insertUser(String uname, String uPw, String uemail, String role);
     public boolean checkIfExist(String email);
     public String checkUser(String email) throws SQLException;
-    public customerModel getUserDetail(String email) throws SQLException;
-    public ArrayList<customerModel> queryUsers() throws SQLException;
+    public CustomerModel getUserDetail(String email) throws SQLException;
+    public ArrayList<CustomerModel> queryUsers() throws SQLException;
     public boolean deleteUser(int uID);
     public boolean resetUser(int uID);
     public boolean updateUser(int id, String uname, String uemail);

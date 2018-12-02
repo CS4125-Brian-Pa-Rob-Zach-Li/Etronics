@@ -21,9 +21,4 @@ public class ControllerFactory {
             SimUserStateFactory susf, ITransactionDetectionObserver o) throws Exception{
         return new SimUserController(su, susf, o);
     }
-    
-    public Controller getSimWarehouseController(){
-        return new SimWarehouseController();
-    }
-
 }

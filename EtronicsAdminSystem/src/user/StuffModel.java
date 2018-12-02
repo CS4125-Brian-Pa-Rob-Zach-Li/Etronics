@@ -9,8 +9,8 @@ package user;
  *
  * @author XintingLi
  */
-public class stuffModel extends User{
-    public stuffModel()
+public class StuffModel extends User{
+    public StuffModel()
     {
         userID = 0;
         userName = "";

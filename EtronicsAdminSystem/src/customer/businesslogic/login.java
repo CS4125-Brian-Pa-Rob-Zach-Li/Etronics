@@ -8,14 +8,14 @@ package customer.businesslogic;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import user.User;
-import user.customerModel;
+import user.CustomerModel;
 import database.UserDAO;
 import database.UserDAOImp;
-import user.customerFactory;
-import user.stuffFactory;
-import user.stuffModel;
-import user.userDecorator;
-import user.userFactory;
+import user.CustomerFactory;
+import user.StuffFactory;
+import user.StuffModel;
+import user.UserDecorator;
+import user.UserFactory;
 
 /**
  *
@@ -98,7 +98,7 @@ public class login {
     
     public String setCustomerDetails(String uemail) throws SQLException
     {
-        user = new userDecorator(user);
+        user = new UserDecorator(user);
         user = userDao.getUserDetail(uemail);
         return user.getUserName();
     }
@@ -113,13 +113,13 @@ public class login {
     {
         if(role.equals("stuff"))
         {
-            userFactory ufactory = new stuffFactory();
+            UserFactory ufactory = new StuffFactory();
             user = ufactory.getuser();
             //user = new stuffModel();
         }
         else
         {
-             userFactory ufactory = new customerFactory();
+             UserFactory ufactory = new CustomerFactory();
            user = ufactory.getuser();
             //user = new customerModel();
         }

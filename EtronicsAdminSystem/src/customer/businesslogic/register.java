@@ -10,7 +10,7 @@ import database.UserDAOImp;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import user.User;
-import user.customerModel;
+import user.CustomerModel;
 
 /**
  *
@@ -18,7 +18,7 @@ import user.customerModel;
  */
 public class register {
     UserDAOImp userDao;
-    customerModel user = new customerModel();
+    CustomerModel user = new CustomerModel();
     public register() throws ClassNotFoundException, SQLException{
         userDao = new UserDAOImp();
 	}

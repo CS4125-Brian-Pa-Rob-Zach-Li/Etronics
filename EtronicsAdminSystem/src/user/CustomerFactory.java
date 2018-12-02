@@ -9,10 +9,10 @@ package user;
  *
  * @author XintingLi
  */
-public class customerFactory extends userFactory{
+public class CustomerFactory extends UserFactory{
         
     @Override
     User createuser() {
-        return new customerModel();
+        return new CustomerModel();
     }
 }

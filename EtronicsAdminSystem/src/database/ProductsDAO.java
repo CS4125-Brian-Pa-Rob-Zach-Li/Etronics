@@ -2,6 +2,7 @@ package database;
 
 import java.util.HashMap;
 import database.ConnectionHandler;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import products.BasicProduct;
+import products.ProductFactory;
 
 /**
  *
@@ -17,7 +20,9 @@ import java.util.logging.Logger;
 public class ProductsDAO {
 
     private Statement statement = null;
+    private CallableStatement cStmt = null;
     private ResultSet resultSet = null;
+    private ArrayList<BasicProduct> allProducts;
     ConnectionHandler connHand;
     Connection conn;
 
@@ -29,6 +34,53 @@ public class ProductsDAO {
         } catch(SQLException e) {
             System.out.println(e);
         }
+        
+        allProducts = new ArrayList<BasicProduct>();
+        updateProductList();
+    }
+    
+    public void updateProductList(){
+        try{
+            cStmt = conn.prepareCall("{call get_all_products()}");
+            boolean result = cStmt.execute();
+            
+            if(result){    
+                resultSet = cStmt.getResultSet();
+            }
+            else{
+                allProducts = null;
+                return;
+            }
+            
+            BasicProduct prod = null;
+            ProductFactory pf = new ProductFactory();
+            allProducts.clear();
+            
+            while(resultSet.next()){
+                int pID = Integer.parseInt(resultSet.getString("id"));
+                String pName = resultSet.getString("name");
+                String type = resultSet.getString("type");
+                String desc = resultSet.getString("description");
+                int price = Integer.parseInt(resultSet.getString("price"));
+                int promoID;
+                
+                if(isInt(resultSet.getString("promoID"))){
+                    promoID = Integer.parseInt(resultSet.getString("promoID"));
+                }
+                else
+                    promoID = 0;
+                
+                prod = pf.getProduct(pID, pName, price, type, desc, promoID);
+                allProducts.add(prod);
+            }
+        }catch(SQLException se){
+            throw new RuntimeException("Error communicating with server.", se);
+        }
+    }
+    
+    public ArrayList<BasicProduct> getProductList(){
+        updateProductList();
+        return allProducts;
     }
 
     public void insertIntoShoppingCart(int userID, int itemID, int itemQuantity) throws SQLException {
@@ -37,8 +89,8 @@ public class ProductsDAO {
             System.out.println("Not enough in stock");
         
         else
-            statement.executeUpdate("INSERT INTO shopping_carts(userID,itemID,quantity)" +
-                    " VALUES (" + 1 + ", + " + 12 +", + " + 1+ " )");
+            statement.executeUpdate("INSERT INTO shopping_carts(userID,productID,quantity)" +
+                    " VALUES (" + userID + ", + " + itemID +", + " + itemQuantity + " )");
     }
     
     public void updateShoppingCart(int userID, int itemID, int itemQuantity) throws SQLException {
@@ -61,10 +113,10 @@ public class ProductsDAO {
 
     private boolean checkIfProductLastOne(int itemID, int itemQuantity) throws SQLException {
         resultSet = statement.executeQuery("SELECT stock FROM etronics_products WHERE id = " + itemID + ";");
-        if((resultSet.getInt("stock") - itemQuantity) < 0 ) {
+        if(resultSet.next() && (resultSet.getInt("stock") - itemQuantity) < 0 ) {
             return true;
         }
-        else if((resultSet.getInt("stock") - itemQuantity) > 0 ) {
+        else if(resultSet.next() && (resultSet.getInt("stock") - itemQuantity) > 0 ) {
           int newQuantity = (resultSet.getInt("stock") - itemQuantity);
             setStock(newQuantity,itemID);
             return false;
@@ -94,7 +146,7 @@ public class ProductsDAO {
             newQuantity + " WHERE userID = " + userID + " AND itemID = " + itemID + ";");
     }
 
-    public void createTransction(int userID, String status) throws SQLException {
+    public void createTransaction(int userID, String status) throws SQLException {
         StringBuilder description = new StringBuilder();
         HashMap<String,Integer> idQuantityHash = new HashMap<>();
         resultSet = statement.executeQuery("SELECT * FROM shopping_carts WHERE userID = " + userID +";");
@@ -103,11 +155,12 @@ public class ProductsDAO {
             description.append(resultSet.getString("productID")).append("||");
             idQuantityHash.put(resultSet.getString("userID"),resultSet.getInt("quantity"));
         }
-        int totalCost = getTotalCost(idQuantityHash);
-//        statement.executeUpdate("INSERT INTO orders ( userID, description, totalCost, status)" +
+        statement.executeUpdate("DELETE FROM shopping_carts WHERE userID="+userID+";");
+//        int totalCost = getTotalCost(idQuantityHash);
+//        statement.executeQuery("INSERT INTO orders ( userID, description, totalCost, status)" +
 //                " VALUES (" + userID + ", + " + description.toString() + ", + " +  totalCost + ", + " + status+ " )");
-        System.out.println("INSERT INTO orders ( userID, description, totalCost, status)" +
-                " VALUES (" + userID + ", + " + description.toString() + ", + " +  totalCost + ", + " + status+ " )");
+////        System.out.println("INSERT INTO orders ( userID, description, totalCost, status)" +
+////                " VALUES (" + userID + ", + " + description.toString() + ", + " +  totalCost + ", + " + status+ " )");
     }
 
     private int getTotalCost(HashMap<String,Integer> idQuantityHash) throws SQLException {
@@ -191,22 +244,33 @@ public class ProductsDAO {
         ArrayList<String> cartList = new ArrayList<>();
         ArrayList<String[]> shoppingCart = new ArrayList<>();
         
-        while(resultSet.next()) {
+        if(resultSet.next()) {
             cartList.add(resultSet.getString("productID"));
-        }
-        String[] products;
-        for(int i = 0; i < cartList.size(); i++) {
-            resultSet = statement.executeQuery("SELECT * FROM etronics_products WHERE id =" + cartList.get(i));
-            products = new String[4];
-            resultSet.first();
-            products[0] = resultSet.getString("name");
-            products[1] = resultSet.getString("price");
-            products[2] = resultSet.getString("id");
-            products[3] = resultSet.getString("description");
-            shoppingCart.add(products);
+            
+            String[] products;
+            for(int i = 0; i < cartList.size(); i++) {
+                resultSet = statement.executeQuery("SELECT * FROM etronics_products WHERE id =" + cartList.get(i));
+                products = new String[4];
+                if(resultSet.next()){
+                    resultSet.first();
+                    products[0] = resultSet.getString("name");
+                    products[1] = resultSet.getString("price");
+                    products[2] = resultSet.getString("id");
+                    products[3] = resultSet.getString("description");
+                    shoppingCart.add(products);
+                }
+            } 
         }
         
         return shoppingCart;
     }
 
+    public boolean isInt(String s){
+        try{
+            Integer.parseInt(s);
+            return true;
+        }catch(NumberFormatException nfe){
+            return false;
+        }
+    }
 }

@@ -9,13 +9,13 @@ package user;
  *
  * @author XintingLi
  */
-public class customerModel extends User{
+public class CustomerModel extends User{
     
     private String userAddress;
     private String userPN; //Phone Number
     private int cartID;
 
-    public customerModel()
+    public CustomerModel()
     {
         userID = 0;
         userName = "";

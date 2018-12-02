@@ -9,10 +9,10 @@ package user;
  *
  * @author XintingLi
  */
-public class userDecorator extends User{
+public class UserDecorator extends User{
     User user;
     boolean status = false;
-    public userDecorator(User user){
+    public UserDecorator(User user){
 	this.user = user;
     }
     public void setStatus()
