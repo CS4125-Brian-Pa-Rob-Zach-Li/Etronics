@@ -140,31 +140,65 @@ public class UIAdminView extends JFrame {
         mainButtonPanel.add(adManButton);
         
         //promotion GUI//////////////////////////////
+        JLabel[] emptyLabels = new JLabel[7];
+        JLabel[] centreBoxLabels = new JLabel[7];
+        for(int i=0; i< emptyLabels.length; i++){
+            emptyLabels[i] = new JLabel();
+            centreBoxLabels[i] = new JLabel();
+        }
         discount = new JLabel("Discount:");
+        JPanel disNumPanel = new JPanel();
+        disNumPanel.setLayout(new GridLayout(3,1));
         discountNum = new JTextField("", 100);
+        disNumPanel.add(centreBoxLabels[4]);
+        disNumPanel.add(discountNum);
         discountNum.setSize(100, 20);
         prod = new JLabel("Product ID:");
+        JPanel prodPanel = new JPanel();
+        prodPanel.setLayout(new GridLayout(3,1));
         productID = new JTextField("", 100);
+        prodPanel.add(centreBoxLabels[3]);
+        prodPanel.add(productID);
         productID.setSize(100, 20);
         promo = new JLabel("Promotion:");
+        JPanel promoPanel = new JPanel();
+        promoPanel.setLayout(new GridLayout(3,1));
         promoName = new JTextField("", 100);
+        promoPanel.add(centreBoxLabels[2]);
+        promoPanel.add(promoName);
         promoName.setSize(100, 20);
         date = new JLabel("Promotion End Date:");
+        JPanel datePanel = new JPanel();
+        datePanel.setLayout(new GridLayout(3,1));
         endDate = new JTextField("", 100);
+        datePanel.add(centreBoxLabels[1]);
+        datePanel.add(endDate);
         endDate.setSize(100, 20);
+        JPanel buttPanel = new JPanel();
+        buttPanel.setLayout(new GridLayout(3,1));        
         addPromButton = new JButton("Add Promotion");
+        buttPanel.add(emptyLabels[0]);
+        buttPanel.add(addPromButton);
         addPromPanel = new JPanel();
         addPromPanel.setLayout(new GridLayout(4,2));
-
+        
+        addPromPanel.add(emptyLabels[0]);
         addPromPanel.add(discount);
-        addPromPanel.add(discountNum);
-        addPromPanel.add(prod);
-        addPromPanel.add(productID);
+        addPromPanel.add(disNumPanel);
+        addPromPanel.add(emptyLabels[1]);
+        addPromPanel.add(emptyLabels[2]);
+        addPromPanel.add(prod);   
+        addPromPanel.add(prodPanel);
+        addPromPanel.add(emptyLabels[3]);
+        addPromPanel.add(emptyLabels[4]);
         addPromPanel.add(promo);
-        addPromPanel.add(promoName);
+        addPromPanel.add(promoPanel);
+        addPromPanel.add(emptyLabels[5]);
+        addPromPanel.add(emptyLabels[6]);
         addPromPanel.add(date);
-        addPromPanel.add(endDate);
-        addPromPanel.add(addPromButton); 
+        addPromPanel.add(datePanel);
+        addPromPanel.add(buttPanel);
+        
         //////////////////////////////////////////////
         
         JPanel variablePanel = setupProductGUI();
@@ -371,12 +405,12 @@ public class UIAdminView extends JFrame {
     }
     
     public void setPromoMenuVisible(){
-        /*JPanel contentPane = (JPanel) this.getContentPane();
+        JPanel contentPane = (JPanel) this.getContentPane();
 
         contentPane.removeAll();
         contentPane.add(addPromPanel);
         contentPane.revalidate(); 
-        contentPane.repaint();*/
+        contentPane.repaint();
     }
     //////////////////////////////////////////////////////////
     
