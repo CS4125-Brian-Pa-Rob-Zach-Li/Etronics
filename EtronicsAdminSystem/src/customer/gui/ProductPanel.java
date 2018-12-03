@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ProductPanel extends JPanel implements ActionListener{
+public class ProductPanel extends JPanel implements ActionListener, PanelInterface{
     private String description;
     private int price;
     private int id;
@@ -31,33 +31,8 @@ public class ProductPanel extends JPanel implements ActionListener{
 
     public ProductPanel(String desc, int prodPrice, String title, int id) 
     {
-            GridLayout lay = new GridLayout(0,4);
-            lay.setHgap(35);
-            lay.setVgap(90);
-            this.setLayout(lay);
-
-            setDescription(desc);
-            setPrice(prodPrice);
-            setTitle(title);
-            setID(id);
-
-
-            buyB = new JButton("Add to Cart");
-            buyB.addActionListener(this);
-            descrip = new JButton("More Info");
-            descrip.addActionListener(this);
-
-            JLabel name = new JLabel(title);
-            JLabel description = new JLabel(this.description);
-
-
-            JLabel price = new JLabel("€"+Integer.toString(this.price));
-            this.add(name);
-            this.add(price);
-            this.add(descrip);
-            this.add(buyB);
-            this.setBounds(7, 7, 1000, 60);
-            this.setMaximumSize(new Dimension(1000, 451-14));
+        this.draw(desc, prodPrice, title, id);
+            
     }
     
    public ProductPanel(String desc, int prodPrice, String title, int id, int shippingCart) {
@@ -158,4 +133,36 @@ public class ProductPanel extends JPanel implements ActionListener{
         }
     }
     //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    @Override
+    public void draw(String desc, int prodPrice, String title, int id) {
+        GridLayout lay = new GridLayout(0,4);
+            lay.setHgap(35);
+            lay.setVgap(90);
+            this.setLayout(lay);
+
+            setDescription(desc);
+            setPrice(prodPrice);
+            setTitle(title);
+            setID(id);
+
+
+            buyB = new JButton("Add to Cart");
+            buyB.addActionListener(this);
+            descrip = new JButton("More Info");
+            descrip.addActionListener(this);
+
+            JLabel name = new JLabel(title);
+            JLabel description = new JLabel(this.description);
+
+
+            JLabel price = new JLabel("€"+Integer.toString(this.price));
+            this.add(name);
+            this.add(price);
+            this.add(descrip);
+            this.add(buyB);
+            this.setBounds(7, 7, 1000, 60);
+            this.setMaximumSize(new Dimension(1000, 451-14));
+        
+    }
 }
