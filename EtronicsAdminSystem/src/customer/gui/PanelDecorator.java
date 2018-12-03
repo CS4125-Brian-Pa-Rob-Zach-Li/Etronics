@@ -9,6 +9,18 @@ package customer.gui;
  *
  * @author Zach
  */
-public class PanelDecorator {
+public abstract class PanelDecorator implements PanelInterface {
+    
+    protected ProductPanel decoratedPanel;
+    
+    public PanelDecorator(ProductPanel decoratedPanel)
+    {
+        this.decoratedPanel = decoratedPanel;
+    }
+
+    @Override
+    public void draw(String desc, int prodPrice, String title, int id) {
+        decoratedPanel.draw(desc, prodPrice, title, id);
+    }
     
 }

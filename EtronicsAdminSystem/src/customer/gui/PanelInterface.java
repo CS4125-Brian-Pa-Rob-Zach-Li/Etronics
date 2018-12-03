@@ -11,4 +11,6 @@ package customer.gui;
  */
 public interface PanelInterface {
     
+    void draw(String desc, int prodPrice, String title, int id);
+    
 }
