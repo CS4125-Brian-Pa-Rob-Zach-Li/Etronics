@@ -32,7 +32,7 @@ public class UICustomerController {
     public UICustomerController(mainpageGUI mainPage, loginGUI loginPage, myCartGUI cartPage,
             purchaseGUI purchasePage, allProductsGUI productPage, UICustomerModel model) {
         
-        this.mainPage = mainPage;
+        UICustomerController.mainPage = mainPage;
         this.loginPage = loginPage;
         this.cartPage = cartPage;
         this.purchasePage = purchasePage;
@@ -66,15 +66,12 @@ public class UICustomerController {
     }
     
     public void addListeners() {
-        mainPage.setSearchListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    mainPage.refreshScreen();
-                    updateSearchView();
-                } catch (SQLException ex) {
-                    Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        mainPage.setSearchListener((ActionEvent e) -> {
+            try {
+                mainPage.refreshScreen();
+                updateSearchView();
+            } catch (SQLException ex) {
+                Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         
@@ -151,9 +148,7 @@ public class UICustomerController {
                 
             }
         });
-        
-        
-        
+                
         purchasePage.setPurchaseListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 try {

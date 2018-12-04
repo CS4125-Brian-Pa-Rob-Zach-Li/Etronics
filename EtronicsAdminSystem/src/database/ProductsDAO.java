@@ -154,32 +154,51 @@ public class ProductsDAO {
     public void createTransaction(int userID, String status) throws SQLException {
         StringBuilder description = new StringBuilder();
         HashMap<String,Integer> idQuantityHash = new HashMap<>();
+        ArrayList<String[]> idArrayList = new ArrayList<>();
         resultSet = statement.executeQuery("SELECT * FROM shopping_carts WHERE userID = " + userID +";");
 
+        String[] IDsArray;
         while (resultSet.next()) {
+            IDsArray = new String[3];
             description.append(resultSet.getString("productID")).append("||");
             idQuantityHash.put(resultSet.getString("userID"),resultSet.getInt("quantity"));
+            IDsArray[0] = resultSet.getString("userID");
+            IDsArray[1] = resultSet.getString("quantity");
+            IDsArray[2] = resultSet.getString("productID");
+            idArrayList.add(IDsArray);
+            
         }
         
         statement.executeUpdate("DELETE FROM shopping_carts WHERE userID="+userID+";");
-        
-        int totalCost = getTotalCost(idQuantityHash);
+
+        int totalCost = getTotalCost(idArrayList);
         statement.executeUpdate("INSERT INTO orders ( userID, description, totalCost, status)" +
                 " VALUES (" + userID + ", '" + description.toString() + "', " +  totalCost + ", '" + status+ "' )");
     }
 
-    private int getTotalCost(HashMap<String,Integer> idQuantityHash) throws SQLException {
+    public  int getTotalCost(ArrayList<String[]> userArray) throws SQLException {
         int totalCost = 0;
         HashMap<String,Integer> idPriceHash = new HashMap<>();
+        ArrayList<String[]> idPriceArray = new ArrayList<>();
         
         resultSet = statement.executeQuery("SELECT id, price FROM etronics_products;");
-        while(resultSet.next()){
+        String[] idPrices;
+        while (resultSet.next()) {
+            idPrices = new String[2];
             idPriceHash.put(resultSet.getString("id"),resultSet.getInt("price"));
+            idPrices[0] = resultSet.getString("id");
+            idPrices[1] = resultSet.getString("price");
+            idPriceArray.add(idPrices);
         }
         
-        for( String key : idQuantityHash.keySet() ) {
-            totalCost += idQuantityHash.get(key) * idPriceHash.get(key);
+        for(int i = 0; i < userArray.size(); i++) {
+                for(int j = 0; j < idPriceArray.size(); j++) {
+                     if(idPriceArray.get(j)[0].equals(userArray.get(i)[2])){
+                         totalCost += Integer.parseInt(idPriceArray.get(j)[1]) * Integer.parseInt(userArray.get(i)[1]);
+                     }
+                }
         }
+//        System.out.println("Total Cost: "+totalCost);
         
         return totalCost;
     }
