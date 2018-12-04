@@ -80,14 +80,14 @@ public class EtronicsSystem {
                 cartPage, purchasePage, productsPage, customerModel);
         
         // Start Simulation
-        ControllerFactory cf = new ControllerFactory();
-        Controller simController = cf.getSimulationController();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                simController.startSim();
-            }
-        }).start();
+//        ControllerFactory cf = new ControllerFactory();
+//        Controller simController = cf.getSimulationController();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                simController.startSim();
+//            }
+//        }).start();
         
         addloginListeners();
         addRegisterListeners_login();

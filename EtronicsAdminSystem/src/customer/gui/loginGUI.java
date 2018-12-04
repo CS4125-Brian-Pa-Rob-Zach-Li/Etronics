@@ -72,13 +72,20 @@ public class loginGUI extends javax.swing.JFrame {
         jLabel4.setText("Email:");
 
         EmailTF.setForeground(new java.awt.Color(153, 153, 153));
-        EmailTF.setText("a-z 0-9 \"_\" only");
+        EmailTF.setText("user@ul.ie");
+        EmailTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailTFActionPerformed(evt);
+            }
+        });
 
         registerBu.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         registerBu.setText("Register");
 
         LoginBu.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         LoginBu.setText("Login");
+
+        pwTF.setText("12341234");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -145,6 +152,10 @@ public class loginGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void EmailTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailTFActionPerformed
     
     
     /**
