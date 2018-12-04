@@ -5,6 +5,7 @@
  */
 package simulation;
 
+import administration.UIAdminController;
 import database.ProductsDAO;
 import database.UserDAO;
 import database.UserDAOImp;
@@ -21,6 +22,7 @@ public class SimUserController extends Controller{
     private ArrayList<SimUser> simUsers;
     private ArrayList<ITransactionDetectionObserver> observers;
     private SimUserStateFactory simUserStateFact;
+    private UIAdminController adminController;
     private UserDAO uDAO;
     
     public SimUserController(ArrayList<SimUser> su, SimUserStateFactory susf,
@@ -68,6 +70,10 @@ public class SimUserController extends Controller{
     public int getRandInt100(){
         int random = (int )(Math.random() * 100 + 1);
         return random;
+    }
+    
+    public void setAdminController(UIAdminController ac){
+        adminController = ac;
     }
     
     @Override

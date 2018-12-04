@@ -26,13 +26,27 @@ public class SimUserShoppingState implements ISimUserState {
     
     @Override
     public String makePurchase(int userID) {
+        details = "";
         try{
             ArrayList<String[]> cartDetails = pDAO.getCart(userID);
             pDAO.createTransaction(userID, "complete");
+            
+            int total = 0;
+            
+            if(cartDetails.size() > 0)
+                details += "<html>-----Transaction Start-----<br>";
+            
             for(int x = 0; x < cartDetails.size(); x++){
                 details += "Product: " + cartDetails.get(x)[0] + " ";
-                details += "Price: $" + cartDetails.get(x)[1];
-                details += "\n";
+                details += "| [Price: $" + cartDetails.get(x)[1] + "] x"+cartDetails.get(x)[4];
+                total += Integer.parseInt(cartDetails.get(x)[1]) * Integer.parseInt(cartDetails.get(x)[4]);
+                details += "<br>";
+            }
+            
+            if(cartDetails.size() > 0){
+                details += "<br>";
+                details += "Total Cost: $"+total+"<br>";
+                details += "-----Transaction End-----<br><br></html>";
             }
         }catch(Exception sqlEx){
             System.out.println("SimUserShoppingState.makePurchase: "+sqlEx);
@@ -48,7 +62,6 @@ public class SimUserShoppingState implements ISimUserState {
         if(userType == "Person"){
             try{
                 pDAO.insertIntoShoppingCart(userID, productID, 1);
-                System.out.println("Added product ["+productID+"] to user ["+userID+"]");
             }catch(Exception sqlEx){
                 System.out.println("SimUserShoppingState.addToCart: "+sqlEx);
             }
@@ -56,7 +69,6 @@ public class SimUserShoppingState implements ISimUserState {
         else if(userType == "Company"){
             try{
                 pDAO.insertIntoShoppingCart(userID, productID, 10);
-                System.out.println("Added x10 product ["+productID+"] to user ["+userID+"]");
             }catch(Exception sqlEx){
                 System.out.println("SimUserShoppingState.addToCart: "+sqlEx);
             }

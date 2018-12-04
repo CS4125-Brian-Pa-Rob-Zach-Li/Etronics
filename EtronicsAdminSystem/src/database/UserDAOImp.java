@@ -93,7 +93,6 @@ public class UserDAOImp implements UserDAO{
         
         if(rs.next()){
             user.setUserID(rs.getInt(1));
-            System.out.println("uid: "+rs.getInt(1));
             user.setUserName(rs.getString(2));
             user.setUserPW(rs.getString(4));
             user.setUserEmail(rs.getString(3));
