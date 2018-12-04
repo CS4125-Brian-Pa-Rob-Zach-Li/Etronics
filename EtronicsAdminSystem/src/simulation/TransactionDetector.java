@@ -5,16 +5,23 @@
  */
 package simulation;
 
+import administration.UIAdminController;
+
 /**
  *
  * @author Brian
  */
 public class TransactionDetector implements ITransactionDetectionObserver{
 
+    private UIAdminController adminController;
+    
+    public TransactionDetector(UIAdminController ac){
+        adminController = ac;
+    }
+    
     @Override
     public void transactionNotification(String details) {
-        System.out.println("Transaction Details: "+details);
-        // Add code here to update admin GUI with info of transaction
+        adminController.updateTransactionList(details);
     }
     
 }

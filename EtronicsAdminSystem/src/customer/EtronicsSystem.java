@@ -81,7 +81,7 @@ public class EtronicsSystem {
         
         // Start Simulation
         ControllerFactory cf = new ControllerFactory();
-        Controller simController = cf.getSimulationController();
+        Controller simController = cf.getSimulationController(adminController);
         new Thread(new Runnable() {
             @Override
             public void run() {

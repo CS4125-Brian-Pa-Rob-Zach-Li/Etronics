@@ -5,6 +5,8 @@
  */
 package simulation;
 
+import administration.UIAdminController;
+
 /**
  *
  * @author Brian

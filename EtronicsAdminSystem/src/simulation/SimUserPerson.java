@@ -19,9 +19,9 @@ public class SimUserPerson extends SimUser{
     private SimUserStateFactory simUserStateFact;
     private CustomerModel custModel;
     
-    public SimUserPerson(ISimUserState state){
+    public SimUserPerson(ISimUserState state, SimUserStateFactory susf){
         this.state = state;
-        simUserStateFact = new SimUserStateFactory();
+        simUserStateFact = susf;
         observers = new ArrayList<ITransactionDetectionObserver>();
     }
     

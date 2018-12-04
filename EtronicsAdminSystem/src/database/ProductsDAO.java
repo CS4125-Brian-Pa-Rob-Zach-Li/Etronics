@@ -242,21 +242,27 @@ public class ProductsDAO {
     public ArrayList<String[]> getCart(int userID) throws SQLException {
         resultSet = statement.executeQuery("SELECT * FROM shopping_carts WHERE userID = " + userID + ";");
         ArrayList<String> cartList = new ArrayList<>();
+        ArrayList<String> quantityList = new ArrayList<>();
         ArrayList<String[]> shoppingCart = new ArrayList<>();
         
         if(resultSet.next()) {
-            cartList.add(resultSet.getString("productID"));
+            resultSet.first();
+            while(resultSet.next()){
+                cartList.add(resultSet.getString("productID"));
+                quantityList.add(resultSet.getString("quantity"));
+            }
             
             String[] products;
             for(int i = 0; i < cartList.size(); i++) {
                 resultSet = statement.executeQuery("SELECT * FROM etronics_products WHERE id =" + cartList.get(i));
-                products = new String[4];
+                products = new String[5];
                 if(resultSet.next()){
                     resultSet.first();
                     products[0] = resultSet.getString("name");
                     products[1] = resultSet.getString("price");
                     products[2] = resultSet.getString("id");
                     products[3] = resultSet.getString("description");
+                    products[4] = quantityList.get(i);
                     shoppingCart.add(products);
                 }
             } 
