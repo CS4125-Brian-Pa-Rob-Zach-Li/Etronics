@@ -174,6 +174,7 @@ public class ProductsDAO {
         int totalCost = getTotalCost(idArrayList);
         statement.executeUpdate("INSERT INTO orders ( userID, description, totalCost, status)" +
                 " VALUES (" + userID + ", '" + description.toString() + "', " +  totalCost + ", '" + status+ "' )");
+  
     }
 
     public  int getTotalCost(ArrayList<String[]> userArray) throws SQLException {
