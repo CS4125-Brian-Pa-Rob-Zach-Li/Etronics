@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -156,6 +157,9 @@ public class UICustomerController {
                 } catch (SQLException ex) {
                     Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                JOptionPane.showMessageDialog(null, "Purchase made"); 
+                mainPage.setVisible(true);
+                purchasePage.setVisible(false);
             }
         });
         
