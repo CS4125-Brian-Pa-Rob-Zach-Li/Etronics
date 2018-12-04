@@ -109,8 +109,8 @@ public class UserDAOImp implements UserDAO{
         ResultSet rs = null;
         rs = stmt.executeQuery(sql);
         if(rs != null){
-            CustomerModel user = new CustomerModel();
             while(rs.next()){
+            CustomerModel user = new CustomerModel();
             user.setUserID(rs.getInt(1));
             user.setUserName(rs.getString(2));
             user.setUserPW(rs.getString(4));
