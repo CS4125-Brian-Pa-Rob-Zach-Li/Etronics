@@ -38,7 +38,7 @@ public class myCartGUI extends javax.swing.JFrame {
             
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        jScrollPane.setBounds(7, 7, 1000, 451-14);
+        jScrollPane.setBounds(7, 7, 1090, 451-14);
         
     }
 

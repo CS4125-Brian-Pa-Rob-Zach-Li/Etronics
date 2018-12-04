@@ -106,6 +106,12 @@ public class UICustomerController {
         
         cartPage.setPurchaseListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
+                try {
+                    purchasePage.refreshScreen();
+                    updateProductView();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 purchasePage.setVisible(true);
                 cartPage.setVisible(false);
             }
@@ -134,6 +140,12 @@ public class UICustomerController {
         
         productPage.setCartListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
+                try {
+                    cartPage.refreshScreen();
+                    updateProductView();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 cartPage.setVisible(true);
                 productPage.setVisible(false);
                 

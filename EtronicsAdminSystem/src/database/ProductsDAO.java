@@ -97,15 +97,17 @@ public class ProductsDAO {
         
         resultSet = statement.executeQuery("SELECT COUNT(*) FROM shopping_carts WHERE userID ="+ userID+
                 " AND productID = "+ itemID+ ";" );
-       
+        resultSet.next();
         if(resultSet.getInt(1) > 0) {
         resultSet = statement.executeQuery("SELECT quantity FROM shopping_carts WHERE userID ="+ userID+
                 " AND productID = "+ itemID+ ";" );
+        resultSet.next();
         int newQuantity = (resultSet.getInt("quantity")) + itemQuantity;
         statement.execute("UPDATE shopping_carts set quantity = " + newQuantity + "WHERE productID = " + itemID +
                 " AND userID =" + userID);
         }
-        else {
+        
+        else {       
             insertIntoShoppingCart(userID,itemID,itemQuantity);
         } 
             
@@ -130,15 +132,18 @@ public class ProductsDAO {
 
     public void removeFromShoppingCart(int userID, int itemID) throws  SQLException {
         resultSet = statement.executeQuery("SELECT quantity FROM shopping_carts WHERE userID = " +
-                userID + " AND itemID = " + itemID + ";");
+                userID + " AND productID = " + itemID + ";");
+        resultSet.next();
         int removedStock = resultSet.getInt("quantity");
+        
         resultSet = statement.executeQuery("SELECT stock FROM etronics_products WHERE id = "+ itemID + ";");
+        resultSet.next();
         int currentStock = resultSet.getInt("stock");
         
         setStock(removedStock + currentStock, itemID);
         
         statement.executeUpdate("DELETE FROM shopping_carts WHERE userID = " +
-        userID + " AND itemID = " + itemID + ";");
+        userID + " AND productID = " + itemID + ";");
     }
 
     void changeQuantityShoppingCart(int userID, int itemID, int newQuantity) throws SQLException {
@@ -155,12 +160,12 @@ public class ProductsDAO {
             description.append(resultSet.getString("productID")).append("||");
             idQuantityHash.put(resultSet.getString("userID"),resultSet.getInt("quantity"));
         }
+        
         statement.executeUpdate("DELETE FROM shopping_carts WHERE userID="+userID+";");
-//        int totalCost = getTotalCost(idQuantityHash);
-//        statement.executeQuery("INSERT INTO orders ( userID, description, totalCost, status)" +
-//                " VALUES (" + userID + ", + " + description.toString() + ", + " +  totalCost + ", + " + status+ " )");
-////        System.out.println("INSERT INTO orders ( userID, description, totalCost, status)" +
-////                " VALUES (" + userID + ", + " + description.toString() + ", + " +  totalCost + ", + " + status+ " )");
+        
+        int totalCost = getTotalCost(idQuantityHash);
+        statement.executeUpdate("INSERT INTO orders ( userID, description, totalCost, status)" +
+                " VALUES (" + userID + ", '" + description.toString() + "', " +  totalCost + ", '" + status+ "' )");
     }
 
     private int getTotalCost(HashMap<String,Integer> idQuantityHash) throws SQLException {

@@ -37,7 +37,7 @@ public class purchaseGUI extends javax.swing.JFrame {
             
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        jScrollPane.setBounds(7, 7, 984, 232);
+        jScrollPane.setBounds(7, 7, 984-10, 232-14);
     }
 
     /**
@@ -351,5 +351,11 @@ public class purchaseGUI extends javax.swing.JFrame {
     
     public void setCancelListener(ActionListener actionListener) {
         cancelButton.addActionListener(actionListener);
+    }
+    
+    public void refreshScreen() {
+        innerFrame.removeAll();
+        innerFrame.revalidate();
+        innerFrame.repaint();
     }
 }
