@@ -27,6 +27,7 @@ public class UIAdminView extends JFrame {
     private JPanel mainContent;
     // Basic View
     private JLabel heading;
+    private JButton logoutButton;
     private JButton productManButton;
     private JButton userManButton;
     private JButton storeManButton;
@@ -78,6 +79,7 @@ public class UIAdminView extends JFrame {
         // Basic View
         heading = new JLabel("Etronics Admin System", JLabel.CENTER);
         productManButton = new JButton("Product Management");
+        logoutButton = new JButton("Logout");
         userManButton = new JButton("User Management");
         storeManButton = new JButton("Store Management");
         promoManButton = new JButton("Promotional Management");
@@ -122,6 +124,7 @@ public class UIAdminView extends JFrame {
         JPanel mainButtonPanel = new JPanel();
         mainButtonPanel.setLayout(new GridLayout(0,1));
         mainButtonPanel.setBorder(new EmptyBorder(10, 0, 0, 10));
+        mainButtonPanel.add(logoutButton);
         mainButtonPanel.add(productManButton);
         mainButtonPanel.add(userManButton);
         mainButtonPanel.add(storeManButton);
@@ -182,6 +185,7 @@ public class UIAdminView extends JFrame {
         
         JPanel addProdTitlePanel = new JPanel(new GridLayout(0,1));
         addProdTitlePanel.add(addProdTitleLabel);
+        
         
         JPanel addProdLabelPanel = new JPanel();
         addProdLabelPanel.setLayout(new GridLayout(4, 1));
@@ -310,6 +314,10 @@ public class UIAdminView extends JFrame {
         return prodNameField.getText();
     }
     
+    public void setCats(ArrayList<String> cats){
+        categoryComboBox.setModel(new DefaultComboBoxModel(cats.toArray()));
+    }
+    
     public String getAddProductPrice(){
         return prodPriceField.getText();
     }
@@ -328,6 +336,10 @@ public class UIAdminView extends JFrame {
     
     public String getDeleteProductID(){
         return prodIDField.getText();
+    }
+    
+    public void addLogoutListener(ActionListener al){
+        logoutButton.addActionListener(al);
     }
     
     public void addUserManListener(ActionListener al){

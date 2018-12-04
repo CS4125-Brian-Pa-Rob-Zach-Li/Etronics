@@ -97,6 +97,12 @@ public class EtronicsSystem {
     } 
     
     public static void addloginListeners(){
+        adminView.addLogoutListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                adminView.setVisible(false);
+                loginPage.setVisible(true);
+            }
+        });
         loginPage.addLoginListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 String email = loginPage.getEmail();

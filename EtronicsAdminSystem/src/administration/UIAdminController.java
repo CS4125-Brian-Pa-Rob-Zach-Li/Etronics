@@ -32,6 +32,7 @@ public class UIAdminController{
         this.userManGUI = umg;
         
         addListeners();
+        updateCategories();
     }
     
     public void addListeners(){
@@ -149,6 +150,10 @@ public class UIAdminController{
     
     public void updateTransactionList(String s){
         view.updateTransactionList(s);
+    }
+    
+    public void updateCategories(){
+        view.setCats(model.getCategoryList());
     }
     
     public boolean isInt(String s){

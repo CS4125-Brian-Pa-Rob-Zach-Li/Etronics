@@ -166,6 +166,7 @@ public class ProductsDAO {
         int totalCost = getTotalCost(idQuantityHash);
         statement.executeUpdate("INSERT INTO orders ( userID, description, totalCost, status)" +
                 " VALUES (" + userID + ", '" + description.toString() + "', " +  totalCost + ", '" + status+ "' )");
+  
     }
 
     private int getTotalCost(HashMap<String,Integer> idQuantityHash) throws SQLException {
