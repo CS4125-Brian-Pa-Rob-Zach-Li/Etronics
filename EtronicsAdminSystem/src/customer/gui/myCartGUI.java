@@ -26,6 +26,7 @@ public class myCartGUI extends javax.swing.JFrame {
     
     JPanel innerFrame;
     JScrollPane jScrollPane;
+    ArrayList<ProductPanel> productsArray;
     
     /** Creates new form myCartGUI */
     public myCartGUI() {
@@ -39,6 +40,8 @@ public class myCartGUI extends javax.swing.JFrame {
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane.setBounds(7, 7, 1090, 451-14);
+        
+        productsArray = new ArrayList<>();
         
     }
 
@@ -240,22 +243,34 @@ public class myCartGUI extends javax.swing.JFrame {
                         products.get(i)[0], 
                         Integer.parseInt(products.get(i)[2]));
                 innerFrame.add(example);
+                productsArray.add(example);
             }
         jPanel4.add(jScrollPane);
     }
     
-    public void setCart(ArrayList<String[]> productsArray) throws SQLException {
-        for(int i=0;i< productsArray.size();i++)
+    public void setCart(ArrayList<String[]> products) throws SQLException {
+        for(int i=0;i< products.size();i++)
                 {
-                    ProductPanel product = new ProductPanel(productsArray.get(i)[3],
-                        Integer.parseInt(productsArray.get(i)[1]),
-                        productsArray.get(i)[0], 
-                        Integer.parseInt(productsArray.get(i)[2]),
+                    ProductPanel product = new ProductPanel(products.get(i)[3],
+                        Integer.parseInt(products.get(i)[1]),
+                        products.get(i)[0], 
+                        Integer.parseInt(products.get(i)[2]),
                             1);
-                    innerFrame.add(product);
+                    innerFrame.add(product);           
+                    productsArray.add(product);
                 }
         jPanel4.add(jScrollPane);
+        System.out.println("Cart size "+products.size());
     }
+    
+        
+    public void resetProducts(int userID) {
+        for(int i = 0; i < productsArray.size(); i++) {
+            productsArray.get(i).setUserID(userID);
+        }
+        
+    }
+    
     
     /**
      * @param args the command line arguments
@@ -320,6 +335,10 @@ public class myCartGUI extends javax.swing.JFrame {
         innerFrame.removeAll();
         innerFrame.revalidate();
         innerFrame.repaint();
+    }
+    
+    public void test(){
+        System.out.println("Hello");
     }
 
     public void setHomeListener(ActionListener actionListener) {

@@ -84,10 +84,10 @@ public class ProductsDAO {
     }
 
     public void insertIntoShoppingCart(int userID, int itemID, int itemQuantity) throws SQLException {
-        if(checkIfProductLastOne(itemID, itemQuantity))
+        if(checkIfProductLastOne(itemID, itemQuantity)) {
             //Throw message not enough stock
             System.out.println("Not enough in stock");
-        
+        }
         else
             statement.executeUpdate("INSERT INTO shopping_carts(userID,productID,quantity)" +
                     " VALUES (" + userID + ", + " + itemID +", + " + itemQuantity + " )");
@@ -266,12 +266,11 @@ public class ProductsDAO {
     
     public ArrayList<String[]> getCart(int userID) throws SQLException {
         resultSet = statement.executeQuery("SELECT * FROM shopping_carts WHERE userID = " + userID + ";");
+        System.out.println("SELECT * FROM shopping_carts WHERE userID = " + userID + ";");
         ArrayList<String> cartList = new ArrayList<>();
         ArrayList<String> quantityList = new ArrayList<>();
         ArrayList<String[]> shoppingCart = new ArrayList<>();
         
-        if(resultSet.next()) {
-            resultSet.first();
             while(resultSet.next()){
                 cartList.add(resultSet.getString("productID"));
                 quantityList.add(resultSet.getString("quantity"));
@@ -291,7 +290,6 @@ public class ProductsDAO {
                     shoppingCart.add(products);
                 }
             } 
-        }
         
         return shoppingCart;
     }

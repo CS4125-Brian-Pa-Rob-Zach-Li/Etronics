@@ -22,4 +22,5 @@ public interface UserDAO {
     public boolean deleteUser(int uID);
     public boolean resetUser(int uID);
     public boolean updateUser(int id, String uname, String uemail);
+    public int getUser();
 }

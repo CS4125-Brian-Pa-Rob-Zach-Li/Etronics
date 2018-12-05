@@ -103,6 +103,10 @@ public class login {
         return user.getUserName();
     }
     
+    public int getUserID(){
+        return user.getUserID();
+    }
+    
     public String getRole(String email) throws SQLException
     {
         String role = userDao.getUserRole(email);
