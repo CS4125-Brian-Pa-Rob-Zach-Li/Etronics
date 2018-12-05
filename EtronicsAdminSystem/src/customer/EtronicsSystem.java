@@ -8,7 +8,6 @@ package customer;
 import administration.UIAdminController;
 import administration.UIAdminModel;
 import administration.gui.UIAdminView;
-import administration.businesslogic.UserManagement;
 import customer.businesslogic.login;
 import customer.businesslogic.register;
 import administration.gui.UserManagementGUI;
@@ -23,8 +22,6 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import javax.swing.JOptionPane;
 import simulation.*;
 
@@ -76,18 +73,18 @@ public class EtronicsSystem {
         
         customerModel = new UICustomerModel();
         
-         customerController = new UICustomerController(mainPage, loginPage, 
-                cartPage, purchasePage, productsPage, customerModel);
+        customerController = new UICustomerController(mainPage, loginPage, 
+            cartPage, purchasePage, productsPage, customerModel);
         
         // Start Simulation
-        ControllerFactory cf = new ControllerFactory();
-        Controller simController = cf.getSimulationController(adminController);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                simController.startSim();
-            }
-        }).start();
+//        ControllerFactory cf = new ControllerFactory();
+//        Controller simController = cf.getSimulationController(adminController);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                simController.startSim();
+//            }
+//        }).start();
         
         addloginListeners();
         addRegisterListeners_login();
@@ -126,6 +123,8 @@ public class EtronicsSystem {
                 if(result.equals("Successfully")){
                     try {
                         rule = loginBL.getRole(email);
+                        customerController.setUserID(loginBL.getUserID());
+                        System.out.println(loginBL.getUserID());
                     } catch (SQLException ex) {
                         Logger.getLogger(EtronicsSystem.class.getName()).log(Level.SEVERE, null, ex);
                     }
