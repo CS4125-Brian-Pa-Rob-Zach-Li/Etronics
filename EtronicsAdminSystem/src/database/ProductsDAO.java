@@ -169,9 +169,10 @@ public class ProductsDAO {
             
         }
         
-        statement.executeUpdate("DELETE FROM shopping_carts WHERE userID="+userID+";");
+        statement.executeUpdate("DELETE FROM shopping_carts WHERE userID = "+userID+";");
 
         int totalCost = getTotalCost(idArrayList);
+        
         statement.executeUpdate("INSERT INTO orders ( userID, description, totalCost, status)" +
                 " VALUES (" + userID + ", '" + description.toString() + "', " +  totalCost + ", '" + status+ "' )");
   
