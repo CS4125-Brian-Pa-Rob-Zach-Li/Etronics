@@ -103,7 +103,7 @@ public class ProductsDAO {
                 " AND productID = "+ itemID+ ";" );
         resultSet.next();
         int newQuantity = (resultSet.getInt("quantity")) + itemQuantity;
-        statement.execute("UPDATE shopping_carts set quantity = " + newQuantity + "WHERE productID = " + itemID +
+        statement.executeUpdate("UPDATE shopping_carts set quantity = " + newQuantity + " WHERE productID = " + itemID +
                 " AND userID =" + userID);
         }
         
