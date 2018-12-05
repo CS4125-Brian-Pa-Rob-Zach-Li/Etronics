@@ -177,7 +177,8 @@ public class UICustomerController {
         purchasePage.setPurchaseListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 try {
-                    model.createTransaction();
+                    model.createTransaction(userID);
+                    resetCart();
                 } catch (SQLException ex) {
                     Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
