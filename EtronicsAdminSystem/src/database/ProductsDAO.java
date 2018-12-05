@@ -266,7 +266,6 @@ public class ProductsDAO {
     
     public ArrayList<String[]> getCart(int userID) throws SQLException {
         resultSet = statement.executeQuery("SELECT * FROM shopping_carts WHERE userID = " + userID + ";");
-        System.out.println("SELECT * FROM shopping_carts WHERE userID = " + userID + ";");
         ArrayList<String> cartList = new ArrayList<>();
         ArrayList<String> quantityList = new ArrayList<>();
         ArrayList<String[]> shoppingCart = new ArrayList<>();

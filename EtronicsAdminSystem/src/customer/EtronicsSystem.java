@@ -171,6 +171,8 @@ public class EtronicsSystem {
                     mainPage.setVisible(true);
                     try {
                         mainPage.showID(loginBL.setCustomerDetails(email));
+                        customerController.setUserID(loginBL.getUserID());
+                        System.out.println(loginBL.getUserID());
                     } catch (SQLException ex) {
                         Logger.getLogger(EtronicsSystem.class.getName()).log(Level.SEVERE, null, ex);
                     }
