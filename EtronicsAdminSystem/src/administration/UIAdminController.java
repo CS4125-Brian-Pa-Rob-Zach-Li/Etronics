@@ -6,7 +6,6 @@
 package administration;
 
 import administration.gui.UIAdminView;
-import administration.gui.UserManagementGUI;
 import products.BasicProduct;
 import products.ProductFactory;
 import products.Promotion;
@@ -23,13 +22,13 @@ public class UIAdminController{
     
     private UIAdminView view;
     private UIAdminModel model;
-    private UserManagementGUI userManGUI;
+    //private UserManagementGUI userManGUI;
     
 
-    public UIAdminController(UIAdminView view, UIAdminModel model, UserManagementGUI umg){
+    public UIAdminController(UIAdminView view, UIAdminModel model){
         this.view = view;
         this.model = model;
-        this.userManGUI = umg;
+        //this.userManGUI = umg;
         
         addListeners();
         updateCategories();
@@ -37,22 +36,11 @@ public class UIAdminController{
     
     public void addListeners(){
         // Promo Man Button
-        view.addPromoManListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                view.setPromoMenuVisible();
-            }});
-        // Product management button
-        userManGUI.addProductManListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                userManGUI.setVisible(false);
-                view.setVisible(true);
-            }});
-        // User management button
-        view.addUserManListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                view.setVisible(false);
-                userManGUI.setVisible(true);
-            }});
+//        view.addPromoManListener(new ActionListener(){
+//            public void actionPerformed(ActionEvent e){
+//                view.setPromoMenuVisible();
+//            }});
+        
         // Delete product button
         view.addDeleteProductListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
