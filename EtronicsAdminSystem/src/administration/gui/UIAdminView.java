@@ -25,6 +25,7 @@ public class UIAdminView extends JFrame {
     private UIAdminModel model;
     // Components
     private JPanel mainContent;
+    private JPanel mainButtonPanel;
     // Basic View
     private JLabel heading;
     private JButton productManButton;
@@ -76,8 +77,7 @@ public class UIAdminView extends JFrame {
     private JTextField promoName;    
     private JLabel date;
     private JTextField endDate;
-    private JButton addPromButton;
-    private JPanel addPromPanel;    
+    private JButton addPromButton = new JButton("Add Promotion");
     
     public UIAdminView(UIAdminModel model){
         
@@ -89,8 +89,39 @@ public class UIAdminView extends JFrame {
         storeManButton = new JButton("Store Management");
         promoManButton = new JButton("Promotional Management");
         adManButton = new JButton("Advertising Management");
-
-        // Add Products
+    
+        mainContent = new JPanel();
+        mainContent.setLayout(new BorderLayout());
+        heading.setFont(new Font("",Font.PLAIN, 40));
+        mainContent.add(heading, BorderLayout.NORTH);
+        
+        mainButtonPanel = new JPanel();
+        mainButtonPanel.setLayout(new GridLayout(0,1));
+        mainButtonPanel.setBorder(new EmptyBorder(10, 0, 0, 10));
+        mainButtonPanel.add(productManButton);
+        mainButtonPanel.add(userManButton);
+        mainButtonPanel.add(storeManButton);
+        mainButtonPanel.add(promoManButton);
+        mainButtonPanel.add(adManButton);
+        
+        //////////////////////////////////////////////
+        
+        JPanel variablePanel = setupProductGUI();
+        
+        mainContent.add(mainButtonPanel, BorderLayout.WEST);
+        mainContent.add(variablePanel, BorderLayout.CENTER);
+        
+        this.setContentPane(mainContent);
+        this.setSize(900,600);
+        this.setResizable(false);
+        this.setTitle("Etronics Admin System");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    
+    public JPanel setupProductGUI(){
+        
+        
+         // Add Products
         addProdTitleLabel = new JLabel("Add Product");
         prodNameLabel = new JLabel("Name: ");
         prodPriceLabel = new JLabel("Price: ");
@@ -106,6 +137,7 @@ public class UIAdminView extends JFrame {
         delProdIDLabel = new JLabel("Product ID: ");
         prodIDField = new JTextField();
         prodDelButton = new JButton("Delete Product");
+        
         // Change Product
         changeProdTitleLabel = new JLabel("Change Product");
         changeProdIDLabel = new JLabel("Product ID: ");
@@ -117,104 +149,13 @@ public class UIAdminView extends JFrame {
         changeProdPriceField = new JTextField();
         changeCategoryComboBox = new JComboBox();
         changeProdAddButton = new JButton("Change Product");
-        // Find product ID
+        //Find product ID
         findProdTitleLabel = new JLabel("Find Product ID");
         findProdIDLabel = new JLabel("Product Name: ");
         idLabel = new JLabel("ID List: ");
         idComboBox = new JComboBox();
         findProdButton = new JButton("Find ID");
         findProdIDField = new JTextField();
-    
-        mainContent = new JPanel();
-        mainContent.setLayout(new BorderLayout());
-        heading.setFont(new Font("",Font.PLAIN, 40));
-        mainContent.add(heading, BorderLayout.NORTH);
-        
-        JPanel mainButtonPanel = new JPanel();
-        mainButtonPanel.setLayout(new GridLayout(0,1));
-        mainButtonPanel.setBorder(new EmptyBorder(10, 0, 0, 10));
-        mainButtonPanel.add(productManButton);
-        mainButtonPanel.add(userManButton);
-        mainButtonPanel.add(storeManButton);
-        mainButtonPanel.add(promoManButton);
-        mainButtonPanel.add(adManButton);
-        
-        //promotion GUI//////////////////////////////
-        JLabel[] emptyLabels = new JLabel[7];
-        JLabel[] centreBoxLabels = new JLabel[7];
-        for(int i=0; i< emptyLabels.length; i++){
-            emptyLabels[i] = new JLabel();
-            centreBoxLabels[i] = new JLabel();
-        }
-        discount = new JLabel("Discount:");
-        JPanel disNumPanel = new JPanel();
-        disNumPanel.setLayout(new GridLayout(3,1));
-        discountNum = new JTextField("", 100);
-        disNumPanel.add(centreBoxLabels[4]);
-        disNumPanel.add(discountNum);
-        discountNum.setSize(100, 20);
-        prod = new JLabel("Product ID:");
-        JPanel prodPanel = new JPanel();
-        prodPanel.setLayout(new GridLayout(3,1));
-        productID = new JTextField("", 100);
-        prodPanel.add(centreBoxLabels[3]);
-        prodPanel.add(productID);
-        productID.setSize(100, 20);
-        promo = new JLabel("Promotion:");
-        JPanel promoPanel = new JPanel();
-        promoPanel.setLayout(new GridLayout(3,1));
-        promoName = new JTextField("", 100);
-        promoPanel.add(centreBoxLabels[2]);
-        promoPanel.add(promoName);
-        promoName.setSize(100, 20);
-        date = new JLabel("Promotion End Date:");
-        JPanel datePanel = new JPanel();
-        datePanel.setLayout(new GridLayout(3,1));
-        endDate = new JTextField("", 100);
-        datePanel.add(centreBoxLabels[1]);
-        datePanel.add(endDate);
-        endDate.setSize(100, 20);
-        JPanel buttPanel = new JPanel();
-        buttPanel.setLayout(new GridLayout(3,1));        
-        addPromButton = new JButton("Add Promotion");
-        buttPanel.add(emptyLabels[0]);
-        buttPanel.add(addPromButton);
-        addPromPanel = new JPanel();
-        addPromPanel.setLayout(new GridLayout(4,2));
-        
-        addPromPanel.add(emptyLabels[0]);
-        addPromPanel.add(discount);
-        addPromPanel.add(disNumPanel);
-        addPromPanel.add(emptyLabels[1]);
-        addPromPanel.add(emptyLabels[2]);
-        addPromPanel.add(prod);   
-        addPromPanel.add(prodPanel);
-        addPromPanel.add(emptyLabels[3]);
-        addPromPanel.add(emptyLabels[4]);
-        addPromPanel.add(promo);
-        addPromPanel.add(promoPanel);
-        addPromPanel.add(emptyLabels[5]);
-        addPromPanel.add(emptyLabels[6]);
-        addPromPanel.add(date);
-        addPromPanel.add(datePanel);
-        addPromPanel.add(buttPanel);
-        
-        //////////////////////////////////////////////
-        
-        JPanel variablePanel = setupProductGUI();
-        
-        mainContent.add(mainButtonPanel, BorderLayout.WEST);
-        mainContent.add(variablePanel, BorderLayout.CENTER);
-
-        this.setContentPane(mainContent);
-        this.setSize(900,600);
-        this.setResizable(false);
-        this.setTitle("Etronics Admin System");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-    
-    public JPanel setupProductGUI(){
-        
         JPanel variablePanel = new JPanel();
         //variablePanel.setLayout(new BoxLayout(variablePanel, BoxLayout.Y_AXIS));
         variablePanel.setLayout(new GridLayout(2,2));
@@ -361,11 +302,82 @@ public class UIAdminView extends JFrame {
         variablePanel.add(delProdPanel);
         variablePanel.add(changeProdPanel);
         variablePanel.add(chProdPanel);
+        variablePanel.setVisible(true);
         
         return variablePanel;
     }
     
+     //promotion GUI//////////////////////////////
+    public JPanel setupPromotionGUI()
+    {   
+        JPanel addPromPanel = new JPanel();
+        addPromPanel.setLayout(new BoxLayout(addPromPanel,BoxLayout.Y_AXIS));
+        addPromPanel.setBorder(new EmptyBorder(100, 100, 100, 150));
+
+        JPanel labelsPanel = new JPanel();
+        labelsPanel.setLayout(new GridLayout(4,1, 20, 20));
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new GridLayout(4,1, 40, 40));
+        
+        discount = new JLabel("Discount:");
+        discountNum = new JTextField("", 100);
+        labelsPanel.add(discount);
+        textPanel.add(discountNum);
+        discountNum.setSize(100, 20);
+        
+        prod = new JLabel("Product ID:");
+        productID = new JTextField("", 100);
+        labelsPanel.add(prod);
+        textPanel.add(productID);
+        productID.setSize(100, 20);
+        
+        promo = new JLabel("Promotion:");
+        promoName = new JTextField("", 100);
+        labelsPanel.add(promo);
+        textPanel.add(promoName);
+        promoName.setSize(100, 20);
+        
+        
+        date = new JLabel("Promotion End Date:");
+        endDate = new JTextField("", 100);
+        labelsPanel.add(date );
+        textPanel.add(endDate);
+        endDate.setSize(100, 20);
+        
+        JPanel addPromXPanel = new JPanel();
+        addPromXPanel.setLayout(new BoxLayout(addPromXPanel,BoxLayout.X_AXIS));
+        addPromXPanel.add(labelsPanel);
+        addPromXPanel.add(textPanel);
+        
+        addPromPanel.add(addPromXPanel);
+        addPromPanel.add(addPromButton);          
+        addPromPanel.setVisible(true);
+        
+        return addPromPanel;
+    }
     
+    
+    //Setting Panels Visible///////////////////////////
+    
+    
+    public void setSelectedMenuVisible(int selected)
+    {     
+        JPanel variablePanel;
+        switch(selected)
+        {
+            case 1: variablePanel = setupProductGUI(); break;
+            case 2: variablePanel = setupPromotionGUI(); break;
+            case 3: ;
+            default: variablePanel = setupProductGUI();
+        }
+        variablePanel.setVisible(true);
+        mainContent.removeAll();
+        mainContent.add(mainButtonPanel, BorderLayout.WEST);
+        mainContent.add(variablePanel, BorderLayout.CENTER);
+        mainContent.revalidate(); 
+        mainContent.repaint();
+        this.setContentPane(mainContent);
+    }
     
     ////////////Product attribute methods////////////////////////////
     public String getAddProductName(){
@@ -388,9 +400,10 @@ public class UIAdminView extends JFrame {
         return String.valueOf(categoryComboBox.getSelectedItem());
     }
     
+    //Button Listeners///////////////////////////////////
     public void addUserManListener(ActionListener al){
         userManButton.addActionListener(al);
-    }
+    }  
     
     public void addNewProductListener(ActionListener al){
         prodAddButton.addActionListener(al);
@@ -400,23 +413,18 @@ public class UIAdminView extends JFrame {
         findProdButton.addActionListener(al);
     }
     
+    public void addProductManListener(ActionListener al){
+        productManButton.addActionListener(al);
+    }
     public void addPromoManListener(ActionListener al){
         promoManButton.addActionListener(al);
-    }
-    
-    public void setPromoMenuVisible(){
-        JPanel contentPane = (JPanel) this.getContentPane();
-
-        contentPane.removeAll();
-        contentPane.add(addPromPanel);
-        contentPane.revalidate(); 
-        contentPane.repaint();
     }
     //////////////////////////////////////////////////////////
     
     
     //////////////Promotion attribute methods///////////////////////
-    public void addNewPromotionListener(ActionListener al){
+    public void addNewPromotionListener(ActionListener al)
+    {
         addPromButton.addActionListener(al);
     }
     
@@ -432,11 +440,11 @@ public class UIAdminView extends JFrame {
     
     public String getAddPromotionEndDate()
     {
-        return endDate.toString();
+        return endDate.getText();
     }
     
     public String getAddPromotionPromoName(){
-        return promoName.toString();
+        return promoName.getText();
     }
     
     public void resetAllTextBoxes(){
@@ -491,7 +499,7 @@ public class UIAdminView extends JFrame {
             return false;
         }else if(dateToValidate.toString().matches(datePatternSlash) || dateToValidate.toString().matches(datePatternDash))//check if date is correct format
         {
-            JOptionPane.showMessageDialog(null,"Error: Incorrect format used! Please use one of these formats, dd-mm-yyyy, dd/mm/yy");
+            JOptionPane.showMessageDialog(null,"Error: Incorrect format used! Please use one of these formats, mm-dd-yyyy, mm/dd/yy");
             return false;
         }else if(dateToValidate.before(today) || dateToValidate.equals(today))//check if date is same as today or before
         {
