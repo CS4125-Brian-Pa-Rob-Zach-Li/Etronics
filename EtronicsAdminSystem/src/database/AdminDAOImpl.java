@@ -149,7 +149,9 @@ public class AdminDAOImpl implements AdminDAO {
 
     @Override
     public boolean insertPromotion(Promotion p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      return true;
     }
 
     public void updateProduct(BasicProduct p) {

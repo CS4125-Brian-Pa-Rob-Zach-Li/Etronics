@@ -374,6 +374,10 @@ public class UserManagementGUI extends javax.swing.JFrame {
         productMan.addActionListener(al);
     }
    
+   public void addPromoManListener(ActionListener al){
+        PromotionalMan.addActionListener(al);
+    }
+   
    public boolean validatePW(String text){
         String pattern = "^[0-9a-zA-Z]{8,16}";
         if(!(text.matches(pattern))){
