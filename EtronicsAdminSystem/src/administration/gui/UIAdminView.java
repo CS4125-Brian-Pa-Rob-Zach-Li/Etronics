@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
  * @author Brian Heaphy - 14160846
  */
 
-public class UIAdminView extends JFrame {
+public class UIAdminView extends JPanel{
     
     //Model
     private UIAdminModel model;
@@ -27,12 +27,6 @@ public class UIAdminView extends JFrame {
     private JPanel mainContent;
     // Basic View
     private JLabel heading;
-    private JButton logoutButton;
-    private JButton productManButton;
-    private JButton userManButton;
-    private JButton storeManButton;
-    private JButton promoManButton;
-    private JButton adManButton;
     // Add Products
     private JLabel addProdTitleLabel;
     private JLabel prodNameLabel;
@@ -78,12 +72,6 @@ public class UIAdminView extends JFrame {
         this.model = model;
         // Basic View
         heading = new JLabel("Etronics Admin System", JLabel.CENTER);
-        productManButton = new JButton("Product Management");
-        logoutButton = new JButton("Logout");
-        userManButton = new JButton("User Management");
-        storeManButton = new JButton("Store Management");
-        promoManButton = new JButton("Promotional Management");
-        adManButton = new JButton("Advertising Management");
 
         // Add Products
         addProdTitleLabel = new JLabel("Add Product");
@@ -121,15 +109,6 @@ public class UIAdminView extends JFrame {
         heading.setFont(new Font("",Font.PLAIN, 40));
         mainContent.add(heading, BorderLayout.NORTH);
         
-        JPanel mainButtonPanel = new JPanel();
-        mainButtonPanel.setLayout(new GridLayout(0,1));
-        mainButtonPanel.setBorder(new EmptyBorder(10, 0, 0, 10));
-        mainButtonPanel.add(logoutButton);
-        mainButtonPanel.add(productManButton);
-        mainButtonPanel.add(userManButton);
-        mainButtonPanel.add(storeManButton);
-        mainButtonPanel.add(promoManButton);
-        mainButtonPanel.add(adManButton);
         
         //promotion GUI//////////////////////////////
         discount = new JLabel("Discount:");
@@ -161,22 +140,17 @@ public class UIAdminView extends JFrame {
         
         JPanel variablePanel = setupProductGUI();
         
-        mainContent.add(mainButtonPanel, BorderLayout.WEST);
         mainContent.add(variablePanel, BorderLayout.CENTER);
-
-        this.setContentPane(mainContent);
-        this.setSize(900,600);
-        this.setResizable(false);
-        this.setTitle("Etronics Admin System");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        this.add(mainContent);
     }
     
     public JPanel setupProductGUI(){
         
         JPanel variablePanel = new JPanel();
         //variablePanel.setLayout(new BoxLayout(variablePanel, BoxLayout.Y_AXIS));
-        variablePanel.setLayout(new GridLayout(2,2));
-        variablePanel.setBorder(new EmptyBorder(10, 0, 0, 10));
+        variablePanel.setLayout(new GridLayout(2,2, 20, 20));
+        variablePanel.setBorder(new EmptyBorder(20, 20, 20, 20));
         
         // Add Product Panel
         JPanel addProdPanel = new JPanel();
@@ -253,7 +227,7 @@ public class UIAdminView extends JFrame {
         transactionTitlePanel.add(transactionMonitorLabel);
         
         JPanel transactionToolPanel = new JPanel();
-        transactionToolPanel.setLayout(new GridLayout(1, 0));
+        transactionToolPanel.setLayout(new GridLayout(0, 1));
         transactionToolPanel.add(transactionMonitor);
         
         transactionPanel.add(transactionTitlePanel);
@@ -338,13 +312,6 @@ public class UIAdminView extends JFrame {
         return prodIDField.getText();
     }
     
-    public void addLogoutListener(ActionListener al){
-        logoutButton.addActionListener(al);
-    }
-    
-    public void addUserManListener(ActionListener al){
-        userManButton.addActionListener(al);
-    }
     
     public void addNewProductListener(ActionListener al){
         prodAddButton.addActionListener(al);
@@ -358,9 +325,7 @@ public class UIAdminView extends JFrame {
         findProdButton.addActionListener(al);
     }
     
-    public void addPromoManListener(ActionListener al){
-        promoManButton.addActionListener(al);
-    }
+
     
     public void setPromoMenuVisible(){
         /*JPanel contentPane = (JPanel) this.getContentPane();

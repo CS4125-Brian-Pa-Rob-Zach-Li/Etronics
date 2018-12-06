@@ -10,7 +10,7 @@ import administration.UIAdminModel;
 import administration.gui.UIAdminView;
 import customer.businesslogic.login;
 import customer.businesslogic.register;
-import administration.gui.UserManagementGUI;
+import administration.gui.mainFrame;
 import customer.gui.allProductsGUI;
 import customer.gui.loginGUI;
 import customer.gui.mainpageGUI;
@@ -49,18 +49,22 @@ public class EtronicsSystem {
 
     // Admin
     private static UIAdminController adminController;
-    private static UIAdminModel adminModel;
-    private static UIAdminView adminView;
-    private static UserManagementGUI userManagementPage;
+//    private static UIAdminModel adminModel;
+//    private static UIAdminView adminView;
+//    private static UserManagementGUI userManagementPage;
+   private static mainFrame managementPage;
     
     
     public static void main(String[] args) throws Exception {
        
-        adminModel = new UIAdminModel();
-        adminView = new UIAdminView(adminModel);
-        userManagementPage = new UserManagementGUI();
-        adminController = new UIAdminController(adminView, adminModel, userManagementPage);
-
+//        adminModel = new UIAdminModel();
+//        adminView = new UIAdminView(adminModel);
+//        userManagementPage = new UserManagementGUI();
+//        adminController = new UIAdminController(adminView, adminModel, userManagementPage);
+        
+        managementPage = new mainFrame();
+        adminController = managementPage.getController();
+        
         loginPage = new loginGUI();
         mainPage = new mainpageGUI();
         registerPage = new registerGUI();
@@ -94,12 +98,7 @@ public class EtronicsSystem {
     } 
     
     public static void addloginListeners(){
-        adminView.addLogoutListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                adminView.setVisible(false);
-                loginPage.setVisible(true);
-            }
-        });
+            
         loginPage.addLoginListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 String email = loginPage.getEmail();
@@ -138,7 +137,7 @@ public class EtronicsSystem {
                         }
                     }
                     else
-                        adminView.setVisible(true);
+                        managementPage.setVisible(true);
                 }
             }});
     }
