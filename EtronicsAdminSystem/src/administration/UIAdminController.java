@@ -36,16 +36,35 @@ public class UIAdminController{
     }
     
     public void addListeners(){
-        // Promo Man Button
+        // Promotion Management Button
         view.addPromoManListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                view.setPromoMenuVisible();
+                userManGUI.setVisible(false);
+                view.setVisible(true);
+                view.setSelectedMenuVisible(2);
             }});
+        
+        userManGUI.addPromoManListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                userManGUI.setVisible(false);
+                view.setVisible(true);
+                view.setSelectedMenuVisible(2);
+            }});
+
         // Product management button
+        
+        view.addProductManListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                userManGUI.setVisible(false);
+                view.setVisible(true);
+                view.setSelectedMenuVisible(1);
+            }});
+        
         userManGUI.addProductManListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 userManGUI.setVisible(false);
                 view.setVisible(true);
+                view.setSelectedMenuVisible(1);
             }});
         
         // User management button
@@ -54,6 +73,8 @@ public class UIAdminController{
                 view.setVisible(false);
                 userManGUI.setVisible(true);
             }});
+        
+        
         // Add product button
         view.addNewProductListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -114,23 +135,23 @@ public class UIAdminController{
             {
                 String discount = view.getAddPromotionDiscountNum(), id = view.getAddPromotionProductID();
                 String promoName = view.getAddPromotionPromoName(), date = view.getAddPromotionEndDate();
-                boolean validInput;
+                boolean validInput, validDate;
                 validInput = view.validateInput(discount,2);
                 if(validInput) validInput = view.validateInput(id, 0);
-                else if(validInput) validInput = view.validateDate(date);
+                validDate = view.validateDate(date);
                 
-                if(validInput)
-                    {
-                      int pID = Integer.parseInt(id);
-                      int dis = Integer.parseInt(discount);
-                      Date lastDate = new Date(date);
-                      Promotion newPromotion = new Promotion(id, dis, lastDate);
-                      model.addPromotion(newPromotion);
-                    } else {
-                        view.resetAllTextBoxes();
-                        JOptionPane.showMessageDialog(null,"Error: Input in incorrect format");
-                        }
+                if(validInput && validDate)
+                {
+                  int pID = Integer.parseInt(id);
+                  int dis = Integer.parseInt(discount);
+                  Date lastDate = new Date(date);
+                  Promotion newPromotion = new Promotion(id, dis, lastDate);
+                  model.addPromotion(newPromotion);
+                } else {
+                    view.resetAllTextBoxes();
+                    JOptionPane.showMessageDialog(null,"Error: Input in incorrect format");
                     }
+                }
         });
     }
     
