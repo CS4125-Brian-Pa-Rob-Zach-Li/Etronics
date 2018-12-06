@@ -20,7 +20,8 @@ import java.awt.event.ActionListener;
 public class mainpageGUI extends javax.swing.JFrame {
     
     JPanel searchFrame;
-    JScrollPane jScrollPane;;
+    JScrollPane jScrollPane;
+    ArrayList<ProductPanel> productsArray;
     
     /**
      * Creates new form mainpageGUI
@@ -39,6 +40,12 @@ public class mainpageGUI extends javax.swing.JFrame {
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane.setBounds(0, 0, 715, 197);
   
+    }
+    
+    public void resetProducts(int userID) {
+        for(int i = 0; i < productsArray.size(); i++) {
+            productsArray.get(i).setUserID(userID);
+        }
     }
     
     public void showID(String email)
@@ -312,23 +319,26 @@ public class mainpageGUI extends javax.swing.JFrame {
     }
     
     
-    public void setProducts(ArrayList<String[]> productsArray,int panel) throws SQLException {
+    public void setProducts(ArrayList<String[]> products,int panel) throws SQLException {
+            productsArray = new ArrayList<>();
             JPanel innerFrame = new JPanel();
             innerFrame.setLayout(new BoxLayout(innerFrame,BoxLayout.Y_AXIS));
             innerFrame.setSize(1000, 800);
       
-            for(int i=0;i< productsArray.size();i++)
+            for(int i=0;i< products.size();i++)
             {
                 ProductPanel productPanel = new ProductPanel(
-                        productsArray.get(i)[3],
-                        Integer.parseInt(productsArray.get(i)[1]),
-                        productsArray.get(i)[0], 
-                        Integer.parseInt(productsArray.get(i)[2]));
+                        products.get(i)[3],
+                        Integer.parseInt(products.get(i)[1]),
+                        products.get(i)[0], 
+                        Integer.parseInt(products.get(i)[2]));
                 if(panel != 1) {
                     searchFrame.add(productPanel);
                 }
                 else
                     innerFrame.add(productPanel);
+                
+                productsArray.add(productPanel);
             }
             
             if(panel ==1) {
@@ -405,4 +415,5 @@ public class mainpageGUI extends javax.swing.JFrame {
     public void setProductListener(ActionListener actionListener) {
         AllProductBu.addActionListener(actionListener);
     }
+    
 }

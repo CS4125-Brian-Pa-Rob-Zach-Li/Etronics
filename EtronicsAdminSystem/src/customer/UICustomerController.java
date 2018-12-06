@@ -29,10 +29,11 @@ public class UICustomerController {
     private static purchaseGUI purchasePage;
     private static allProductsGUI productPage;
     private UICustomerModel model;
+    private int userID;
     
     public UICustomerController(mainpageGUI mainPage, loginGUI loginPage, myCartGUI cartPage,
             purchaseGUI purchasePage, allProductsGUI productPage, UICustomerModel model) {
-        
+        userID = 1;
         UICustomerController.mainPage = mainPage;
         this.loginPage = loginPage;
         this.cartPage = cartPage;
@@ -50,14 +51,34 @@ public class UICustomerController {
     
     public void updateProductView() throws SQLException {
 //        mainPage
+        System.out.println("updateProductView userid = "+ userID);
         mainPage.setProducts(model.getProducts("Television"), 1);
         mainPage.setProducts(model.getProducts("Oven"), 0);
         //Get userId for getCarts(userID)
-        cartPage.setCart(model.getCart(1));
+        cartPage.setCart(model.getCart(userID));
         //Get userID for getCarts
-        purchasePage.setCart(model.getCart(1));
+        purchasePage.setCart(model.getCart(userID));
         productPage.setProducts(model.getProducts());
+    }
+    
+    public void resetCart() throws SQLException {        
+        cartPage.setCart(model.getCart(userID));
+        purchasePage.setCart(model.getCart(userID));
         
+        cartPage.resetProducts(userID);
+//        purchasePage.resetProducts()
+    }
+    
+    
+    public void resetView() throws SQLException {
+        productPage.resetProducts(userID);
+        mainPage.resetProducts(userID);
+        cartPage.resetProducts(userID);
+
+        cartPage.refreshScreen();
+        purchasePage.refreshScreen();
+        cartPage.setCart(model.getCart(userID));
+        purchasePage.setCart(model.getCart(userID));
     }
     
     public void updateSearchView() throws SQLException {
@@ -106,7 +127,8 @@ public class UICustomerController {
             public void actionPerformed(ActionEvent e) {
                 try {
                     purchasePage.refreshScreen();
-                    updateProductView();
+//                    updateProductView();
+                    resetCart();
                 } catch (SQLException ex) {
                     Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -140,7 +162,9 @@ public class UICustomerController {
             public void actionPerformed(ActionEvent e) {
                 try {
                     cartPage.refreshScreen();
-                    updateProductView();
+//                    updateProductView();
+                    resetCart();
+
                 } catch (SQLException ex) {
                     Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -153,7 +177,8 @@ public class UICustomerController {
         purchasePage.setPurchaseListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 try {
-                    model.createTransaction();
+                    model.createTransaction(userID);
+                    resetCart();
                 } catch (SQLException ex) {
                     Logger.getLogger(UICustomerController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -169,6 +194,11 @@ public class UICustomerController {
                 purchasePage.setVisible(false);
             }
         });
+    }
+    
+    public void setUserID(int userID) throws SQLException {
+        this.userID = userID;
+        resetView();
     }
     
     

@@ -20,7 +20,7 @@ import javax.swing.JScrollPane;
 public class allProductsGUI extends javax.swing.JFrame {
     JPanel innerFrame;
     JScrollPane jScrollPane;
-    
+    ArrayList<ProductPanel> productsArray;
     /**
      * Creates new form allProduct
      */
@@ -233,7 +233,7 @@ public class allProductsGUI extends javax.swing.JFrame {
 
     
     public void setProducts(ArrayList<String[]> products) throws SQLException {
-
+        productsArray = new ArrayList<>();
             for(int i=0;i< products.size();i++)
             {
                 ProductPanel example = new ProductPanel(
@@ -242,8 +242,15 @@ public class allProductsGUI extends javax.swing.JFrame {
                         products.get(i)[0], 
                         Integer.parseInt(products.get(i)[2]));
                 innerFrame.add(example);
+                productsArray.add(example);
             }
         jPanel4.add(jScrollPane);
+    }
+    
+    public void resetProducts(int userID) {
+        for(int i = 0; i < productsArray.size(); i++) {
+            productsArray.get(i).setUserID(userID);
+        }
     }
     
     public String getSearchText() {

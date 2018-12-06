@@ -28,11 +28,15 @@ public class ProductPanel extends JPanel implements ActionListener, PanelInterfa
     private String title;
     private JButton buyB;
     private JButton descrip;
+    private int userID = 1;
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
 
     public ProductPanel(String desc, int prodPrice, String title, int id) 
     {
         this.draw(desc, prodPrice, title, id);
-            
     }
     
    public ProductPanel(String desc, int prodPrice, String title, int id, int shippingCart) {
@@ -115,7 +119,7 @@ public class ProductPanel extends JPanel implements ActionListener, PanelInterfa
         if(text.equals("Add to Cart")) {
             ProductsDAO products = new ProductsDAO();
             try {
-                    products.updateShoppingCart(1, id, 1);
+                    products.updateShoppingCart(userID, id, 1);
             } catch (SQLException ex) {
                 Logger.getLogger(ProductPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -124,7 +128,7 @@ public class ProductPanel extends JPanel implements ActionListener, PanelInterfa
         if(text.equals("Remove")) {
             ProductsDAO products = new ProductsDAO();
             try {
-                products.removeFromShoppingCart(1,id);
+                products.removeFromShoppingCart(userID,id);
             } catch (SQLException ex) {
                 Logger.getLogger(ProductPanel.class.getName()).log(Level.SEVERE, null, ex);
             }

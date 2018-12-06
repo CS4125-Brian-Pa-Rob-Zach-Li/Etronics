@@ -84,10 +84,10 @@ public class ProductsDAO {
     }
 
     public void insertIntoShoppingCart(int userID, int itemID, int itemQuantity) throws SQLException {
-        if(checkIfProductLastOne(itemID, itemQuantity))
+        if(checkIfProductLastOne(itemID, itemQuantity)) {
             //Throw message not enough stock
             System.out.println("Not enough in stock");
-        
+        }
         else
             statement.executeUpdate("INSERT INTO shopping_carts(userID,productID,quantity)" +
                     " VALUES (" + userID + ", + " + itemID +", + " + itemQuantity + " )");
@@ -103,7 +103,7 @@ public class ProductsDAO {
                 " AND productID = "+ itemID+ ";" );
         resultSet.next();
         int newQuantity = (resultSet.getInt("quantity")) + itemQuantity;
-        statement.execute("UPDATE shopping_carts set quantity = " + newQuantity + "WHERE productID = " + itemID +
+        statement.execute("UPDATE shopping_carts set quantity = " + newQuantity + " WHERE productID = " + itemID +
                 " AND userID =" + userID);
         }
         
@@ -169,9 +169,10 @@ public class ProductsDAO {
             
         }
         
-        statement.executeUpdate("DELETE FROM shopping_carts WHERE userID="+userID+";");
+        statement.executeUpdate("DELETE FROM shopping_carts WHERE userID = "+userID+";");
 
         int totalCost = getTotalCost(idArrayList);
+        
         statement.executeUpdate("INSERT INTO orders ( userID, description, totalCost, status)" +
                 " VALUES (" + userID + ", '" + description.toString() + "', " +  totalCost + ", '" + status+ "' )");
   
@@ -270,8 +271,6 @@ public class ProductsDAO {
         ArrayList<String> quantityList = new ArrayList<>();
         ArrayList<String[]> shoppingCart = new ArrayList<>();
         
-        if(resultSet.next()) {
-            resultSet.first();
             while(resultSet.next()){
                 cartList.add(resultSet.getString("productID"));
                 quantityList.add(resultSet.getString("quantity"));
@@ -291,7 +290,6 @@ public class ProductsDAO {
                     shoppingCart.add(products);
                 }
             } 
-        }
         
         return shoppingCart;
     }
