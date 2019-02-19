@@ -24,5 +24,5 @@ public interface AdminDAO {
     //void updateUser(User u);
     void updateProduct(BasicProduct p);
     //void deleteUser();
-    void deleteProduct();
+    boolean deleteProduct(int id);
 }

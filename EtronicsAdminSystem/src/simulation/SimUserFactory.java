@@ -11,11 +11,11 @@ package simulation;
  */
 public class SimUserFactory {
     
-    public SimUser createUser(String type, ISimUserState state){
+    public SimUser createUser(String type, ISimUserState state, SimUserStateFactory susf){
         if(type.equals(ISimUser.COMPANY))
-            return new SimUserCompany(state);
+            return new SimUserCompany(state, susf);
         else if(type.equals(ISimUser.PERSON))
-            return new SimUserPerson(state);
+            return new SimUserPerson(state, susf);
         else
             return null;
     }

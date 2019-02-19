@@ -5,6 +5,7 @@
  */
 package simulation;
 
+import administration.UIAdminController;
 import java.util.ArrayList;
 
 /**
@@ -21,9 +22,9 @@ public class SimController extends Controller{
     private Controller simUserCon;
     private TransactionDetector transDet;
     
-    public SimController(ControllerFactory cf) throws Exception{
+    public SimController(ControllerFactory cf, UIAdminController ac) throws Exception{
         
-        transDet = new TransactionDetector();
+        transDet = new TransactionDetector(ac);
         
         simUsers = generateUsers();
         
@@ -39,10 +40,10 @@ public class SimController extends Controller{
 
         // Generate a set amount of each type of user with their state set to shopping
         for(int x =0; x < COMPANYUSERS; x++)
-            su.add(simUserFact.createUser("Company", simUserStateFact.getUserState("Shopping")));
+            su.add(simUserFact.createUser("Company", simUserStateFact.getUserState("Shopping"), simUserStateFact));
         
         for(int x = 0; x < INDIVIDUALUSERS; x++)
-            su.add(simUserFact.createUser("Person", simUserStateFact.getUserState("Shopping")));
+            su.add(simUserFact.createUser("Person", simUserStateFact.getUserState("Shopping"), simUserStateFact));
         
         return su;
     }

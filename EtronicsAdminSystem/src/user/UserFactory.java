@@ -9,7 +9,7 @@ package user;
  *
  * @author XintingLi
  */
-public abstract class userFactory {
+public abstract class UserFactory {
     abstract User createuser();
     
     public User getuser(){

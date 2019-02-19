@@ -5,6 +5,7 @@
  */
 package simulation;
 
+import administration.UIAdminController;
 import java.util.ArrayList;
 
 /**
@@ -13,17 +14,12 @@ import java.util.ArrayList;
  */
 public class ControllerFactory {
     
-    public Controller getSimulationController() throws Exception{
-        return new SimController(this);
+    public Controller getSimulationController(UIAdminController ac) throws Exception{
+        return new SimController(this, ac);
     }
     
     public Controller getSimUserController(ArrayList<SimUser> su, 
             SimUserStateFactory susf, ITransactionDetectionObserver o) throws Exception{
         return new SimUserController(su, susf, o);
     }
-    
-    public Controller getSimWarehouseController(){
-        return new SimWarehouseController();
-    }
-
 }

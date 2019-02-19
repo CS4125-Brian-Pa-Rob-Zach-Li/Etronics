@@ -28,11 +28,23 @@ public class UIAdminView extends JFrame {
     private JPanel mainButtonPanel;
     // Basic View
     private JLabel heading;
+    private JButton logoutButton;
     private JButton productManButton;
     private JButton userManButton;
     private JButton storeManButton;
     private JButton promoManButton;
     private JButton adManButton;
+    
+    private JLabel changeProdTitleLabel;
+    private JLabel changeProdIDLabel;
+    private JLabel    changeProdNameLabel;
+    private JLabel changeProdPriceLabel;
+    private JLabel changeCategoryLabel ;
+    private JTextField changeProdIDField;
+    private JTextField changeProdNameField;
+    private JTextField changeProdPriceField;
+    private JComboBox changeCategoryComboBox;
+    private JButton changeProdAddButton;
     // Add Products
     private JLabel addProdTitleLabel;
     private JLabel prodNameLabel;
@@ -49,17 +61,10 @@ public class UIAdminView extends JFrame {
     private JLabel delProdIDLabel;
     private JTextField prodIDField;
     private JButton prodDelButton;
-    // Change Product
-    private JLabel changeProdTitleLabel;
-    private JLabel changeProdIDLabel;
-    private JLabel changeProdNameLabel;
-    private JLabel changeProdPriceLabel;
-    private JLabel changeCategoryLabel;
-    private JTextField changeProdIDField;
-    private JTextField changeProdNameField;
-    private JTextField changeProdPriceField;
-    private JComboBox changeCategoryComboBox;
-    private JButton changeProdAddButton;
+    // Transaction Monitor
+    private JLabel transactionMonitorLabel;
+    private JScrollPane transactionMonitor;
+    private DefaultListModel liveList;
     // Add Category
     private JLabel findProdTitleLabel;
     private JLabel findProdIDLabel;
@@ -85,6 +90,7 @@ public class UIAdminView extends JFrame {
         // Basic View
         heading = new JLabel("Etronics Admin System", JLabel.CENTER);
         productManButton = new JButton("Product Management");
+        logoutButton = new JButton("Logout");
         userManButton = new JButton("User Management");
         storeManButton = new JButton("Store Management");
         promoManButton = new JButton("Promotional Management");
@@ -117,11 +123,11 @@ public class UIAdminView extends JFrame {
         this.setTitle("Etronics Admin System");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+  
     
     public JPanel setupProductGUI(){
         
-        
-         // Add Products
+          // Add Products
         addProdTitleLabel = new JLabel("Add Product");
         prodNameLabel = new JLabel("Name: ");
         prodPriceLabel = new JLabel("Price: ");
@@ -137,8 +143,14 @@ public class UIAdminView extends JFrame {
         delProdIDLabel = new JLabel("Product ID: ");
         prodIDField = new JTextField();
         prodDelButton = new JButton("Delete Product");
+        // Transaction Monitor
+        transactionMonitorLabel = new JLabel("Live Transactions");
+        liveList = new DefaultListModel();
+        JList list = new JList(liveList);
+        transactionMonitor = new JScrollPane(list);
+        transactionMonitor.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        transactionMonitor.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
-        // Change Product
         changeProdTitleLabel = new JLabel("Change Product");
         changeProdIDLabel = new JLabel("Product ID: ");
         changeProdNameLabel = new JLabel("New Name: ");
@@ -156,6 +168,7 @@ public class UIAdminView extends JFrame {
         idComboBox = new JComboBox();
         findProdButton = new JButton("Find ID");
         findProdIDField = new JTextField();
+    
         JPanel variablePanel = new JPanel();
         //variablePanel.setLayout(new BoxLayout(variablePanel, BoxLayout.Y_AXIS));
         variablePanel.setLayout(new GridLayout(2,2));
@@ -168,6 +181,7 @@ public class UIAdminView extends JFrame {
         
         JPanel addProdTitlePanel = new JPanel(new GridLayout(0,1));
         addProdTitlePanel.add(addProdTitleLabel);
+        
         
         JPanel addProdLabelPanel = new JPanel();
         addProdLabelPanel.setLayout(new GridLayout(4, 1));
@@ -226,41 +240,20 @@ public class UIAdminView extends JFrame {
         delProdPanel.add(delProdButtonPanel);
         /////////////////////////////////////////////////////
         
+        ////////// Transaction Panel//////////////////////
+        JPanel transactionPanel = new JPanel();
+        transactionPanel.setLayout(new BoxLayout(transactionPanel, BoxLayout.Y_AXIS));
+        transactionPanel.setBorder(new EmptyBorder(20, 0, 0, 20));
         
-        ////////// Change Product Panel//////////////////////
-        JPanel changeProdPanel = new JPanel();
-        changeProdPanel.setLayout(new BoxLayout(changeProdPanel, BoxLayout.Y_AXIS));
-        changeProdPanel.setBorder(new EmptyBorder(20, 0, 0, 20));
+        JPanel transactionTitlePanel = new JPanel(new GridLayout(0,1));
+        transactionTitlePanel.add(transactionMonitorLabel);
         
-        JPanel changeProdTitlePanel = new JPanel(new GridLayout(0,1));
-        changeProdTitlePanel.add(changeProdTitleLabel);
+        JPanel transactionToolPanel = new JPanel();
+        transactionToolPanel.setLayout(new GridLayout(1, 0));
+        transactionToolPanel.add(transactionMonitor);
         
-        JPanel changeProdLabelPanel = new JPanel();
-        changeProdLabelPanel.setLayout(new GridLayout(4, 1));
-        changeProdLabelPanel.add(changeProdIDLabel);
-        changeProdLabelPanel.add(changeProdNameLabel);
-        changeProdLabelPanel.add(changeProdPriceLabel);
-        changeProdLabelPanel.add(changeCategoryLabel);
-        
-        JPanel changeProdToolPanel = new JPanel();
-        changeProdToolPanel.setLayout(new GridLayout(4, 1));
-        changeProdToolPanel.add(changeProdIDField);
-        changeProdToolPanel.add(changeProdNameField);
-        changeProdToolPanel.add(changeProdPriceField);
-        changeProdToolPanel.add(changeCategoryComboBox);
-        
-        changeProdPanel.add(changeProdTitlePanel);
-        
-        JPanel yetAnotherPanel3 = new JPanel();
-        yetAnotherPanel3.setLayout(new BoxLayout(yetAnotherPanel3, BoxLayout.X_AXIS));
-        yetAnotherPanel3.add(changeProdLabelPanel);
-        yetAnotherPanel3.add(changeProdToolPanel);
-        
-        changeProdPanel.add(yetAnotherPanel3);
-        
-        JPanel changeProdButtonPanel = new JPanel(new FlowLayout());
-        changeProdButtonPanel.add(changeProdAddButton);
-        changeProdPanel.add(changeProdButtonPanel);
+        transactionPanel.add(transactionTitlePanel);
+        transactionPanel.add(transactionToolPanel);
         //////////////////////////////////////////////////////////
         
         
@@ -296,18 +289,24 @@ public class UIAdminView extends JFrame {
         chProdPanel.add(chProdButtonPanel);
         ////////////////////////////////////////////////////////////
         
-        
-        
+
         variablePanel.add(addProdPanel);
         variablePanel.add(delProdPanel);
-        variablePanel.add(changeProdPanel);
+        variablePanel.add(transactionPanel);
         variablePanel.add(chProdPanel);
         variablePanel.setVisible(true);
         
         return variablePanel;
     }
     
+    ////////////Live Transactions////////////////////////////////////
+    public void updateTransactionList(String transaction){
+        liveList.addElement(transaction);
+        JScrollBar vertical = transactionMonitor.getVerticalScrollBar();
+        vertical.setValue(vertical.getMaximum());
      //promotion GUI//////////////////////////////
+    }
+     
     public JPanel setupPromotionGUI()
     {   
         JPanel addPromPanel = new JPanel();
@@ -384,6 +383,10 @@ public class UIAdminView extends JFrame {
         return prodNameField.getText();
     }
     
+    public void setCats(ArrayList<String> cats){
+        categoryComboBox.setModel(new DefaultComboBoxModel(cats.toArray()));
+    }
+    
     public String getAddProductPrice(){
         return prodPriceField.getText();
     }
@@ -400,6 +403,14 @@ public class UIAdminView extends JFrame {
         return String.valueOf(categoryComboBox.getSelectedItem());
     }
     
+    public String getDeleteProductID(){
+        return prodIDField.getText();
+    }
+    
+    public void addLogoutListener(ActionListener al){
+        logoutButton.addActionListener(al);
+    }
+    
     //Button Listeners///////////////////////////////////
     public void addUserManListener(ActionListener al){
         userManButton.addActionListener(al);
@@ -407,6 +418,10 @@ public class UIAdminView extends JFrame {
     
     public void addNewProductListener(ActionListener al){
         prodAddButton.addActionListener(al);
+    }
+    
+    public void addDeleteProductListener(ActionListener al){
+        prodDelButton.addActionListener(al);
     }
     
     public void addFindProductListener(ActionListener al){
@@ -463,11 +478,6 @@ public class UIAdminView extends JFrame {
     
     public void showInfoMessage(String m){
         JOptionPane.showMessageDialog(null, m, "Info", 2);
-    }
-    
-    public void setCats(ArrayList<String> cats){
-        categoryComboBox.setModel(new DefaultComboBoxModel(cats.toArray()));
-        changeCategoryComboBox.setModel(new DefaultComboBoxModel(cats.toArray()));
     }
     
     public void setFindIDResults(ArrayList<String> r){

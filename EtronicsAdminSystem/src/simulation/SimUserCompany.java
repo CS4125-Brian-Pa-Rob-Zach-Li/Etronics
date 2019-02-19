@@ -6,6 +6,7 @@
 package simulation;
 
 import java.util.ArrayList;
+import user.CustomerModel;
 
 /**
  *
@@ -16,11 +17,17 @@ public class SimUserCompany extends SimUser{
     private ArrayList<ITransactionDetectionObserver> observers;
     private ISimUserState state;
     private SimUserStateFactory simUserStateFact;
+    private CustomerModel custModel;
     
-    public SimUserCompany(ISimUserState state){
+    public SimUserCompany(ISimUserState state, SimUserStateFactory susf){
         this.state = state;
-        simUserStateFact = new SimUserStateFactory();
+        simUserStateFact = susf;
         observers = new ArrayList<ITransactionDetectionObserver>();
+    }
+    
+    @Override
+    public void setCustomerModel(CustomerModel cm){
+        custModel = cm;
     }
     
     @Override
@@ -35,12 +42,12 @@ public class SimUserCompany extends SimUser{
 
     @Override
     public void addToCart() {
-        state.addToCart(ISimUser.COMPANY);
+        state.addToCart(ISimUser.COMPANY, custModel.getUserID());
     }
 
     @Override
     public void makePurchase() {
-        String purchaseDetails = state.makePurchase();
+        String purchaseDetails = state.makePurchase(custModel.getUserID());
         if(!purchaseDetails.equals("")){
             notifyObservers(purchaseDetails);
             state = simUserStateFact.getUserState("Browsing");

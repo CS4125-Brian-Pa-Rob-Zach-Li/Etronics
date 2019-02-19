@@ -5,11 +5,13 @@
  */
 package simulation;
 
+import administration.UIAdminController;
 import database.ProductsDAO;
 import database.UserDAO;
 import database.UserDAOImp;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
+import user.CustomerModel;
 
 /**
  *
@@ -20,6 +22,7 @@ public class SimUserController extends Controller{
     private ArrayList<SimUser> simUsers;
     private ArrayList<ITransactionDetectionObserver> observers;
     private SimUserStateFactory simUserStateFact;
+    private UIAdminController adminController;
     private UserDAO uDAO;
     
     public SimUserController(ArrayList<SimUser> su, SimUserStateFactory susf,
@@ -39,19 +42,27 @@ public class SimUserController extends Controller{
         simUserStateFact = susf;
         uDAO = new UserDAOImp();
         
-        add_sim_users_to_database();
+        addSimUsersToDatabase();
     }
     
-    public void add_sim_users_to_database(){
+    public void addSimUsersToDatabase(){
         // Add simulation users if they do not already exist
         for(int x = 0; x < simUsers.size(); x++){
             boolean exists = uDAO.checkIfExist("sim_user"+x+"@sim.com");
             
             if(!exists){
-                // 'custormer' Typo here deliberate. 
+                // 'custormer' typo here deliberate. 
                 // Need to check with Xinting Li if she does checks using this spelling
                 boolean result = uDAO.insertUser("simUser"+x, "testtest", "sim_user"+x+"@sim.com", "custormer");
                 System.out.println("Res: "+result);
+            }
+            else{
+                try{
+                    CustomerModel cm = uDAO.getUserDetail("sim_user"+x+"@sim.com");
+                    simUsers.get(x).setCustomerModel(cm);
+                }catch(Exception sqlEx){
+                    System.out.println("SimUserController: "+sqlEx);
+                }
             }
         }
     }
@@ -59,6 +70,10 @@ public class SimUserController extends Controller{
     public int getRandInt100(){
         int random = (int )(Math.random() * 100 + 1);
         return random;
+    }
+    
+    public void setAdminController(UIAdminController ac){
+        adminController = ac;
     }
     
     @Override
@@ -82,8 +97,8 @@ public class SimUserController extends Controller{
                 }
             }
             try{
-                // One second wait between cycles
-                sleep(1000);
+                // Two second wait between cycles
+                sleep(2000);
             }catch(Exception e){
                 System.out.println("Exception: sleep() unsuccessful.");
             }

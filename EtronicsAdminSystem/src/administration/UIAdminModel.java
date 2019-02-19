@@ -52,6 +52,17 @@ public class UIAdminModel {
         return dao.insertProduct(p);
     }
     
+    public boolean deleteProduct(int id){
+        boolean result = dao.deleteProduct(id);
+        if(result){
+            updateProducts();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     public ArrayList<String> getCategoryList(){
         return categoryList;
     }

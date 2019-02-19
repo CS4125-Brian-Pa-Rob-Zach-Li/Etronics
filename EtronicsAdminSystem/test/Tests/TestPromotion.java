@@ -1,4 +1,4 @@
-
+package Tests;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,7 +21,7 @@ public class TestPromotion {
         pid = 5827123;
         pName = "Christmas Sale";
         disAmount = 12;
-        date = new Date("22/12/18");
+        date = new Date("06/12/18");
     }
     
     @After

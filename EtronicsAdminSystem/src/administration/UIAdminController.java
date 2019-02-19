@@ -66,12 +66,26 @@ public class UIAdminController{
                 view.setVisible(true);
                 view.setSelectedMenuVisible(1);
             }});
-        
         // User management button
         view.addUserManListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 view.setVisible(false);
                 userManGUI.setVisible(true);
+            }});
+        // Delete product button
+        view.addDeleteProductListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                String prodID = view.getDeleteProductID();
+                if(isInt(prodID)){
+                    int pid = Integer.parseInt(prodID);
+                    boolean success = model.deleteProduct(pid);
+                    if(success)
+                        JOptionPane.showMessageDialog(null, "Product removed.", "Success", 1);
+                    else
+                        JOptionPane.showMessageDialog(null, "Please use a valid product ID.", "Invalid", 1);
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Please use a valid product ID.", "Invalid", 1);
             }});
         
         
@@ -153,6 +167,10 @@ public class UIAdminController{
                     }
                 }
         });
+    }
+    
+    public void updateTransactionList(String s){
+        view.updateTransactionList(s);
     }
     
     public void updateCategories(){

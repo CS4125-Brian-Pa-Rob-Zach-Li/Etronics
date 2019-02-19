@@ -10,7 +10,7 @@ import database.UserDAOImp;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import user.User;
-import user.customerModel;
+import user.CustomerModel;
 
 /**
  *
@@ -18,7 +18,7 @@ import user.customerModel;
  */
 public class register {
     UserDAOImp userDao;
-    customerModel user = new customerModel();
+    CustomerModel user = new CustomerModel();
     public register() throws ClassNotFoundException, SQLException{
         userDao = new UserDAOImp();
 	}
@@ -67,9 +67,9 @@ public class register {
         }
         else
         {
-            
-        }
             return true;
+        }
+            
     }
     
     public boolean checkEmail(String email)
@@ -84,22 +84,26 @@ public class register {
     
     public boolean validatePW(String text){
         String pattern = "^[0-9a-zA-Z]{8,16}";
-        if(!(text.matches(pattern))){
-            return false;
-        }
-        else{
-            return true;
-        }
+        if(text != null) {
+            if(!(text.matches(pattern))){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }else return false;
     }
     
     public boolean validateEmail(String text){
         String pattern = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-        if(!(text.matches(pattern))){
-            return false;
-        }
-        else{
-            return true;
-        }
+        if(text != null){
+            if(!(text.matches(pattern))){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }else return false;
     }
     
 }

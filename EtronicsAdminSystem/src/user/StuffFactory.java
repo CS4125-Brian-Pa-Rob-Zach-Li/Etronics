@@ -3,12 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package products;
+package user;
 
 /**
  *
- * @author Brian
+ * @author XintingLi
  */
-public class ProductDecorator {
+public class StuffFactory extends UserFactory{
+
+    @Override
+    User createuser() {
+        return new StuffModel();
+    }
     
 }

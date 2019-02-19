@@ -5,6 +5,7 @@
  */
 package simulation;
 
+import administration.UIAdminController;
 import database.ProductsDAO;
 
 /**

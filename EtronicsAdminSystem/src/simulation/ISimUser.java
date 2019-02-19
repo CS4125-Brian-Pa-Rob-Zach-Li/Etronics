@@ -5,6 +5,8 @@
  */
 package simulation;
 
+import user.CustomerModel;
+
 /**
  *
  * @author Brian
@@ -16,6 +18,8 @@ public interface ISimUser {
     public ISimUserState getState();
     
     public void setState(ISimUserState s);
+    
+    public void setCustomerModel(CustomerModel cm);
     
     public void addToCart();
     

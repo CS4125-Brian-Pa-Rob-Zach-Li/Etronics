@@ -9,7 +9,7 @@ import database.UserDAO;
 import database.UserDAOImp;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import user.customerModel;
+import user.CustomerModel;
 
 /**
  *
@@ -17,7 +17,7 @@ import user.customerModel;
  */
 public class UserManagement {
     UserDAOImp userDao;
-    customerModel user = new customerModel();
+    CustomerModel user = new CustomerModel();
     public UserManagement() throws ClassNotFoundException, SQLException{
         userDao = new UserDAOImp();
     }
@@ -59,8 +59,8 @@ public class UserManagement {
             return "Delete failed";
     }
     
-    public ArrayList<customerModel> queryUser() throws SQLException{
-        ArrayList<customerModel> list = new ArrayList<customerModel>();
+    public ArrayList<CustomerModel> queryUser() throws SQLException{
+        ArrayList<CustomerModel> list = new ArrayList<CustomerModel>();
         list = userDao.queryUsers();
         return list;
     }

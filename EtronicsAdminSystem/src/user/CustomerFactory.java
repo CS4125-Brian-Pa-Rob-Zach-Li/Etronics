@@ -9,14 +9,10 @@ package user;
  *
  * @author XintingLi
  */
-public class userDecorator extends User{
-    User user;
-    boolean status = false;
-    public userDecorator(User user){
-	this.user = user;
-    }
-    public void setStatus()
-    {
-        status = true;
+public class CustomerFactory extends UserFactory{
+        
+    @Override
+    User createuser() {
+        return new CustomerModel();
     }
 }

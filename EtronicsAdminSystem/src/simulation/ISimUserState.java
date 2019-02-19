@@ -14,8 +14,8 @@ public interface ISimUserState {
     public static final String STATE_BROWSING = "Browsing";
     public static final String STATE_SHOPPING = "Shopping";
     
-    public String makePurchase();
+    public String makePurchase(int userId);
     
-    public void addToCart(String userType);
+    public void addToCart(String userType, int userID);
 
 }

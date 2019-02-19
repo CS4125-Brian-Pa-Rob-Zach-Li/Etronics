@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package database;
+package database; 
 
 import database.AdminDAO;
 import products.BasicProduct;
@@ -75,7 +75,6 @@ public class AdminDAOImpl implements AdminDAO {
                     promoID = 0;
                 
                 prod = pf.getProduct(pID, pName, price, type, desc, promoID);
-                System.out.println("Product read with promoID: "+promoID);
                 products.add(prod);
             }
         }catch(SQLException se){
@@ -159,8 +158,16 @@ public class AdminDAOImpl implements AdminDAO {
     }
 
     @Override
-    public void deleteProduct() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean deleteProduct(int id) {
+        try{
+            statement = conn.createStatement();
+            int result = statement.executeUpdate("DELETE FROM etronics_products WHERE id="+id+";");
+            if(result > 0)
+                return true;
+        }catch(Exception e){
+            return false;
+        }
+        return false;
     }
     
     public boolean isInt(String s){

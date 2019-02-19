@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import user.customerModel;
+import user.CustomerModel;
 
 /**
  *
@@ -28,7 +28,7 @@ public class UserManagementGUI extends javax.swing.JFrame {
     private int selectedValue1;
     private int selectedValue2;
     private int selectedValue3;
-    private ArrayList<customerModel> list;
+    private ArrayList<CustomerModel> list;
     private register newRegister;
     
     public UserManagementGUI() throws ClassNotFoundException, SQLException {
@@ -356,7 +356,7 @@ public class UserManagementGUI extends javax.swing.JFrame {
 
    private void quaryUser() throws SQLException
    {
-       list = new ArrayList<customerModel>();
+       list = new ArrayList<CustomerModel>();
        list = userman.queryUser();
        String email = "";
        for(int i = 0; i < list.size(); i++)

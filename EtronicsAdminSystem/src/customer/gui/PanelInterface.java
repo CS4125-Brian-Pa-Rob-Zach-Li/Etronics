@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package user;
+package customer.gui;
 
 /**
  *
- * @author XintingLi
+ * @author Zach
  */
-public class customerFactory extends userFactory{
-        
-    @Override
-    User createuser() {
-        return new customerModel();
-    }
+public interface PanelInterface {
+    
+    void draw(String desc, int prodPrice, String title, int id);
+    
 }
